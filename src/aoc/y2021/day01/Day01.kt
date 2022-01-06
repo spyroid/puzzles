@@ -4,7 +4,7 @@ import readToIntSeq
 
 fun main() {
 
-    fun part1(seq: Sequence<Int>) = seq.windowed(2, 1).count() { (it[1] > it[0]) }
+    fun part1(seq: Sequence<Int>) = seq.windowed(2, 1).count { (it[1] > it[0]) }
 
     fun part2(seq: Sequence<Int>) = part1(seq.windowed(3, 1).map { it.sum() })
 
