@@ -9,8 +9,8 @@ fun main() {
 //    runWithTime { (solution(listOf(2, 1, 4).toIntArray(), 3)) }
 }
 
-// average = (A[i] + A[i+1] ... + A[j]) / (j - i + 1)
-// average * (j - i + 1) = A[i] + A[i+1]...+ A[j]
+// avg = (A[i] + A[i+1] ... + A[j]) / (j - i + 1)
+// avg * (j - i + 1) = A[i] + A[i+1]...+ A[j]
 // partial sums that is P[0] = 0 and P[i] = X[1] + ... + X[i]
 fun solution(A: IntArray, S: Int): Int {
     val prefs = mutableMapOf<Long, Int>().also { it[0] = 1 }
