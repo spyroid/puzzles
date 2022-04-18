@@ -22,3 +22,13 @@ fun readToIntSeq(name: String) = readInput(name).toIntSeq()
 
 infix fun Int.toward(to: Int) = IntProgression.fromClosedRange(this, to, if (this > to) -1 else 1)
 
+inline fun <T> measureTimeMillisPair(function: () -> T): Pair<T, Long> {
+    val startTime = System.nanoTime()
+    val result: T = function.invoke()
+    val endTime = System.nanoTime()
+    return Pair(result, (endTime - startTime) / 1_000_000)
+}
+
+inline fun <T> runWithTime(function: () -> T) {
+    measureTimeMillisPair { function() }.also { println("\uD83C\uDF40 Result: ${it.first} Time: ${it.second}") }
+}

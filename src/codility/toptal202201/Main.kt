@@ -1,11 +1,20 @@
-package codility.toptal2022
-
-import kotlin.system.measureTimeMillis
+package codility.toptal202201
 
 fun solve(input: List<String>): Int {
     val arr1 = intArrayOf()
     val arr2 = intArrayOf()
     return solution2(arr1, arr2)
+}
+
+fun main() {
+    println(solution4(listOf(-1, -2, 1, 2, 3, 4, 5).toIntArray()))
+    println(solution4(listOf(-1, -2).toIntArray()))
+}
+
+fun solution4(A: IntArray): Int {
+    val set = A.filter { it > 0 }.toSet()
+    for (i in 1..100_000) if (i !in set) return i
+    return 1
 }
 
 
@@ -47,9 +56,9 @@ fun solution1(message: String, K: Int): String {
     return message.substring(0, ids)
 }
 
-fun main() {
-    measureTimeMillis { print("⭐️ Result: ${solve(listOf())}") }
-        .also { time -> println(" in $time ms") }
-}
+//fun main() {
+//    measureTimeMillis { print("⭐️ Result: ${solve(listOf())}") }
+//        .also { time -> println(" in $time ms") }
+//}
 
 class Main {}
