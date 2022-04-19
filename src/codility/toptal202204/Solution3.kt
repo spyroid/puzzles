@@ -9,9 +9,11 @@ fun main() {
     runWithTime { (solution2(listOf(2, 1, 4).toIntArray(), 3)) }
 }
 
-// avg = (A[i] + A[i+1] ... + A[j]) / (j - i + 1)
-// avg * (j - i + 1) = A[i] + A[i+1]...+ A[j]
+// S = (A[i] + A[i+1] ... + A[j]) / (j - i + 1)
+// S * (j - i + 1) = A[i] + A[i+1]...+ A[j]
 // partial sums that is P[0] = 0 and P[i] = X[1] + ... + X[i]
+// (P[j] - P[i - 1]) / (j - i + 1) = S -> P[j] - P[i - 1] = S * j - S * (i - 1) -> P[j] - S * j = P[i - 1] - S * (i - 1)
+// Q[i] = P[i] - S * i
 fun solution(A: IntArray, S: Int): Int {
     val prefs = mutableMapOf<Long, Int>().also { it[0] = 1 }
     val partialSums = LongArray(A.size + 1)
@@ -26,9 +28,8 @@ fun solution(A: IntArray, S: Int): Int {
     return prefs.values.sumOf { it * (it - 1) / 2 }
 }
 
-// simplified: generate cumulative sum, for each item use mod with S and count number of occurrences of each
-// more Kotlin style
-// use mod to avoid negative valued
+// simplified: generate cumulative sum, for each item use (mod S) to calc reminder and count number of occurrences of each reminder
+// use double mod to avoid negative values
 fun solution2(A: IntArray, S: Int): Int {
     return A.asSequence()
         .runningFold(0) { acc, i -> acc + i }
