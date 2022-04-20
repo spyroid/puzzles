@@ -5,8 +5,8 @@ import runWithTime
 fun main() {
     runWithTime {
         solution(
-            listOf("test1a", "test1b", "test1c", "test2", "test3").toTypedArray(),
-            listOf("W", "RE", "OK", "OK", "Time").toTypedArray()
+            listOf("test1a", "test2", "test1b", "test1c", "test3").toTypedArray(),
+            listOf("Wrong answer", "OK", "Runtime error", "OK", "Time limit exceeded").toTypedArray()
         )
     }
 
@@ -18,19 +18,14 @@ fun main() {
     }
 }
 
-// only id is important. count ids groups
+// only id is important. count groups of ids
 fun solution(T: Array<String>, R: Array<String>): Int {
-    val total = mutableMapOf<Int, Int>()
-    val passed = mutableMapOf<Int, Int>()
-
-    for (i in T.indices) {
-        val match = Regex("\\w+(\\d+)").find(T[i]) ?: continue
-        val id = match.destructured.component1().toInt()
-        total.merge(id, 1) { o, _ -> o + 1 }
-        passed.computeIfAbsent(id) { 0 }
-        passed.merge(id, 0) { o, _ -> if (R[i] == "OK") o + 1 else o }
-    }
-//    println(total)
-//    println(passed)
-    return (total.keys).count { (total[it] == passed[it]) } * 100 / total.size
+    return T.asSequence()
+        .map { Regex("\\w+(\\d+)").find(it) }
+        .filterNotNull()
+        .map { it.destructured.component1().toInt() }
+        .zip(R.asSequence().map { it == "OK" })
+        .groupingBy { it.first }
+        .fold(true) { acc, el -> acc && el.second }
+        .let { map -> map.values.count { it } * 100 / map.size }
 }
