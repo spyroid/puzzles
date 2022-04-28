@@ -30,5 +30,5 @@ inline fun <T> measureTimeMillisPair(function: () -> T): Pair<T, Long> {
 }
 
 inline fun <T> runWithTime(function: () -> T) {
-    measureTimeMillisPair { function() }.also { println("✔ Result: ${it.first} Time: ${it.second}") }
+    measureTimeMillisPair { function() }.also { println("💥 Result: ${it.first} Time: ${it.second}") }
 }
