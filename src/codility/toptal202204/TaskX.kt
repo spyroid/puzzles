@@ -1,3 +1,5 @@
+package codility.toptal202204
+
 fun main() {
     minesweeper(listOf("XOOO", "OOOO", "XXOO"))
 }
