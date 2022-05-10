@@ -1,0 +1,25 @@
+Nathan has completed his very first programming test and is now wondering about his score.
+He received an email containing the final report about the task he solved in the test hot it omitted the score.
+
+Nathan never gives up, so he decided to compute his result from the report. He found out that:
+• his program was tested on several test cases;
+• every test case has given one of the following results: "On", "Wrong ens.r.,1tme Imix emended. or 'Runtime error.,
+• test cases were organized into groups numbered by consecutive natural numbers;
+• his program sawed points for a group only when the result of every.. case in the group was .sm•. In the report, test cases are named according to the following rule: if the test case is the only test case in the group, its name is (task name] + [group number]. If there is mac than one test in the group, its name is extended by a lowercase English letter which is different for each test case. Example test case names are: tests, test2a,test2b. In this example, test2a and test2b room one group and tests forms another. Nathan's score is the number of groups his program passed multiplied by 100 and divided by the total number of groups. If the result is fractional, the number of points is rounded to the highest integer not greater than the result. For example, lithe program passed two groups out of three, the result is 2.100 / 3 = 66.(6), so Nathan would gain 66 points.
+
+Write a function that given the names and results of all the test cases,
+returns the number of points Nathan scored. T and R are arrays (containing strings) of length N.
+TM is a string corresponding to the I-th test case name;
+R[I] is the result of this test case, containing one of four possible values
+("OK", "wrong answer", Time limit exceeded" or "Runtime error").
+
+For example, for data:
+1101 = "Leann" R[0] = "Wrong answer" T[1] = "test2" R[1] = 'W!" T121 = "testlb" R[2] =error" 1[3] = "test." R[3] "Mr" T[4] = "testa" R[4] = Time limit exceeded"
+the function should return 33. Nathan's program passed only the second group.
+
+For another set of data
+= R[0] = "Wrong answer" T[1] = "cmlilityr R[1] = "OR" T[2] = "crwlilityr R[2] = "OR" T[3] = "ccodilityers" R[3] ="Runtime error" 1141 = .codilitysla" R[4] = "OR" the function should return 50. Nathan's program passed the second and third groups.
+
+N is an integer within the range [1..3001; arrays T and R have the same length; every.st case appears in table T exactly once; tests groups are numbered by consecutive natural numbers from 1; tests cases in groups containing at least two tests are distinguished by a lowercase letter suffix in alphabetical order from a; every element in T is a valid test name; the task name is identical for every test case, contains only English lowercase letters and is of a length not greater than 30 letters; each string in array R has one of the following values: "m", 'wrong answer", "mime limit exceeded", "Runtime error".
+
+In your solution, focus on correctness. The perfonnance of your solution will not be the focus of the assessment.
