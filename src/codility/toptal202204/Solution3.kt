@@ -28,7 +28,8 @@ fun solution(A: IntArray, S: Int): Int {
     return prefs.values.sumOf { it * (it - 1) / 2 }
 }
 
-// simplified: generate cumulative sum, for each item use (mod S) to calc reminder and count number of occurrences of each reminder
+// simplified: generate cumulative sum, for each item use (mod S) to calc reminder and count number of occurrences
+// of each reminder
 // use double mod to avoid negative values
 fun solution2(A: IntArray, S: Int): Int {
     return A.asSequence()
