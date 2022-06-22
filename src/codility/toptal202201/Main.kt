@@ -56,7 +56,7 @@ fun solution1(message: String, K: Int): String {
     return message.substring(0, ids)
 }
 
-//fun main() {
+//fun other.main() {
 //    measureTimeMillis { print("⭐️ Result: ${solve(listOf())}") }
 //        .also { time -> println(" in $time ms") }
 //}
