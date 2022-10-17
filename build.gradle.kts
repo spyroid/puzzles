@@ -1,7 +1,9 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.7.10"
+    kotlin("jvm") version "1.7.20"
+    java
+    application
 }
 
 repositories {
@@ -17,9 +19,18 @@ dependencies {
 
 tasks.withType<KotlinCompile> {
     kotlinOptions {
-        freeCompilerArgs = listOf("-Xcontext-receivers")
-        jvmTarget = "17"
+//        freeCompilerArgs = listOf("-Xcontext-receivers")
+//        jvmTarget = "18"
     }
+}
+
+tasks.withType<JavaCompile> {
+    options.compilerArgs.add("--enable-preview")
+}
+
+java {
+//    sourceCompatibility = JavaVersion.VERSION_18
+//    targetCompatibility = JavaVersion.VERSION_19
 }
 
 tasks {
