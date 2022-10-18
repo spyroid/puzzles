@@ -1,11 +1,11 @@
 package leetcode
 
-import runWithTime
+import puzzle
 
 fun main() {
-    runWithTime { evalRPN(arrayOf("2", "1", "+", "3", "*")) }
-    runWithTime { evalRPN(arrayOf("4", "13", "5", "/", "+")) }
-    runWithTime { evalRPN(arrayOf("10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+")) }
+    puzzle { evalRPN(arrayOf("2", "1", "+", "3", "*")) }
+    puzzle { evalRPN(arrayOf("4", "13", "5", "/", "+")) }
+    puzzle { evalRPN(arrayOf("10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+")) }
 }
 
 fun ArrayDeque<Int>.applyOp(op: (Int, Int) -> Int) = removeFirst().also { addFirst(op(removeFirst(), it)) }
