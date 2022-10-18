@@ -1,24 +1,23 @@
 package leetcode
 
-import runWithTime
+import puzzle
 
 fun main() {
-    runWithTime { fizzBuzz(3) }
-    runWithTime { fizzBuzz(5) }
-    runWithTime { fizzBuzz(15) }
+    puzzle { fizzBuzz(3) }
+    puzzle { fizzBuzz(5) }
+    puzzle { fizzBuzz(15) }
 }
 
-fun fizzBuzz(n: Int) = (1..n).asSequence().map {
-    val a = it % 3 == 0
-    val b = it % 5 == 0
-    if (a && b) {
-        "FizzBuzz"
-    } else if (a) {
-        "Fizz"
-    } else if (b) {
-        "Buzz"
-    } else {
-        it.toString()
-    }
-}.toList()
+fun fizzBuzz(n: Int): List<Any> {
+    return (1..n).map {
+        val a = it % 3 == 0
+        val b = it % 5 == 0
+        when {
+            a && b -> "FizzBuzz"
+            a -> "Fizz"
+            b -> "Buzz"
+            else -> it
+        }
+    }.toList()
+}
 
