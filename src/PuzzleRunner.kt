@@ -6,8 +6,8 @@ class PuzzleRunner {
     lateinit var local: Any
     private val baseDir = "src."
     private fun localDir(klass: Any) = File((baseDir + klass.javaClass.packageName).replace(".", File.separatorChar.toString()))
-    private fun readLocal(klass: Any, fileName: String) = File(localDir(klass), fileName).readLines()
-    fun dataFrom(filename: String) = readLocal(local, filename)
+    private fun readLocal(klass: Any, fileName: String) = File(localDir(klass), fileName)
+    fun readLinesFrom(filename: String) = readLocal(local, filename).readLines()
 }
 
 @OptIn(ExperimentalTime::class)
@@ -16,9 +16,9 @@ fun <T> puzzle(code: PuzzleRunner.() -> T): PuzzleRunner {
         this.local = code
         val timed  = measureTimedValue { code.invoke(this) }
         if (timed.value is Unit) {
-            println("🕘 ${timed.duration}")
+            println("⌛️ ${timed.duration}")
         } else {
-            println("💥 ${timed.value} 🕑 ${timed.duration}")
+            println("✔️️ ${timed.value} \t\t ⏳ ${timed.duration}")
         }
     }
 }
