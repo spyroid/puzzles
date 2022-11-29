@@ -15,6 +15,3 @@ fun List<String>.toIntSeq() = this.asSequence().map { it.toInt() }
 fun readIntsAsSeq(name: String): Sequence<Int> = readInput(name).joinToString().split(",").map { it.toInt() }.asSequence()
 
 fun readToIntSeq(name: String) = readInput(name).toIntSeq()
-
-infix fun Int.toward(to: Int) = IntProgression.fromClosedRange(this, to, if (this > to) -1 else 1)
-

@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.7.21"
+    kotlin("jvm") version "1.8.0-Beta"
 }
 
 repositories {
@@ -26,8 +26,8 @@ tasks {
 
     withType<KotlinCompile> {
         kotlinOptions {
-//        freeCompilerArgs = listOf("-Xcontext-receivers")
-//        jvmTarget = "18"
+            freeCompilerArgs = listOf("-Xcontext-receivers")
+            jvmTarget = "18"
         }
     }
 
@@ -39,12 +39,6 @@ tasks {
         options.compilerArgs.addAll(listOf("--enable-preview", "-Xlint:preview"))
     }
 
-    jar {
-        manifest {
-            attributes("Main-Class" to "org.example.Main")
-        }
-    }
-
     sourceSets {
         main {
             java.srcDirs("src")
@@ -52,16 +46,8 @@ tasks {
     }
 }
 
-
 java {
-//    sourceCompatibility = JavaVersion.VERSION_18
-//    targetCompatibility = JavaVersion.VERSION_19
+    sourceCompatibility = JavaVersion.VERSION_19
+    targetCompatibility = JavaVersion.VERSION_19
 }
 
-//tasks {
-//    sourceSets {
-//        main {
-//            java.srcDirs("src")
-//        }
-//    }
-//}
