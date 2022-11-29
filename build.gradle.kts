@@ -15,26 +15,53 @@ dependencies {
 //    implementation("org.jetbrains.kotlinx:multik-default:0.1.1")
 }
 
-tasks.withType<KotlinCompile> {
-    kotlinOptions {
+tasks {
+    withType<Test>().all {
+        allJvmArgs = listOf("--enable-preview")
+        testLogging.showStandardStreams = true
+        testLogging.showExceptions = true
+        useJUnitPlatform {
+        }
+    }
+
+    withType<KotlinCompile> {
+        kotlinOptions {
 //        freeCompilerArgs = listOf("-Xcontext-receivers")
 //        jvmTarget = "18"
+        }
     }
-}
 
-tasks.withType<JavaCompile> {
-    options.compilerArgs.add("--enable-preview")
-}
+    withType<JavaExec>().all {
+        allJvmArgs = listOf("--enable-preview")
+    }
 
-java {
-//    sourceCompatibility = JavaVersion.VERSION_18
-//    targetCompatibility = JavaVersion.VERSION_19
-}
+    withType(JavaCompile::class.java).all {
+        options.compilerArgs.addAll(listOf("--enable-preview", "-Xlint:preview"))
+    }
 
-tasks {
+    jar {
+        manifest {
+            attributes("Main-Class" to "org.example.Main")
+        }
+    }
+
     sourceSets {
         main {
             java.srcDirs("src")
         }
     }
 }
+
+
+java {
+//    sourceCompatibility = JavaVersion.VERSION_18
+//    targetCompatibility = JavaVersion.VERSION_19
+}
+
+//tasks {
+//    sourceSets {
+//        main {
+//            java.srcDirs("src")
+//        }
+//    }
+//}

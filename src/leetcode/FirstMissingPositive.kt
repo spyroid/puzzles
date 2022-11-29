@@ -1,9 +1,9 @@
 package leetcode
 
-import runWithTime
+import puzzle
 
 fun main() {
-    runWithTime { firstMissingPositive(intArrayOf(7, 8, 9, 11, 12)) }
+    puzzle { firstMissingPositive(intArrayOf(7, 8, 9, 11, 12)) }
 }
 
 fun firstMissingPositive(nums: IntArray): Int {

@@ -1,12 +1,12 @@
 package codility.toptal202204
 
-import runWithTime
+import puzzle
 
 fun main() {
-    runWithTime { (solution2(listOf(5, 3, 6, 2, 5, 5, 2).toIntArray(), 4)) }
-    runWithTime { (solution2(listOf(2, 1, 3).toIntArray(), 2)) }
-    runWithTime { (solution2(listOf(0, 4, 3, -1).toIntArray(), 2)) }
-    runWithTime { (solution2(listOf(2, 1, 4).toIntArray(), 3)) }
+    puzzle { (solution2(listOf(5, 3, 6, 2, 5, 5, 2).toIntArray(), 4)) }
+    puzzle { (solution2(listOf(2, 1, 3).toIntArray(), 2)) }
+    puzzle { (solution2(listOf(0, 4, 3, -1).toIntArray(), 2)) }
+    puzzle { (solution2(listOf(2, 1, 4).toIntArray(), 3)) }
 }
 
 // S = (A[i] + A[i+1] ... + A[j]) / (j - i + 1)

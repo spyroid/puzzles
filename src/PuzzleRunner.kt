@@ -1,4 +1,6 @@
 import java.io.File
+import kotlin.time.ExperimentalTime
+import kotlin.time.measureTimedValue
 
 class PuzzleRunner {
     lateinit var local: Any
@@ -8,12 +10,15 @@ class PuzzleRunner {
     fun dataFrom(filename: String) = readLocal(local, filename)
 }
 
+@OptIn(ExperimentalTime::class)
 fun <T> puzzle(code: PuzzleRunner.() -> T): PuzzleRunner {
     return PuzzleRunner().apply {
         this.local = code
-        val startTime = System.nanoTime()
-        val result: T = code.invoke(this)
-        val endTime = System.nanoTime()
-        println("💥 Result: $result Time: ${(endTime - startTime) / 1_000_000}")
+        val timed  = measureTimedValue { code.invoke(this) }
+        if (timed.value is Unit) {
+            println("🕘 ${timed.duration}")
+        } else {
+            println("💥 ${timed.value} 🕑 ${timed.duration}")
+        }
     }
 }

@@ -1,7 +1,5 @@
 package leetcode
 
-import runWithTime
-
 fun main() {
 //    var res = sequenceOf(sequenceOf(1,1), sequenceOf(2,2), sequenceOf(3,3))
 //        .fold(sequenceOf<Sequence<Int>>()) { acc, seq ->

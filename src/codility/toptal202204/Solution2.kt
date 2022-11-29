@@ -1,14 +1,14 @@
 package codility.toptal202204
 
-import runWithTime
+import puzzle
 import kotlin.random.Random
 
 fun main() {
-    runWithTime { (solution(listOf(7, 3, 7, 3, 1, 3, 4, 1).toIntArray())) }
-    runWithTime { solution(listOf(2, 1, 1, 3, 2, 1, 1, 3).toIntArray()) }
-    runWithTime { solution(listOf(7, 5, 2, 7, 2, 7, 4, 7).toIntArray()) }
+    puzzle { (solution(listOf(7, 3, 7, 3, 1, 3, 4, 1).toIntArray())) }
+    puzzle { solution(listOf(2, 1, 1, 3, 2, 1, 1, 3).toIntArray()) }
+    puzzle { solution(listOf(7, 5, 2, 7, 2, 7, 4, 7).toIntArray()) }
     val huge = IntArray(100_000) { _ -> Random.nextInt(0, 100 - 1) }
-    runWithTime { solution(huge) }
+    puzzle { solution(huge) }
 }
 
 // Use 2 pointers.

@@ -1,9 +1,9 @@
 package leetcode
 
-import runWithTime
+import puzzle
 
 fun main() {
-    runWithTime { numberOfSteps(123) }
+    puzzle { numberOfSteps(123) }
 }
 
 fun numberOfSteps(num: Int): Int {

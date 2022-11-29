@@ -1,7 +1,6 @@
 package leetcode
 
-import runWithTime
-import java.util.concurrent.DelayQueue
+import puzzle
 
 fun main() {
 //    runWithTime {
@@ -24,7 +23,7 @@ fun main() {
 //    runWithTime {
 //        ladderLength("hit", "cog", listOf("hot", "dot", "dog", "lot", "log"))
 //    }
-    runWithTime {
+    puzzle {
         ladderLength(
             "qa",
             "sq",

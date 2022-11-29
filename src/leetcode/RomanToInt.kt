@@ -1,11 +1,11 @@
 package leetcode
 
-import runWithTime
+import puzzle
 
 fun main() {
-    runWithTime { romanToInt("III") }
-    runWithTime { romanToInt("LVIII") }
-    runWithTime { romanToInt("MCMXCIV") }
+    puzzle { romanToInt("III") }
+    puzzle { romanToInt("LVIII") }
+    puzzle { romanToInt("MCMXCIV") }
 }
 
 val map = mapOf(

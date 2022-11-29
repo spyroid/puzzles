@@ -1,16 +1,16 @@
 package codility.toptal202204
 
-import runWithTime
+import puzzle
 
 fun main() {
-    runWithTime {
+    puzzle {
         solution(
             listOf("test1a", "test2", "test1b", "test1c", "test3").toTypedArray(),
             listOf("Wrong answer", "OK", "Runtime error", "OK", "Time limit exceeded").toTypedArray()
         )
     }
 
-    runWithTime {
+    puzzle {
         solution(
             listOf("codility1", "codility3", "codility2", "codility4b", "codility4a").toTypedArray(),
             listOf("W", "OK", "OK", "Runtime Err", "OK").toTypedArray()
