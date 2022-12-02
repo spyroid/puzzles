@@ -8,7 +8,7 @@ fun main() {
     puzzle { part1(readLinesFrom("day1.input.txt"), 3) }
 }
 
-fun part1(input: List<String>, count: Int): Int {
+private fun part1(input: List<String>, count: Int): Int {
     return input.fold(mutableListOf(0)) { acc, s ->
         when {
             s.isNotBlank() -> acc[acc.lastIndex] = s.toInt() + acc.last()
