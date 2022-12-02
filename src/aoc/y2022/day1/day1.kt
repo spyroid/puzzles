@@ -1,4 +1,4 @@
-package aoc.y2022
+package aoc.y2022.day1
 
 import puzzle
 
