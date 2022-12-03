@@ -24,7 +24,13 @@ fun <T> puzzle(code: PuzzleRunner.() -> T): PuzzleRunner {
         if (timed.value is Unit) {
             println("⌛️ ${timed.duration}")
         } else {
-            println("✔️️ ${timed.value} \t\t ⏳ ${timed.duration}")
+            val paddedRes = timed.value.toString().padEnd(20)
+            println("${items.random()} $paddedRes \t\t ⏳ ${timed.duration}")
         }
     }
 }
+
+private val items = listOf(
+    "💊", "🎁", "🎉", "🎈", "💣", "⚰️", "💎", "💰", "✈️", "🚀", "🎸", "⚽", "️🍺", "🍪",
+    "🍕", "🍔", "🍓", "🍉", "🌶", "🌈", "🔥", "🍄", "🌸", "🌻", "🍀", "🦊", "🐱"
+)
