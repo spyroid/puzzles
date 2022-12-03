@@ -25,7 +25,7 @@ fun <T> puzzle(code: PuzzleRunner.() -> T): PuzzleRunner {
             println("⌛️ ${timed.duration}")
         } else {
             val paddedRes = timed.value.toString().padEnd(20)
-            println("${items.random()} $paddedRes \t\t ⏳ ${timed.duration}")
+            println("${items.random()} $paddedRes ⏳ ${timed.duration}")
         }
     }
 }
