@@ -11,8 +11,8 @@ fun main() {
 }
 
 private fun part1(input: List<String>): Int = input.asSequence()
-    .map { Pair(it.substring(0 until it.length / 2), it.substring(it.length / 2 until it.length)) }
-    .map { it.first.toSet().intersect(it.second.toSet()) }
+    .map { it.chunked(it.length / 2) }
+    .map { it[0].toSet().intersect(it[1].toSet()) }
     .flatMap { it }
     .map { decode(it) }
     .sum()
