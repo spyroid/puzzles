@@ -34,3 +34,7 @@ private val items = listOf(
     "💊", "🎁", "🎉", "🎈", "💣", "⚰️", "💎", "💰", "✈️", "🚀", "🎸", "⚽", "️🍺", "🍪",
     "🍕", "🍔", "🍓", "🍉", "🌶", "🌈", "🔥", "🍄", "🌸", "🌻", "🍀", "🦊", "🐱"
 )
+
+infix fun IntRange.isFullyOverlaps(other: IntRange): Boolean = first <= other.first && last >= other.last
+infix fun IntRange.isOverlaps(other: IntRange): Boolean = first <= other.last && other.first <= last
+
