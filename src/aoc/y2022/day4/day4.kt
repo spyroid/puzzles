@@ -18,8 +18,6 @@ private fun asRanges(list: List<String>) = list.map { l ->
     l.split(",").map { p -> p.split("-").let { IntRange(it[0].toInt(), it[1].toInt()) } }
 }
 
-infix fun IntRange.isFullyOverlapped(other: IntRange): Boolean =
-    (first in other && last in other) || (other.first in this && other.last in this)
+infix fun IntRange.isFullyOverlapped(other: IntRange): Boolean = (first in other && last in other) || (other.first in this && other.last in this)
 
-infix fun IntRange.isPartiallyOverlapped(other: IntRange): Boolean =
-    (first in other || last in other) || (other.first in this || other.last in this)
+infix fun IntRange.isPartiallyOverlapped(other: IntRange): Boolean = (first in other || last in other) || (other.first in this || other.last in this)
