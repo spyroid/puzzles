@@ -22,9 +22,9 @@ private fun craneMove(input: List<String>, crates: MutableList<String>, skip: In
             }
         }
         .onEach { m ->
-            val cons = crates[m.from].takeLast(m.amount)
+            val toMove = crates[m.from].takeLast(m.amount)
             crates[m.from] = crates[m.from].dropLast(m.amount)
-            crates[m.to] = crates[m.to].plus(if (reversed) cons.reversed() else cons)
+            crates[m.to] = crates[m.to].plus(if (reversed) toMove.reversed() else toMove)
         }
         .count().let { crates.map { it.last() }.joinToString("") }
 }
