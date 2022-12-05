@@ -13,18 +13,15 @@ fun main() {
 val testCrates = listOf("ZN", "MCD", "P")
 val crates = listOf("CZNBMWQV", "HZRWCB", "FQRJ", "ZSWHFNMT", "GFWLNQP", "LPW", "VBDRGCQJ", "ZQNBW", "HLFCGTJ")
 
-private data class Move(val amount: Int, val from: Int, val to: Int)
-
 private fun craneMove(input: List<String>, crates: MutableList<String>, skip: Int, reversed: Boolean): String {
     return input.asSequence().drop(skip)
-        .map { line -> line.split("move ", " from ", " to ").let {
-                Move(it[1].toInt(), it[2].toInt() - 1, it[3].toInt() - 1)
+        .onEach { line ->
+            val (amount, from, to) = line.split("move ", " from ", " to ").let {
+                listOf(it[1].toInt(), it[2].toInt() - 1, it[3].toInt() - 1)
             }
-        }
-        .onEach { m ->
-            val toMove = crates[m.from].takeLast(m.amount)
-            crates[m.from] = crates[m.from].dropLast(m.amount)
-            crates[m.to] = crates[m.to].plus(if (reversed) toMove.reversed() else toMove)
+            val toMove = crates[from].takeLast(amount).let { if (reversed) it.reversed() else it }
+            crates[to] = crates[to].plus(toMove)
+            crates[from] = crates[from].dropLast(amount)
         }
         .count().let { crates.map { it.last() }.joinToString("") }
 }
