@@ -5,11 +5,11 @@ import isOverlaps
 import puzzle
 
 fun main() {
-    puzzle { part1(readLinesFrom("test.txt")) }
-    puzzle { part1(readLinesFrom("input.txt")) }
+    puzzle { part1(linesFrom("test.txt")) }
+    puzzle { part1(linesFrom("input.txt")) }
 
-    puzzle { part2(readLinesFrom("test.txt")) }
-    puzzle { part2(readLinesFrom("input.txt")) }
+    puzzle { part2(linesFrom("test.txt")) }
+    puzzle { part2(linesFrom("input.txt")) }
 }
 
 private fun part1(input: List<String>) = asRanges(input).count { it[0] isFullyOverlaps it[1] || it[1] isFullyOverlaps it[0] }

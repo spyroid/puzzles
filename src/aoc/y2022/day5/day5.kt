@@ -3,11 +3,11 @@ package aoc.y2022.day5
 import puzzle
 
 fun main() {
-    puzzle { craneMove(readLinesFrom("test.txt"), testCrates.toMutableList(), 5, true) }
-    puzzle { craneMove(readLinesFrom("input.txt"), crates.toMutableList(), 10, true) }
+    puzzle { craneMove(linesFrom("test.txt"), testCrates.toMutableList(), 5, true) }
+    puzzle { craneMove(linesFrom("input.txt"), crates.toMutableList(), 10, true) }
 
-    puzzle { craneMove(readLinesFrom("test.txt"), testCrates.toMutableList(), 5, false) }
-    puzzle { craneMove(readLinesFrom("input.txt"), crates.toMutableList(), 10, false) }
+    puzzle { craneMove(linesFrom("test.txt"), testCrates.toMutableList(), 5, false) }
+    puzzle { craneMove(linesFrom("input.txt"), crates.toMutableList(), 10, false) }
 }
 
 val testCrates = listOf("ZN", "MCD", "P")

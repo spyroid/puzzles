@@ -3,9 +3,9 @@ package aoc.y2022.day1
 import puzzle
 
 fun main() {
-    puzzle { part1(readLinesFrom("day1.test.txt"), 1) }
-    puzzle { part1(readLinesFrom("day1.input.txt"), 1) }
-    puzzle { part1(readLinesFrom("day1.input.txt"), 3) }
+    puzzle { part1(linesFrom("day1.test.txt"), 1) }
+    puzzle { part1(linesFrom("day1.input.txt"), 1) }
+    puzzle { part1(linesFrom("day1.input.txt"), 3) }
 }
 
 private fun part1(input: List<String>, count: Int): Int {

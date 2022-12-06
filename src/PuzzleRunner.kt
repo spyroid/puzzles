@@ -8,7 +8,7 @@ class PuzzleRunner {
     private val baseDir = "src."
     private fun localDir(klass: Any) = File((baseDir + klass.javaClass.packageName).replace(".", File.separatorChar.toString()))
     private fun readLocal(klass: Any, fileName: String) = File(localDir(klass), fileName)
-    fun readLinesFrom(filename: String) = readLocal(local, filename).readLines()
+    fun linesFrom(filename: String) = readLocal(local, filename).readLines()
     fun readLinesFromUrl(url: String): List<String> {
         URL(url).openStream().use {
             return it.bufferedReader().lines().toList()
@@ -17,15 +17,16 @@ class PuzzleRunner {
 }
 
 @OptIn(ExperimentalTime::class)
-fun <T> puzzle(code: PuzzleRunner.() -> T): PuzzleRunner {
+fun <T> puzzle(title:String = "", code: PuzzleRunner.() -> T): PuzzleRunner {
     return PuzzleRunner().apply {
         this.local = code
+        val paddedTitle = title.padStart(15, ' ') + " "
         val timed = measureTimedValue { code.invoke(this) }
         if (timed.value is Unit) {
-            println("⌛️ ${timed.duration}")
+            println("$paddedTitle⌛️ ${timed.duration}")
         } else {
             val paddedRes = timed.value.toString().padEnd(20)
-            println("${items.random()} $paddedRes ⏳ ${timed.duration}")
+            println("$paddedTitle${items.random()} $paddedRes ⏳ ${timed.duration}")
         }
     }
 }
