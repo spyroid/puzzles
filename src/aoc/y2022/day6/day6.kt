@@ -16,4 +16,3 @@ private fun findMarker(input: String, size: Int): Int {
         .mapIndexed { i, s -> (s.toSet().count() == size) to (size + i) }
         .first { it.first }.second
 }
-
