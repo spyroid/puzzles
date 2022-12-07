@@ -40,8 +40,8 @@ private fun buildFs(input: List<String>): Folder {
         val line = input[i]
         if (line.startsWith("$ ls")) {
             while (i + 1 < input.size && !input[i + 1].startsWith("$")) {
-                val l = input[++i].split(" ")
-                if (l[0] != "dir") current.addFile(l[0].toLong())
+                val (cmd) = input[++i].split(" ")
+                if (cmd != "dir") current.addFile(cmd.toLong())
             }
         } else if (line.startsWith("$ cd")) {
             val fn = line.drop(5)
