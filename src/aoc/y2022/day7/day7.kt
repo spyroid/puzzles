@@ -35,25 +35,18 @@ private fun buildFs(input: List<String>): Folder {
     val root = Folder("/", null)
     var current = root
 
-    var i = 1
-    while (i < input.size) {
-        val line = input[i]
-        if (line.startsWith("$ ls")) {
-            while (i + 1 < input.size && !input[i + 1].startsWith("$")) {
-                val (cmd) = input[++i].split(" ")
-                if (cmd != "dir") current.addFile(cmd.toLong())
-            }
-        } else if (line.startsWith("$ cd")) {
-            val fn = line.drop(5)
-            if (fn == "..") {
-                current = current.parent ?: root
-            } else {
-                var f = Folder(fn, current)
-                current.items.add(f)
-                current = f
-            }
+    input.drop(1)
+        .forEach { s ->
+            val (a, b, c) = s.split(" ").plus("")
+            if (a == "$") {
+                if (b == "cd") {
+                    current = if (c == "..") {
+                        current.parent ?: root
+                    } else {
+                        Folder(c, current).also { current.items.add(it) }
+                    }
+                }
+            } else if (a != "dir") current.addFile(a.toLong())
         }
-        i += 1
-    }
     return root
 }
