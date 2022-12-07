@@ -23,11 +23,7 @@ private data class Folder(val name: String, val parent: Folder?, var size: Long 
     val folders = mutableListOf<Folder>()
 
     fun addFile(size: Long) {
-        var f: Folder? = this
-        while (f != null) {
-            f.size = f.size + size
-            f = f.parent
-        }
+        generateSequence(this) { f -> f.parent.also { f.size += size } }.count()
     }
 
     fun flatten(root: Folder = this): List<Folder> = root.folders.flatMap { flatten(it) } + root
