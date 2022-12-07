@@ -3,18 +3,20 @@ package aoc.y2022.day7
 import puzzle
 
 fun main() {
-    puzzle("t1") { part1(buildFs(linesFrom("test.txt"))) }
-    puzzle("1") { part1(buildFs(linesFrom("input.txt"))) }
-    puzzle("t2") { part2(buildFs(linesFrom("test.txt"))) }
-    puzzle("2") { part2(buildFs(linesFrom("input.txt"))) }
+    puzzle("t1") { part1(linesFrom("test.txt")) }
+    puzzle("1") { part1(linesFrom("input.txt")) }
+    puzzle("t2") { part2(linesFrom("test.txt")) }
+    puzzle("2") { part2(linesFrom("input.txt")) }
 }
 
-private fun part1(fs: Folder): Long {
-    return fs.flatten().filter { it.size < 100_000 }.sumOf { it.size }
+private fun part1(input: List<String>): Long {
+    return buildFs(input).flatten().filter { it.size < 100_000 }.sumOf { it.size }
 }
 
-private fun part2(fs: Folder): Long {
-    return fs.flatten().sortedBy { it.size }.first { 70_000_000 - fs.size + it.size > 30_000_000 }.size
+private fun part2(input: List<String>): Long {
+    return buildFs(input).let { fs ->
+        fs.flatten().sortedBy { it.size }.first { 70_000_000 - fs.size + it.size > 30_000_000 }.size
+    }
 }
 
 private data class Folder(val name: String, val parent: Folder?, var size: Long = 0) {
