@@ -20,7 +20,7 @@ private fun part2(input: List<String>): Long {
 }
 
 private data class Folder(val name: String, val parent: Folder?, var size: Long = 0) {
-    val items: MutableList<Folder> = mutableListOf()
+    val folders = mutableListOf<Folder>()
 
     fun addFile(size: Long) {
         var f: Folder? = this
@@ -30,7 +30,7 @@ private data class Folder(val name: String, val parent: Folder?, var size: Long 
         }
     }
 
-    fun flatten(root: Folder = this): List<Folder> = root.items.flatMap { flatten(it) } + root
+    fun flatten(root: Folder = this): List<Folder> = root.folders.flatMap { flatten(it) } + root
 }
 
 private fun buildFs(input: List<String>): Folder {
@@ -45,7 +45,7 @@ private fun buildFs(input: List<String>): Folder {
                     current = if (c == "..") {
                         current.parent ?: root
                     } else {
-                        Folder(c, current).also { current.items.add(it) }
+                        Folder(c, current).also { current.folders.add(it) }
                     }
                 }
             } else if (a != "dir") current.addFile(a.toLong())
