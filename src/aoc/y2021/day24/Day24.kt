@@ -1,6 +1,5 @@
 package aoc.y2021.day24
 
-import kotlinx.coroutines.runBlocking
 import readInput
 import kotlin.system.measureTimeMillis
 
@@ -44,8 +43,8 @@ fun calc5(ww: Int, zz: Int = 0, p1: Int = 0, p2: Int = 0, p3: Int = 0) {
     var z = zz / 26 // param
     val x = if ((zz % 26) - 8 == ww) 0 else 1
     val y = 26 + x
-    z = z * y
-    z = z + ((ww + 1) * x)
+    z *= y
+    z += ((ww + 1) * x)
 }
 
 val p1 = intArrayOf( 1,  1,  1,  1, 26,  1, 26, 26, 1, 26, 1, 26, 26, 26)
@@ -73,7 +72,7 @@ fun backwardsAll(i: Int, zz: Int): List<Pair<Int, Int>> {
     return all
 }
 
-fun main(): Unit = runBlocking {
+fun main() {
     fun part1(input: List<String>): Int {
 
         var zz = 0

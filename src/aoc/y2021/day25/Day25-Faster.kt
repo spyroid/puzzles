@@ -1,7 +1,5 @@
 package aoc.y2021.day25
 
-import com.github.ajalt.mordant.rendering.TextColors.*
-import com.github.ajalt.mordant.terminal.Terminal
 import readInput
 import kotlin.system.measureTimeMillis
 
@@ -32,17 +30,15 @@ fun main() {
         return moved
     }
 
-    val term = Terminal()
-    val colors = mapOf('.' to gray, '>' to brightRed, 'v' to brightBlue)
-    fun printArea() {
-        for (y in 0 until height) {
-            for (x in 0 until width) {
-                val c = area[y][x]
-                term.print("${colors[c]?.let { it(c.toString()) }}")
-            }
-            term.println()
-        }
-    }
+//    fun printArea() {
+//        for (y in 0 until height) {
+//            for (x in 0 until width) {
+//                val c = area[y][x]
+//                term.print("${colors[c]?.let { it(c.toString()) }}")
+//            }
+//            term.println()
+//        }
+//    }
 
     var count = 0
     measureTimeMillis {

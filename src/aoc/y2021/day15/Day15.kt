@@ -1,6 +1,5 @@
 package aoc.y2021.day15
 
-import com.github.ajalt.mordant.terminal.Terminal
 import readInput
 import java.util.*
 import kotlin.system.measureTimeMillis
@@ -56,15 +55,13 @@ fun main() {
     val testData = readInput("day15/test")
     val inputData = readInput("day15/input")
 
-    val term = Terminal()
-
     var res1 = part1(testData)
     check(res1 == 40) { "Expected 40 but got $res1" }
 
     var time = measureTimeMillis { res1 = part1(inputData) }
-    term.success("⭐️ Part1: $res1 in $time ms")
+    println("⭐️ Part1: $res1 in $time ms")
 
     time = measureTimeMillis { res1 = part2(inputData) }
-    term.success("⭐️ Part2: $res1 in $time ms")
+    println("⭐️ Part2: $res1 in $time ms")
 }
 
