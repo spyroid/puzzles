@@ -1,5 +1,4 @@
 import java.io.File
-import java.net.URL
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTimedValue
 
@@ -9,11 +8,6 @@ class PuzzleRunner {
     private fun localDir(klass: Any) = File((baseDir + klass.javaClass.packageName).replace(".", File.separatorChar.toString()))
     private fun readLocal(klass: Any, fileName: String) = File(localDir(klass), fileName)
     fun linesFrom(filename: String) = readLocal(local, filename).readLines()
-    fun readLinesFromUrl(url: String): List<String> {
-        URL(url).openStream().use {
-            return it.bufferedReader().lines().toList()
-        }
-    }
 }
 
 @OptIn(ExperimentalTime::class)
@@ -39,4 +33,29 @@ private val items = listOf(
 infix fun IntRange.isFullyOverlaps(other: IntRange): Boolean = first <= other.first && last >= other.last
 infix fun IntRange.isOverlaps(other: IntRange): Boolean = first <= other.last && other.first <= last
 
-fun <E> List<List<E>>.rotate2D(): List<List<E>> = List(this[0].size) { i -> List(this.size) { j -> this[j][i] } }
+typealias Array2d<T> = List<List<T>>
+
+fun <T> Array2d<T>.rotate2D(): Array2d<T> = List(this[0].size) { i -> List(this.size) { j -> this[j][i] } }
+fun <T> Array2d<T>.at(x: Int, y: Int): T? = if (y in indices && x in first().indices) this[y][x] else null
+
+fun <E> cartesian(lists: List<List<E>>): Sequence<List<E>> {
+    return sequence {
+        val counters = Array(lists.size) { 0 }
+        val length = lists.fold(1) { acc, list -> acc * list.size }
+
+        for (i in 0 until length) {
+            val result = lists.mapIndexed { index, list ->
+                list[counters[index]]
+            }
+            yield(result)
+            for (pointer in lists.size - 1 downTo 0) {
+                counters[pointer]++
+                if (counters[pointer] == lists[pointer].size) {
+                    counters[pointer] = 0
+                } else {
+                    break
+                }
+            }
+        }
+    }
+}
