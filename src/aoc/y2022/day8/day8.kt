@@ -15,7 +15,7 @@ private fun part1(input: List<String>): Int {
         t.fold(-1) { h, tree -> if (tree.height > h) tree.height.also { tree.seen += 1 } else h }
     }
 
-    var forest = makeForest(input, 0)
+    val forest = makeForest(input, 0)
     sequenceOf(forest, forest.rotate2D()).forEach {
         it.forEach { trees -> markTrees(trees).also { markTrees(trees.reversed()) } }
     }
@@ -32,7 +32,7 @@ private fun part2(input: List<String>): Int {
         row.forEachIndexed { idx, tree -> tree.seen = tree.seen * scoreOf(tree.height, row.drop(idx + 1)) }
     }
 
-    var forest = makeForest(input, 1)
+    val forest = makeForest(input, 1)
     sequenceOf(forest, forest.rotate2D()).forEach {
         it.forEach { row -> markTrees(row).also { markTrees(row.reversed()) } }
     }
