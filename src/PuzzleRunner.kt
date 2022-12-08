@@ -38,6 +38,12 @@ typealias Array2d<T> = List<List<T>>
 fun <T> Array2d<T>.rotate2D(): Array2d<T> = List(this[0].size) { i -> List(this.size) { j -> this[j][i] } }
 fun <T> Array2d<T>.at(x: Int, y: Int): T? = if (y in indices && x in first().indices) this[y][x] else null
 
+fun <E, F> cartesian(list1: List<E>, list2: List<F>): Sequence<Pair<E, F>> =
+    cartesian(listOf(list1, list2)).map { it[0] as E to it[1] as F }
+
+fun <E, F, G> cartesian(list1: List<E>, list2: List<F>, list3: List<G>): Sequence<Triple<E, F, G>> =
+    cartesian(listOf(list1, list2, list3)).map { Triple(it[0] as E, it[1] as F, it[2] as G) }
+
 fun <E> cartesian(lists: List<List<E>>): Sequence<List<E>> {
     return sequence {
         val counters = Array(lists.size) { 0 }
