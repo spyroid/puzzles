@@ -17,7 +17,7 @@ class PuzzleRunner {
 }
 
 @OptIn(ExperimentalTime::class)
-fun <T> puzzle(title:String = "", code: PuzzleRunner.() -> T): PuzzleRunner {
+fun <T> puzzle(title: String = "", code: PuzzleRunner.() -> T): PuzzleRunner {
     return PuzzleRunner().apply {
         this.local = code
         val paddedTitle = title.padStart(15, ' ') + " "
@@ -39,3 +39,4 @@ private val items = listOf(
 infix fun IntRange.isFullyOverlaps(other: IntRange): Boolean = first <= other.first && last >= other.last
 infix fun IntRange.isOverlaps(other: IntRange): Boolean = first <= other.last && other.first <= last
 
+fun <E> List<List<E>>.rotate2D(): List<List<E>> = List(this[0].size) { i -> List(this.size) { j -> this[j][i] } }
