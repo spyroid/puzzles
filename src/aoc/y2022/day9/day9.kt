@@ -7,6 +7,7 @@ fun main() {
 }
 
 private fun part1(input: List<String>): Int {
+    val a = input.map { s -> s.map { it.digitToInt() } }
     return 0
 }
 

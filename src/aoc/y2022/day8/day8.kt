@@ -12,11 +12,17 @@ fun main() {
 
 private fun part1(input: List<String>): Int {
     fun markTrees(t: List<Tree>) {
-        t.fold(-1) { h, tree -> if (tree.height > h) tree.height.also { tree.box += 1 } else h }
+        t.fold(-1) { h, tree ->
+            if (tree.height > h) tree.height.also { tree.box += 1 } else h
+        }
     }
 
     val forest = makeForest(input, 0)
-    sequenceOf(forest, forest.rotate2D()).forEach { it.forEach { row -> markTrees(row).also { markTrees(row.reversed()) } } }
+    sequenceOf(forest, forest.rotate2D()).forEach {
+        it.forEach { row ->
+            markTrees(row).also { markTrees(row.reversed()) }
+        }
+    }
     return forest.sumOf { row -> row.count { it.box > 0 } }
 }
 
@@ -26,16 +32,22 @@ private fun part2(input: List<String>): Int {
         return if (score == 0) row.size else score
     }
 
-    fun markTrees(row: List<Tree>) = row.forEachIndexed { idx, tree -> tree.box = tree.box * scoreOf(tree.height, row.drop(idx + 1)) }
+    fun markTrees(row: List<Tree>) = row.forEachIndexed { idx, tree ->
+        tree.box = tree.box * scoreOf(tree.height, row.drop(idx + 1))
+    }
 
     val forest = makeForest(input, 1)
-    sequenceOf(forest, forest.rotate2D()).forEach { it.forEach { row -> markTrees(row).also { markTrees(row.reversed()) } } }
+    sequenceOf(forest, forest.rotate2D()).forEach {
+        it.forEach { row ->
+            markTrees(row).also { markTrees(row.reversed()) }
+        }
+    }
     return forest.maxOf { row -> row.maxOf { it.box } }
 }
 
-data class Tree(val height: Int, val x: Int, val y: Int, var box: Int)
+data class Tree(val height: Int, var box: Int)
 
 private fun makeForest(input: List<String>, boxInit: Int): List<List<Tree>> {
-    return List(input.size) { row -> List(input[row].length) { i -> Tree(input[row][i].digitToInt(), row, i, boxInit) } }
+    return input.map { row -> row.map { Tree(it.digitToInt(), boxInit) } }
 }
 
