@@ -3,8 +3,8 @@ package aoc.y2022.day10
 import puzzle
 
 fun main() {
-    puzzle("test 1") { crt(linesFrom("test.txt")) }
-    puzzle("1") { crt(linesFrom("input.txt")) }
+    puzzle { crt(linesFrom("test.txt")) }
+    puzzle { crt(linesFrom("input.txt")) }
 }
 
 private fun crt(input: List<String>): Int {
