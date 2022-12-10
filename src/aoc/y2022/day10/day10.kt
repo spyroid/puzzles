@@ -8,23 +8,13 @@ fun main() {
 }
 
 private fun crt(input: List<String>): Int {
-    var x = 1
     return sequence {
-        input.forEach {
-            it.split(" ").plus("").let { (op, v) ->
-                if (op == "noop") yield(0) else yieldAll(listOf(0, v.toInt()))
-            }
+        input.forEach { s -> yield(0).also { if (s.startsWith("addx")) yield(s.drop(5).toInt()) } }
+    }.foldIndexed(Pair(1, 0)) { i, acc, v ->
+        val strength = if (i + 1 == 20 || (i - 19) % 40 == 0) acc.first * (i + 1) else 0
+        Pair(acc.first + v, acc.second + strength).also {
+            if (i % 40 == 0) println()
+            if (i % 40 + 1 in acc.first..acc.first + 2) print("#") else print(".")
         }
-    }.mapIndexed { i, v ->
-        var cycle = i + 1
-        val strength = if (cycle == 20 || (cycle - 20) % 40 == 0) {
-            x * cycle
-        } else 0
-
-        var pos = i % 40
-        if (pos == 0) println()
-        if (pos + 1 in x..x + 2) print("#") else print(".")
-
-        strength.also { x += v }
-    }.sum().also { println() }
+    }.second.also { println() }
 }
