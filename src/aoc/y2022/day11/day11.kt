@@ -29,12 +29,8 @@ private data class Monkey(var items: ArrayDeque<Long>, val divBy: Long, val thro
 
     fun inspect(modulo: Long = 0): List<Pair<Long, Int>> {
         return items.onEach { inspections += 1 }
-            .map {
-                op.calcWorry(it).let { worry ->
-                    val w = if (modulo == 0L) worry / 3 else worry % modulo
-                    Pair(w, if (w % divBy == 0L) throwTo.first else throwTo.second)
-                }
-            }
+            .map { item -> op.calcWorry(item).let { if (modulo == 0L) it / 3 else it % modulo } }
+            .map { w -> Pair(w, if (w % divBy == 0L) throwTo.first else throwTo.second) }
             .also { items.clear() }
     }
 
