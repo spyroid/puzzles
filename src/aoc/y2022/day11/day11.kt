@@ -31,14 +31,12 @@ private data class Monkey(var items: ArrayDeque<Long>, val divBy: Long, val thro
             .map { w -> Pair(w, if (w % divBy == 0L) throwTo.first else throwTo.second) }
             .also { items.clear() }
     }
-
-    fun receive(v: Long) = items.addLast(v)
 }
 
 private fun monkeys(input: List<String>, count: Int, useModulo: Boolean = false): Long {
     val all = input.chunked(7).map { Monkey.of(it) }
     val modulo = if (useModulo) all.map { it.divBy }.fold(1, Long::times) else 0
 
-    repeat(count) { all.forEach { m -> m.inspect(modulo).onEach { all[it.second].receive(it.first) } } }
+    repeat(count) { all.forEach { m -> m.inspect(modulo).onEach { all[it.second].items.addLast(it.first) } } }
     return all.sortedByDescending { it.inspections }.take(2).let { it[0].inspections * it[1].inspections }
 }
