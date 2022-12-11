@@ -9,11 +9,7 @@ fun main() {
     puzzle("2") { monkeys(linesFrom("input.txt"), 10_000, true) }
 }
 
-private data class Op(val type: String, val op2: Long?) {
-    fun calcWorry(v: Long) = (op2 ?: v).let { v2 -> if (type == "+") v + v2 else v * v2 }
-}
-
-private data class Monkey(var items: ArrayDeque<Long>, val divBy: Long, val throwTo: Pair<Int, Int>, val op: Op) {
+private data class Monkey(var items: ArrayDeque<Long>, val divBy: Long, val throwTo: Pair<Int, Int>, val type: String, val op2: Long?) {
     var inspections = 0L
 
     companion object {
@@ -23,13 +19,15 @@ private data class Monkey(var items: ArrayDeque<Long>, val divBy: Long, val thro
             val divBy = input[3].substringAfter("by ").toLong()
             val r1 = input[4].substringAfterLast(" ").toInt()
             val r2 = input[5].substringAfterLast(" ").toInt()
-            return Monkey(ArrayDeque(si), divBy, Pair(r1, r2), Op(type, if (op2 == "old") null else op2.toLong()))
+            return Monkey(ArrayDeque(si), divBy, Pair(r1, r2), type, if (op2 == "old") null else op2.toLong())
         }
     }
 
+    fun calcWorry(v: Long) = (op2 ?: v).let { v2 -> if (type == "+") v + v2 else v * v2 }
+
     fun inspect(modulo: Long = 0): List<Pair<Long, Int>> {
         return items.onEach { inspections += 1 }
-            .map { item -> op.calcWorry(item).let { if (modulo == 0L) it / 3 else it % modulo } }
+            .map { item -> calcWorry(item).let { if (modulo == 0L) it / 3 else it % modulo } }
             .map { w -> Pair(w, if (w % divBy == 0L) throwTo.first else throwTo.second) }
             .also { items.clear() }
     }
