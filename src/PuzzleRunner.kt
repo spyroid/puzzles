@@ -34,10 +34,38 @@ private val items = listOf(
 infix fun IntRange.isFullyOverlaps(other: IntRange): Boolean = first <= other.first && last >= other.last
 infix fun IntRange.isOverlaps(other: IntRange): Boolean = first <= other.last && other.first <= last
 
-typealias Array2d<T> = List<List<T>>
+typealias Array2d<T> = MutableList<MutableList<T>>
 
-fun <T> Array2d<T>.rotate2D(): Array2d<T> = List(this[0].size) { i -> List(this.size) { j -> this[j][i] } }
+fun <T> Array2d<T>.rotate2D(): Array2d<T> = MutableList(this[0].size) { i -> MutableList(this.size) { j -> this[j][i] } }
 fun <T> Array2d<T>.at(x: Int, y: Int): T? = if (y in indices && x in first().indices) this[y][x] else null
+fun <T> Array2d<T>.pointAt(x: Int, y: Int): Point? = if (y in indices && x in first().indices) Point(x, y) else null
+fun <T> Array2d<T>.around(x: Int, y: Int): List<T> {
+    return listOf(
+        at(x - 1, y),
+        at(x + 1, y),
+        at(x, y + 1),
+        at(x, y - 1)
+    ).mapNotNull { it }
+}
+
+fun <T> Array2d<T>.pointsAround(x: Int, y: Int): List<Point> {
+    return listOf(
+        pointAt(x - 1, y),
+        pointAt(x + 1, y),
+        pointAt(x, y + 1),
+        pointAt(x, y - 1)
+    ).mapNotNull { it }
+}
+
+fun <T> Array2d<T>.pointsOf(body: (x: Int, y: Int, v: T) -> Boolean): List<Point> {
+    val res = mutableListOf<Point>()
+    for (y in this.indices) {
+        for (x in this[y].indices) {
+            if (body(x, y, this[y][x])) res.add(Point(x, y))
+        }
+    }
+    return res
+}
 
 // gift from Matsemann
 fun <E, F> cartesian(list1: List<E>, list2: List<F>): Sequence<Pair<E, F>> =

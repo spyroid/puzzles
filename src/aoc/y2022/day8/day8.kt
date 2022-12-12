@@ -47,7 +47,7 @@ private fun part2(input: List<String>): Int {
 
 data class Tree(val height: Int, var box: Int)
 
-private fun makeForest(input: List<String>, boxInit: Int): List<List<Tree>> {
-    return input.map { row -> row.map { Tree(it.digitToInt(), boxInit) } }
+private fun makeForest(input: List<String>, boxInit: Int): MutableList<MutableList<Tree>> {
+    return input.map { row -> row.map { Tree(it.digitToInt(), boxInit) }.toMutableList() }.toMutableList()
 }
 
