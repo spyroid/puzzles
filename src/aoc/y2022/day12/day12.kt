@@ -8,27 +8,23 @@ import pointsOf
 import puzzle
 
 fun main() {
-    puzzle("1") { part1(linesFrom("test.txt")) }
-    puzzle("1") { part1(linesFrom("input.txt")) }
-    puzzle("2") { part2(linesFrom("test.txt")) }
-    puzzle("2") { part2(linesFrom("input.txt")) }
+    puzzle("1") { part1(linesFrom("test.txt"), true) }
+    puzzle("1") { part1(linesFrom("input.txt"), true) }
+    puzzle("2") { part1(linesFrom("test.txt"), false) }
+    puzzle("2") { part1(linesFrom("input.txt"), false) }
 }
 
-private fun part1(input: List<String>): Int {
+private fun part1(input: List<String>, directionUp: Boolean): Int {
     val map = input.map { row -> row.map { it }.toMutableList() }.toMutableList()
     val start = map.pointsOf { _, _, v -> v == 'S' }.onEach { map[it.y][it.x] = 'a' }.first()
     var goal = map.pointsOf { _, _, v -> v == 'E' }.onEach { map[it.y][it.x] = 'z' }.first()
-    return hill(map, start, goal)
+    return if (directionUp)
+        hill(map, start, goal, true) { p -> p == goal }.count() - 1
+    else
+        hill(map, goal, start, false) { p -> map.at(p)!! == 'a' }.count() - 1
 }
 
-private fun part2(input: List<String>): Int {
-    val map = input.map { row -> row.map { it }.toMutableList() }.toMutableList()
-    var goal = map.pointsOf { _, _, v -> v == 'E' }.onEach { map[it.y][it.x] = 'z' }.first()
-    val all = map.pointsOf { _, _, v -> (v == 'S' || v == 'a') }.onEach { map[it.y][it.x] = 'a' }.filter { it.x == 0 }
-    return all.minOf { hill(map, it, goal) }
-}
-
-private fun hill(map: Array2d<Char>, start: Point, goal: Point): Int {
+private fun hill(map: Array2d<Char>, start: Point, goal: Point, directionUp: Boolean, rule: (Point) -> Boolean): Sequence<Point> {
     val points = mutableMapOf<Point, Point>()
     var seen = mutableSetOf(start)
     val queue = mutableListOf(start)
@@ -36,18 +32,17 @@ private fun hill(map: Array2d<Char>, start: Point, goal: Point): Int {
 
     while (queue.isNotEmpty()) {
         current = queue.removeFirst()
-        if (current == goal) {
+        if (rule(current)) {
             break
         }
-        map.pointsAround(current.x, current.y)
+        map.pointsAround(current)
             .filter { it !in seen }
-            .filter { map.at(it.x, it.y)!! - map.at(current.x, current.y)!! <= 1 }
+            .filter { (if (directionUp) map.at(it)!! - map.at(current)!! else map.at(current)!! - map.at(it)!!) <= 1 }
             .forEach {
                 points[it] = current
                 seen.add(it)
                 queue.add(it)
             }
     }
-
-    return generateSequence(current) { points[it] }.count() - 1
+    return generateSequence(current) { points[it] }
 }

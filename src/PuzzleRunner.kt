@@ -38,6 +38,7 @@ typealias Array2d<T> = MutableList<MutableList<T>>
 
 fun <T> Array2d<T>.rotate2D(): Array2d<T> = MutableList(this[0].size) { i -> MutableList(this.size) { j -> this[j][i] } }
 fun <T> Array2d<T>.at(x: Int, y: Int): T? = if (y in indices && x in first().indices) this[y][x] else null
+fun <T> Array2d<T>.at(p: Point): T? = at(p.x, p.y)
 fun <T> Array2d<T>.pointAt(x: Int, y: Int): Point? = if (y in indices && x in first().indices) Point(x, y) else null
 fun <T> Array2d<T>.around(x: Int, y: Int): List<T> {
     return listOf(
@@ -47,6 +48,8 @@ fun <T> Array2d<T>.around(x: Int, y: Int): List<T> {
         at(x, y - 1)
     ).mapNotNull { it }
 }
+
+fun <T> Array2d<T>.pointsAround(p: Point) = pointsAround(p.x, p.y)
 
 fun <T> Array2d<T>.pointsAround(x: Int, y: Int): List<Point> {
     return listOf(
@@ -66,6 +69,11 @@ fun <T> Array2d<T>.pointsOf(body: (x: Int, y: Int, v: T) -> Boolean): List<Point
     }
     return res
 }
+
+fun <E> Array2d<E>.update(p: Point, value: E) {
+    this[p.y][p.x] = value
+}
+
 
 // gift from Matsemann
 fun <E, F> cartesian(list1: List<E>, list2: List<F>): Sequence<Pair<E, F>> =
