@@ -32,9 +32,8 @@ private fun hill(map: Array2d<Char>, start: Point, goal: Point, directionUp: Boo
 
     while (queue.isNotEmpty()) {
         current = queue.removeFirst()
-        if (rule(current)) {
-            break
-        }
+        if (rule(current)) break
+
         map.pointsAround(current)
             .filter { it !in seen }
             .filter { (if (directionUp) map.at(it)!! - map.at(current)!! else map.at(current)!! - map.at(it)!!) <= 1 }
