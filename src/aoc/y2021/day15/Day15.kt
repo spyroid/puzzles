@@ -1,6 +1,6 @@
 package aoc.y2021.day15
 
-import readInput
+import gears.readInput
 import java.util.*
 import kotlin.system.measureTimeMillis
 

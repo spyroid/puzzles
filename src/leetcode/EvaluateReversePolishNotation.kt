@@ -1,6 +1,6 @@
 package leetcode
 
-import puzzle
+import gears.puzzle
 
 fun main() {
     puzzle { evalRPN(arrayOf("2", "1", "+", "3", "*")) }

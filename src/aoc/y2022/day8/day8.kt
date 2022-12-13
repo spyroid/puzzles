@@ -1,7 +1,7 @@
 package aoc.y2022.day8
 
-import puzzle
-import rotate2D
+import gears.Grid
+import gears.puzzle
 
 fun main() {
     puzzle("t1") { part1(linesFrom("test.txt")) }
@@ -19,11 +19,11 @@ private fun part1(input: List<String>): Int {
 
     val forest = makeForest(input, 0)
     sequenceOf(forest, forest.rotate2D()).forEach {
-        it.forEach { row ->
+        it.data().forEach { row ->
             markTrees(row).also { markTrees(row.reversed()) }
         }
     }
-    return forest.sumOf { row -> row.count { it.box > 0 } }
+    return forest.data().sumOf { row -> row.count { it.box > 0 } }
 }
 
 private fun part2(input: List<String>): Int {
@@ -38,16 +38,16 @@ private fun part2(input: List<String>): Int {
 
     val forest = makeForest(input, 1)
     sequenceOf(forest, forest.rotate2D()).forEach {
-        it.forEach { row ->
+        it.data().forEach { row ->
             markTrees(row).also { markTrees(row.reversed()) }
         }
     }
-    return forest.maxOf { row -> row.maxOf { it.box } }
+    return forest.data().maxOf { row -> row.maxOf { it.box } }
 }
 
 data class Tree(val height: Int, var box: Int)
 
-private fun makeForest(input: List<String>, boxInit: Int): MutableList<MutableList<Tree>> {
-    return input.map { row -> row.map { Tree(it.digitToInt(), boxInit) }.toMutableList() }.toMutableList()
+private fun makeForest(input: List<String>, boxInit: Int): Grid<Tree> {
+    return Grid.of(input) { c -> Tree(c.digitToInt(), boxInit) }
 }
 

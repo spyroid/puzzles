@@ -1,6 +1,6 @@
 package codingame.green_valleys
 
-import readLocal
+import gears.readLocal
 import kotlin.system.measureTimeMillis
 
 typealias XY = Pair<Int, Int>

@@ -1,6 +1,6 @@
 package aoc.y2022.day6
 
-import puzzle
+import gears.puzzle
 
 fun main() {
     puzzle("test 1") { findMarker(linesFrom("test.txt").first(), 4) }

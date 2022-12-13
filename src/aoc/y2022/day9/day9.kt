@@ -1,8 +1,8 @@
 package aoc.y2022.day9
 
-import Direction
-import Point
-import puzzle
+import gears.Direction
+import gears.Point
+import gears.puzzle
 
 fun main() {
     puzzle("t1") { rope(linesFrom("test.txt"), 2) }

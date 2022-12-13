@@ -1,6 +1,6 @@
 package leetcode
 
-import puzzle
+import gears.puzzle
 
 fun main() {
     puzzle { firstMissingPositive(intArrayOf(7, 8, 9, 11, 12)) }

@@ -1,6 +1,6 @@
 package aoc.y2022.day5
 
-import puzzle
+import gears.puzzle
 
 fun main() {
     puzzle { craneMove(linesFrom("test.txt"), testCrates.toMutableList(), 5, true) }

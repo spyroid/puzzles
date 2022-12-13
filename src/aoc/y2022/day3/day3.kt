@@ -1,6 +1,6 @@
 package aoc.y2022.day3
 
-import puzzle
+import gears.puzzle
 
 fun main() {
     puzzle { part1(linesFrom("test.txt")) }

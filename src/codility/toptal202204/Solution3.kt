@@ -1,6 +1,6 @@
 package codility.toptal202204
 
-import puzzle
+import gears.puzzle
 
 fun main() {
     puzzle { (solution2(listOf(5, 3, 6, 2, 5, 5, 2).toIntArray(), 4)) }

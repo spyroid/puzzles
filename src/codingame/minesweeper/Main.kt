@@ -1,6 +1,6 @@
 package codingame.minesweeper
 
-import readLocal
+import gears.readLocal
 import kotlin.system.measureTimeMillis
 
 data class Point(val x: Int, val y: Int, var v: Double?)

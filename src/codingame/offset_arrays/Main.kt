@@ -1,6 +1,6 @@
 package codingame.offset_arrays
 
-import readLocal
+import gears.readLocal
 import kotlin.system.measureTimeMillis
 
 class OffsetArrays(private val input: List<String>) {

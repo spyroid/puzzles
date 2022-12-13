@@ -1,6 +1,6 @@
 package leetcode
 
-import puzzle
+import gears.puzzle
 import java.util.*
 
 fun main() {

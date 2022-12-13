@@ -1,6 +1,6 @@
 package codingame.going_in_circles
 
-import readLocal
+import gears.readLocal
 import kotlin.system.measureTimeMillis
 
 class GoingInCircles(input: List<String>) {

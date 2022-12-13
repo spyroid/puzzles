@@ -1,8 +1,8 @@
 package aoc.y2022.day4
 
-import isFullyOverlaps
-import isOverlaps
-import puzzle
+import gears.isFullyOverlaps
+import gears.isOverlaps
+import gears.puzzle
 
 fun main() {
     puzzle { part1(linesFrom("test.txt")) }

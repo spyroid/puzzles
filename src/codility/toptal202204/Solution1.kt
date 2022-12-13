@@ -1,6 +1,6 @@
 package codility.toptal202204
 
-import puzzle
+import gears.puzzle
 
 fun main() {
     puzzle {

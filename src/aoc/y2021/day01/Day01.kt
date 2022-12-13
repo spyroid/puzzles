@@ -1,6 +1,6 @@
 package aoc.y2021.day01
 
-import readToIntSeq
+import gears.readToIntSeq
 
 fun main() {
 

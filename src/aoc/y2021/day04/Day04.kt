@@ -1,6 +1,6 @@
 package aoc.y2021.day04
 
-import readInput
+import gears.readInput
 
 fun main() {
 

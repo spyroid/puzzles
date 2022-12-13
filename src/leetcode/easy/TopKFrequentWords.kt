@@ -1,6 +1,6 @@
 package leetcode.easy
 
-import puzzle
+import gears.puzzle
 
 fun main() {
     puzzle {

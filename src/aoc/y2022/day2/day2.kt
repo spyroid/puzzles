@@ -1,6 +1,6 @@
 package aoc.y2022.day2
 
-import puzzle
+import gears.puzzle
 
 fun main() {
     puzzle { getScore(linesFrom("day2.test.txt"), strategy1) }

@@ -1,6 +1,6 @@
 package aoc.y2021.day20
 
-import readInput
+import gears.readInput
 import kotlin.system.measureTimeMillis
 
 data class Pixel(val x: Int, val y: Int, var color: Int)

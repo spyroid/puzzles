@@ -1,7 +1,7 @@
 package aoc.y2022.day10
 
-import fullBlock
-import puzzle
+import gears.fullBlock
+import gears.puzzle
 import kotlin.math.abs
 
 fun main() {

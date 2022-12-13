@@ -1,6 +1,6 @@
 package aoc.y2021.day03
 
-import readInput
+import gears.readInput
 
 enum class Type(val order: Int) {
     OXY(1), CO2(-1)

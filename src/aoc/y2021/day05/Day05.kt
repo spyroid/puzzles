@@ -1,6 +1,6 @@
 package aoc.y2021.day05
 
-import readInput
+import gears.readInput
 import java.awt.Point
 import kotlin.math.sign
 

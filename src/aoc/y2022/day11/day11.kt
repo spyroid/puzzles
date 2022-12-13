@@ -1,6 +1,6 @@
 package aoc.y2022.day11
 
-import puzzle
+import gears.puzzle
 
 fun main() {
     puzzle("1") { monkeys(linesFrom("test.txt"), 20) }

@@ -1,6 +1,6 @@
 package aoc.y2021.day07
 
-import readIntsAsSeq
+import gears.readIntsAsSeq
 import kotlin.math.abs
 import kotlin.system.measureTimeMillis
 
