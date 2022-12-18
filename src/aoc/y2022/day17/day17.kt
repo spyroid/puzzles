@@ -31,10 +31,6 @@ val rockVecs = listOf(
     listOf(0, 1, -cols, -cols + 1)
 )
 
-/*
- * after the first run through the input, the state repeats each input cycle.
- * but after the first run, instead of waiting 1 cycle before forwarding, we wait 2 because line.length could be odd.
- */
 private tailrec fun Tetris.simulate(): Long {
     if (rockCount == target) return rows - row + heightToAdd
     if (firstCycleEnd()) save = Save(rockCount, row)
