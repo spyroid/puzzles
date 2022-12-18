@@ -1,11 +1,12 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.8.0-Beta"
+    kotlin("jvm") version "1.8.0-RC"
 }
 
 repositories {
     mavenCentral()
+    maven { url = uri("https://jitpack.io") }
 }
 
 dependencies {
@@ -13,6 +14,7 @@ dependencies {
 //    implementation("com.github.ajalt.mordant:mordant:2.0.0-beta9")
 //    implementation("org.jetbrains.kotlinx:multik-api:0.2.1")
 //    implementation("org.jetbrains.kotlinx:multik-default:0.2.1")
+    implementation("io.arrow-kt:arrow-core:1.0.1")
 }
 
 tasks {
