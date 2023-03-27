@@ -61,8 +61,6 @@ private enum class Direction(val x: Int, val y: Int) {
     LEFT(-1, 0),
     UP_LEFT(-1, 1);
 
-    fun listFrom(): List<Direction> {
-        return values().toMutableList().rotateLeft(ordinal + 1)
-    }
+    fun listFrom(): List<Direction> = values().toMutableList().rotateLeft(ordinal + 1)
 }
 
