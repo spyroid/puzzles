@@ -150,8 +150,12 @@ data class Point(val x: Int, val y: Int) {
 enum class Direction(var x: Int, var y: Int) {
     RIGHT(1, 0),
     DOWN(0, -1),
+    DOWN_RIGHT(1, -1),
+    DOWN_LEFT(-1, -1),
     LEFT(-1, 0),
-    UP(0, 1);
+    UP(0, 1),
+    UP_RIGHT(1, 1),
+    UP_LEFT(-1, 1);
 
     fun turnCw() =
         when (this) {
@@ -159,6 +163,7 @@ enum class Direction(var x: Int, var y: Int) {
             DOWN -> LEFT
             LEFT -> UP
             UP -> RIGHT
+            else -> {}
         }
 
     fun turnCcw() =
@@ -167,6 +172,7 @@ enum class Direction(var x: Int, var y: Int) {
             DOWN -> RIGHT
             LEFT -> DOWN
             UP -> LEFT
+            else -> {}
         }
 
     fun flip() =
@@ -175,6 +181,7 @@ enum class Direction(var x: Int, var y: Int) {
             LEFT -> RIGHT
             UP -> DOWN
             DOWN -> UP
+            else -> {}
         }
 
     fun asPoint() = Point(x, y)
