@@ -5,9 +5,11 @@ import kotlin.math.max
 import kotlin.math.sign
 
 fun main() {
-    val players = mutableListOf(Player(Point(0, 0), Direction.UP), Player(Point(5, 0), Direction.UP))
+    val players = mutableListOf(Player(Point(0, 0), Direction.UP), Player(Point(5, 0), Direction.LEFT))
     val arena = Arena(players, 0)
     arena.play()
+    println(arena.chain)
+    println(arena.steps)
 }
 
 private fun <T> MutableList<T>.rotateLeft(n: Int) = drop(n % size) + take(n % size)
