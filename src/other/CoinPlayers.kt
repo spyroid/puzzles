@@ -15,7 +15,7 @@ fun main() {
         Player(7, Point(-9, -10)),
         Player(8, Point(-9, 0)),
     )
-    Arena(players, 5, Direction.NW).play().also { println("Steps: ${it.steps} Players: ${it.chain}") }
+    Arena(players, 5, Direction.NW).play().also { println(it.chain) }
 
     val players2 = listOf(
         Player(1, Point(-1000000, -1000000)),
@@ -27,7 +27,7 @@ fun main() {
         Player(7, Point(-999999, -1000000)),
         Player(8, Point(-999999, 0)),
     )
-    Arena(players2, 4, Direction.SE).play().also { println("Steps: ${it.steps} Players: ${it.chain}") }
+    Arena(players2, 4, Direction.SE).play().also { println(it.chain) }
 }
 
 private fun <T> MutableList<T>.rotateLeft(n: Int) = drop(n % size) + take(n % size)
@@ -53,16 +53,15 @@ private data class Player(val id: Int, val pos: Point) {
             val p = otherPlayers.map { p -> Pair(chebyshevDistance(pos, p.pos, dir), p) }
                 .filter { it.first != -1 }
                 .minByOrNull { it.first }?.second
-            if (p == null) null else NextPlayer(p, idx + 1, dir)
+            if (p == null) null else NextPlayer(p, dir)
         }.firstOrNull { it != null }
     }
 }
 
-private data class NextPlayer(val player: Player, val steps: Int, val dir: Direction)
+private data class NextPlayer(val player: Player, val dir: Direction)
 
 private data class Arena(val players: List<Player>, val startId: Int, var dir: Direction) {
     val chain = mutableListOf<Player>()
-    var steps = 0
     var all: MutableList<Player> = players.toMutableList()
 
     init {
@@ -74,7 +73,6 @@ private data class Arena(val players: List<Player>, val startId: Int, var dir: D
         while (all.isNotEmpty()) {
             val next = chain.last().findNextPlayer(all, dir)
             if (next != null) chain.add(next.player).also {
-                steps += next.steps
                 dir = next.dir.opposite()
                 all.remove(next.player)
             } else break
