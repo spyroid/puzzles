@@ -1,5 +1,6 @@
 package other
 
+import gears.puzzle
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.sign
@@ -15,7 +16,9 @@ fun main() {
         Player(7, Point(-9, -10)),
         Player(8, Point(-9, 0)),
     )
-    Arena(players, 5, Direction.NW).play().also { println(it.chain) }
+    puzzle("1") {
+        Arena(players, 5, Direction.NW).play()
+    }
 
     val players2 = listOf(
         Player(1, Point(-1000000, -1000000)),
@@ -27,7 +30,11 @@ fun main() {
         Player(7, Point(-999999, -1000000)),
         Player(8, Point(-999999, 0)),
     )
-    Arena(players2, 4, Direction.SE).play().also { println(it.chain) }
+
+    puzzle {
+        Arena(players2, 4, Direction.SE).play()
+    }
+
 }
 
 private fun <T> MutableList<T>.rotateLeft(n: Int) = drop(n % size) + take(n % size)

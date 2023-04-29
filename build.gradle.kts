@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.8.20-RC2"
+    kotlin("jvm") version "1.8.21"
 }
 
 repositories {
@@ -10,8 +10,8 @@ repositories {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
-//    implementation("com.github.ajalt.mordant:mordant:2.0.0-beta9")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.0-RC")
+//    implementation("com.github.ajalt.mordant:mordant:2.0.0-beta13")
 //    implementation("org.jetbrains.kotlinx:multik-api:0.2.1")
 //    implementation("org.jetbrains.kotlinx:multik-default:0.2.1")
 //    implementation("io.arrow-kt:arrow-core:1.1.5")
@@ -28,7 +28,7 @@ tasks {
 
     withType<KotlinCompile> {
         kotlinOptions {
-//            jvmTarget = "19"
+            jvmTarget = "19"
         }
     }
 
@@ -48,7 +48,7 @@ tasks {
 }
 
 java {
-//    sourceCompatibility = JavaVersion.VERSION_19
-//    targetCompatibility = JavaVersion.VERSION_19
+    sourceCompatibility = JavaVersion.VERSION_19
+    targetCompatibility = JavaVersion.VERSION_19
 }
 
