@@ -31,7 +31,7 @@ private fun solution(s: String): Int {
 }
 
 private fun List<Char>.hasAround(idx: Int): Boolean {
-    if (idx < 0 || this[idx] != 'H') return false
+    if (idx < 0 || idx > this.lastIndex || this[idx] != 'H') return false
     if (this.getOrElse(idx - 1) { _ -> '.' } == '*') return true
     return this.getOrElse(idx + 1) { _ -> '.' } == '*'
 }
