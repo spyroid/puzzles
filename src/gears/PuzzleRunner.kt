@@ -1,8 +1,6 @@
 package gears
 
 import java.io.File
-import kotlin.math.*
-import kotlin.time.ExperimentalTime
 import kotlin.time.measureTimedValue
 
 class PuzzleRunner {
@@ -13,7 +11,6 @@ class PuzzleRunner {
     fun linesFrom(filename: String) = readLocal(local, filename).readLines()
 }
 
-@OptIn(ExperimentalTime::class)
 fun <T> puzzle(title: String = "", code: PuzzleRunner.() -> T): PuzzleRunner {
     return PuzzleRunner().apply {
         this.local = code
