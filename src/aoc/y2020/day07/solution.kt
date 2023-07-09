@@ -7,7 +7,6 @@ private fun main() {
     puzzle { part1(linesFrom("input.txt")) }
     puzzle { part2(linesFrom("test.txt")) }
     puzzle { part2(linesFrom("input.txt")) }
-
 }
 
 private fun part1(lines: List<String>): Int {
