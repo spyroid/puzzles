@@ -10,8 +10,16 @@ class Grid<T> {
         this.grid[p.y][p.x] = value
     }
 
+    operator fun set(x: Int, y: Int, value: T) {
+        this.grid[y][x] = value
+    }
+
     operator fun get(p: Point): T {
         return this.grid[p.y][p.x]
+    }
+
+    operator fun get(x: Int, y: Int): T {
+        return this.grid[y][x]
     }
 
     private var grid: MutableList<MutableList<T>>
@@ -34,7 +42,9 @@ class Grid<T> {
 
     fun at(x: Int, y: Int): T? = if (y in this.grid.indices && x in this.grid.first().indices) this.grid[y][x] else null
     fun at(p: Point): T? = at(p.x, p.y)
-    fun pointAt(x: Int, y: Int): Point? = if (y in this.grid.indices && x in this.grid.first().indices) Point(x, y) else null
+    fun pointAt(x: Int, y: Int): Point? =
+        if (y in this.grid.indices && x in this.grid.first().indices) Point(x, y) else null
+
     fun around(x: Int, y: Int): List<T> {
         return listOf(
             at(x - 1, y),
@@ -65,6 +75,45 @@ class Grid<T> {
         return res
     }
 
+    fun around8(x: Int, y: Int): List<T> {
+        return listOf(
+            at(x - 1, y),
+            at(x + 1, y),
+            at(x, y + 1),
+            at(x - 1, y + 1),
+            at(x + 1, y + 1),
+            at(x, y - 1),
+            at(x - 1, y - 1),
+            at(x + 1, y - 1),
+        ).mapNotNull { it }
+    }
+
+    fun clone(transformer: Grid<T>.(x: Int, y: Int, e: T) -> T): Grid<T> {
+        val cloned = Grid(MutableList(data().size) { data()[it].toMutableList() })
+        for (y in data().indices) {
+            for (x in data()[y].indices) {
+                val v = transformer(x, y, this[x, y])
+                cloned[x, y] = v
+            }
+        }
+        return cloned
+    }
+
+    override fun toString(): String {
+        val data = data()
+        return buildString {
+            for (line in data) {
+                line.forEach { this.append(it) }
+                append("\n")
+            }
+        }
+    }
+
+    fun all(): Sequence<T> {
+        return sequence {
+            for (line in data()) line.forEach { yield(it) }
+        }
+    }
 }
 
 data class Point(val x: Int, val y: Int) {
