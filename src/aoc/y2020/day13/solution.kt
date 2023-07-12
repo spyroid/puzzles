@@ -14,8 +14,9 @@ private fun part2(input: List<String>): Long {
     var time = 0L
     var step = all.first()
 
-    all.drop(1).forEachIndexed { i, bus ->
-        while ((time + i + 1) % bus != 0L) time += step
+    for (i in 1..<all.size) {
+        val bus = all[i]
+        while ((time + i) % bus != 0L) time += step
         step *= bus
     }
 
