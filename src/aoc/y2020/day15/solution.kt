@@ -12,14 +12,14 @@ private fun main() {
     puzzle { part1(input, 30000000) }
 }
 
-private fun part1(input: List<Int>, iterations: Long): Int {
+private fun part1(input: List<Int>, limit: Long): Int {
     val history = mutableMapOf<Int, ArrayDeque<Int>>()
     input.forEachIndexed { i, v -> history.getOrPut(v) { ArrayDeque() }.add(i) }
 
     var current = input.last()
     var iter = input.size
 
-    while (iter < iterations) {
+    while (iter < limit) {
         val pr = history[current]
         current = if (pr == null || pr.size < 2) 0 else pr.last() - pr[pr.lastIndex - 1]
         history.getOrPut(current) { ArrayDeque() }.add(iter)
