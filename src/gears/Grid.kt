@@ -204,7 +204,8 @@ enum class Direction(var x: Int, var y: Int) {
     LEFT(-1, 0),
     UP(0, 1),
     UP_RIGHT(1, 1),
-    UP_LEFT(-1, 1);
+    UP_LEFT(-1, 1),
+    NOTHING(0, 0);
 
     fun turnCw() =
         when (this) {
@@ -212,7 +213,7 @@ enum class Direction(var x: Int, var y: Int) {
             DOWN -> LEFT
             LEFT -> UP
             UP -> RIGHT
-            else -> {}
+            else -> NOTHING
         }
 
     fun turnCcw() =
@@ -221,7 +222,7 @@ enum class Direction(var x: Int, var y: Int) {
             DOWN -> RIGHT
             LEFT -> DOWN
             UP -> LEFT
-            else -> {}
+            else -> NOTHING
         }
 
     fun flip() =
@@ -230,7 +231,7 @@ enum class Direction(var x: Int, var y: Int) {
             LEFT -> RIGHT
             UP -> DOWN
             DOWN -> UP
-            else -> {}
+            else -> NOTHING
         }
 
     fun asPoint() = Point(x, y)
@@ -243,7 +244,7 @@ enum class Direction(var x: Int, var y: Int) {
                 'S', 'D' -> DOWN
                 'E', 'R', 'F' -> RIGHT
                 'W', 'L' -> LEFT
-                else -> throw Exception("unknown direction $ch")
+                else -> NOTHING
             }
 
         fun setYDown() {

@@ -99,5 +99,5 @@ private enum class Direction(val x: Int, val y: Int) {
     NW(-1, 1);
 
     fun listFrom(): List<Direction> = values().toMutableList().rotateLeft(ordinal + 1)
-    fun opposite() = values()[(ordinal + 4) % values().size]
+    fun opposite() = entries[(ordinal + 4) % values().size]
 }
