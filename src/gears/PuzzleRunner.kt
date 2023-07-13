@@ -14,12 +14,12 @@ class PuzzleRunner {
 fun <T> puzzle(title: String = "", code: PuzzleRunner.() -> T): PuzzleRunner {
     return PuzzleRunner().apply {
         this.local = code
-        val paddedTitle = title.padStart(15, ' ') + " "
+        val paddedTitle = title.padStart(20, ' ') + " "
         val timed = measureTimedValue { code.invoke(this) }
         if (timed.value is Unit) {
             println("$paddedTitle⌛️ ${timed.duration}")
         } else {
-            val paddedRes = timed.value.toString().padEnd(20)
+            val paddedRes = timed.value.toString().padEnd(30)
             println("$paddedTitle${items.random()} $paddedRes ⏳ ${timed.duration}")
         }
     }
