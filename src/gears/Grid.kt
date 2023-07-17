@@ -5,7 +5,7 @@ import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.sign
 
-class Grid<T> {
+class Grid<T> private constructor(private var grid: MutableList<MutableList<T>>) {
     operator fun set(p: Point, value: T) {
         this.grid[p.y][p.x] = value
     }
@@ -22,7 +22,6 @@ class Grid<T> {
         return this.grid[y][x]
     }
 
-    private var grid: MutableList<MutableList<T>>
     fun data() = grid
 
     companion object {
@@ -31,12 +30,22 @@ class Grid<T> {
         }
     }
 
-    private constructor(grid: MutableList<MutableList<T>>) {
-        this.grid = grid
-    }
-
     fun rotate2D(): Grid<T> {
         val grid = MutableList(this.grid[0].size) { i -> MutableList(this.grid.size) { j -> this.grid[j][i] } }
+        return Grid(grid)
+    }
+
+    fun rowAsNumber(row: Int, mapper: (T) -> Char): Long {
+        return data()[row].map(mapper).joinToString("").toLong(2)
+    }
+
+    fun flipY(): Grid<T> {
+        val grid = MutableList(this.grid.size) { i -> this.grid[i].reversed().toMutableList() }
+        return Grid(grid)
+    }
+
+    fun flipX(): Grid<T> {
+        val grid = this.grid.reversed().toMutableList()
         return Grid(grid)
     }
 
