@@ -2,6 +2,7 @@ package aoc.y2020.day20
 
 import gears.Grid
 import gears.puzzle
+import kotlin.math.sqrt
 
 private fun main() {
     puzzle("test") {
@@ -23,6 +24,38 @@ private fun findAround(tile: Tile, tiles: List<Tile>): List<Tile> {
     return all
 }
 
+private fun findLeftFor(tile: Tile, all: MutableList<Tile>): Tile? {
+    for (t in all) {
+        if (t.id == tile.id) continue
+        if (tile.leftId == t.rightId) return t
+    }
+    return null
+}
+
+private fun findRightFor(tile: Tile, all: MutableList<Tile>): Tile? {
+    for (t in all) {
+        if (t.id == tile.id) continue
+        if (tile.rightId == t.leftId) return t
+    }
+    return null
+}
+
+private fun findTopFor(tile: Tile, all: MutableList<Tile>): Tile? {
+    for (t in all) {
+        if (t.id == tile.id) continue
+        if (tile.topId == t.bottomId) return t
+    }
+    return null
+}
+
+private fun findBottomFor(tile: Tile, all: MutableList<Tile>): Tile? {
+    for (t in all) {
+        if (t.id == tile.id) continue
+        if (tile.bottomId == t.topId) return t
+    }
+    return null
+}
+
 private fun part1(tiles: List<Tile>): Long {
 
     val all = tiles.toMutableList()
@@ -33,13 +66,25 @@ private fun part1(tiles: List<Tile>): Long {
         if (around < 2) tile.flipY()
     }
 
+    val rows = sqrt(all.size.toFloat()).toInt()
 
-    all.forEach {
-        val neighbours = findAround(it, all).count()
-        println("\t${it.topId}")
-        println("${it.leftId}     ${it.rightId}       neighbours = $neighbours")
-        println("\t${it.bottomId}\n")
+    for (tile in all) {
+        val around = findAround(tile, all).count()
+        if (around != 2) continue
+        val right = findRightFor(tile, all)
+        val top = findTopFor(tile, all)
+        val bottom = findBottomFor(tile, all)
+        val left = findLeftFor(tile, all)
+        val t = 1
     }
+
+
+//    all.forEach {
+//        val neighbours = findAround(it, all).count()
+//        println("\t${it.topId}")
+//        println("${it.leftId}     ${it.rightId}       neighbours = $neighbours")
+//        println("\t${it.bottomId}\n")
+//    }
     return 0
 }
 
