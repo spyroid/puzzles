@@ -35,9 +35,14 @@ class Grid<T> private constructor(private var grid: MutableList<MutableList<T>>)
         return Grid(grid)
     }
 
-    fun rowAsNumber(row: Int, mapper: (T) -> Char): Long {
-        return data()[row].map(mapper).joinToString("").toLong(2)
+    fun edgeAsNumber(edge: List<T>, mapper: (T) -> Char): Long {
+        return edge.map(mapper).joinToString("").toLong(2)
     }
+
+    fun topEdge() = data().first()
+    fun bottomEdge() = data().last()
+    fun leftEdge() = MutableList(data().size) { y -> data()[y].first() }
+    fun rightEdge() = MutableList(data().size) { y -> data()[y].last() }
 
     fun flipY(): Grid<T> {
         val grid = MutableList(this.grid.size) { i -> this.grid[i].reversed().toMutableList() }
