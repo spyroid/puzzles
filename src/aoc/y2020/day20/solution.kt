@@ -33,11 +33,7 @@ private fun List<String>.asTiles(): List<Tile> {
             a = 1
             continue
         }
-        if (a == 1) {
-            id = line.drop(5).removeSuffix(":").toInt()
-        } else {
-            lines.add(line)
-        }
+        if (a == 1) id = line.drop(5).dropLast(1).toInt() else lines.add(line)
         a += 1
     }
     tiles.add(Tile(id, Grid.of(lines) { if (it == '.') 0 else 1 }))
