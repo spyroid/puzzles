@@ -10,7 +10,27 @@ private fun main() {
     puzzle {
         part1(linesFrom("input.txt").asTiles())
     }
+//    puzzle("test") {
+//        part2(linesFrom("test.txt").asTiles())
+//    }
 }
+
+//private fun part2(tiles: List<Tile>) {
+//    val cc = tiles.asSequence()
+//        .map { Pair(it, findAround(it, tiles)) }
+//        .filter { it.second.size == 2 }
+//        .onEach { println("${it.first.id} has ${it.second.map { i -> i.id }}") }
+//        .toList().first()
+//
+//    val cn = cc.second
+//    val t = cc.first
+//
+//    val rightHash = t.grid.rightEdge().map { a -> a.digitToChar() }.joinToString("").toInt(2)
+//    val bottomHash = t.grid.bottomEdge().map { a -> a.digitToChar() }.joinToString("").toInt(2)
+//
+//    val i = 1
+//
+//}
 
 private fun part1(tiles: List<Tile>) = tiles.asSequence()
     .map { Pair(it.id, findAround(it, tiles)) }
