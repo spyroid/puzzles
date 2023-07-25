@@ -3,8 +3,10 @@ package aoc.y2015.day5
 import gears.puzzle
 
 private fun main() {
-    puzzle { part1(linesFrom("test.txt")) }
-    puzzle { part1(linesFrom("input.txt")) }
+    puzzle { part11(linesFrom("test.txt")) }
+    puzzle { part11(linesFrom("input.txt")) }
+    puzzle { part2(listOf("qjhvhtzxzqqjkmpb")) }
+    puzzle { part2(linesFrom("input.txt")) }
 }
 
 private fun part1(all: List<String>): Int {
@@ -19,3 +21,13 @@ private fun part1(all: List<String>): Int {
         }
 }
 
+private val v11 = "[aeiou].*[aeiou].*[aeiou]".toRegex()
+private val v12 = "(\\w)\\1".toRegex()
+private val v13 = "ab|cd|pq|xy".toRegex()
+private fun part11(all: List<String>) = all.count {
+    v11.containsMatchIn(it) && v12.containsMatchIn(it) && !v13.containsMatchIn(it)
+}
+
+private val v21 = "(\\w\\w).*\\1".toRegex()
+private val v22 = "(\\w).\\1".toRegex()
+private fun part2(all: List<String>) = all.count { v21.containsMatchIn(it) && v22.containsMatchIn(it) }
