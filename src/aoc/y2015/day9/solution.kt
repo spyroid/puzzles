@@ -9,7 +9,7 @@ private fun main() {
     puzzle { part1(linesFrom("input.txt")).max() }
 }
 
-val r = "(\\w+) to (\\w+) = (\\d+)".toRegex()
+private val r = "(\\w+) to (\\w+) = (\\d+)".toRegex()
 
 private fun part1(lines: List<String>): List<Int> {
     val dist = mutableMapOf<String, Int>()
