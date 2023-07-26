@@ -6,7 +6,9 @@ import kotlin.time.measureTimedValue
 class PuzzleRunner {
     lateinit var local: Any
     private val baseDir = "src."
-    private fun localDir(klass: Any) = File((baseDir + klass.javaClass.packageName).replace(".", File.separatorChar.toString()))
+    private fun localDir(klass: Any) =
+        File((baseDir + klass.javaClass.packageName).replace(".", File.separatorChar.toString()))
+
     private fun readLocal(klass: Any, fileName: String) = File(localDir(klass), fileName)
     fun linesFrom(filename: String) = readLocal(local, filename).readLines()
 }
@@ -60,4 +62,15 @@ fun <E> cartesian(lists: List<List<E>>): Sequence<List<E>> {
             }
         }
     }
+}
+
+fun <T> permutations(list: List<T>): List<List<T>> = when {
+    list.size > 10 -> throw Exception("You probably dont have enough memory to keep all those permutations")
+    list.size <= 1 -> listOf(list)
+    else ->
+        permutations(list.drop(1)).map { perm ->
+            (list.indices).map { i ->
+                perm.subList(0, i) + list.first() + perm.drop(i)
+            }
+        }.flatten()
 }
