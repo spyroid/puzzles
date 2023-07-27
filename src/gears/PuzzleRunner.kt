@@ -4,18 +4,14 @@ import java.io.File
 import kotlin.time.measureTimedValue
 
 class PuzzleRunner {
-    lateinit var local: Any
-    private val baseDir = "src."
-    private fun localDir(klass: Any) =
-        File((baseDir + klass.javaClass.packageName).replace(".", File.separatorChar.toString()))
-
-    private fun readLocal(klass: Any, fileName: String) = File(localDir(klass), fileName)
-    fun linesFrom(filename: String) = readLocal(local, filename).readLines()
+    lateinit var klass: Any
+    private val localDir by lazy { File(("src." + klass.javaClass.packageName).replace(".", File.separatorChar.toString())) }
+    fun linesFrom(filename: String) = File(localDir, filename).readLines()
 }
 
-fun <T> puzzle(title: String = "", code: PuzzleRunner.() -> T): PuzzleRunner {
-    return PuzzleRunner().apply {
-        this.local = code
+fun <T> puzzle(title: String = "", code: PuzzleRunner.() -> T): T {
+    PuzzleRunner().run {
+        this.klass = code
         val paddedTitle = title.padStart(20, ' ') + " "
         val timed = measureTimedValue { code.invoke(this) }
         if (timed.value is Unit) {
@@ -24,6 +20,7 @@ fun <T> puzzle(title: String = "", code: PuzzleRunner.() -> T): PuzzleRunner {
             val paddedRes = timed.value.toString().padEnd(30)
             println("$paddedTitle${items.random()} $paddedRes ⏳ ${timed.duration}")
         }
+        return timed.value
     }
 }
 
