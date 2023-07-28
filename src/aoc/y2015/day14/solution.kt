@@ -22,10 +22,14 @@ private fun part1(lines: List<String>, clock: Int) = lines.maxOf { dist(it, cloc
 
 private fun part2(lines: List<String>, clock: Int): Int {
     val map = mutableMapOf<Int, Int>()
-    for (time in 1..clock) {
-        val all = lines.mapIndexed { i, line -> i to dist(line, time) }.sortedByDescending { it.second }
-        val top = all.takeWhile { all.first().second == it.second }
-        top.forEach { map[it.first] = map.getOrDefault(it.first, 0) + 1 }
+    for (now in 1..clock) {
+        lines.mapIndexed { i, line -> i to dist(line, now) }
+            .sortedByDescending { it.second }
+            .let { all ->
+                all.takeWhile { all.first().second == it.second }
+                    .forEach { map[it.first] = map.getOrDefault(it.first, 0) + 1 }
+            }
+
     }
     return map.values.max()
 }
