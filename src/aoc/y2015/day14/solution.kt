@@ -29,7 +29,6 @@ private fun part2(lines: List<String>, clock: Int): Int {
                 all.takeWhile { all.first().second == it.second }
                     .forEach { map[it.first] = map.getOrDefault(it.first, 0) + 1 }
             }
-
     }
     return map.values.max()
 }
