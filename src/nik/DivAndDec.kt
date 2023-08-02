@@ -8,6 +8,7 @@ fun main() {
     puzzle { solution("1111010101111") }
 }
 
+// Div by 2 is SHR 1
 private fun solution(s: String): Int {
     var steps = 0
     val line = s.dropWhile { it == '0' }.toByteArray()
