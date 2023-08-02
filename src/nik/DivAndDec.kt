@@ -11,10 +11,10 @@ fun main() {
 // Div by 2 is SHR 1
 private fun solution(s: String): Int {
     var steps = 0
-    val line = s.dropWhile { it == '0' }.toByteArray()
+    val line = s.dropWhile { it == '0' }.toCharArray()
     var idx = line.lastIndex
     while (idx >= 0) {
-        if (line[idx] == '1'.code.toByte()) line[idx] = '0'.code.toByte() else idx -= 1
+        if (line[idx] == '1') line[idx] = '0' else idx -= 1
         steps += 1
     }
     return steps - 1
