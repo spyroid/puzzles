@@ -13,7 +13,7 @@ private fun solution(s: String): Int {
     val line = s.dropWhile { it == '0' }.toByteArray()
     var idx = line.lastIndex
     while (idx >= 0) {
-        if (line[idx] == 49.toByte()) line[idx] = 48 else idx -= 1
+        if (line[idx] == '1'.code.toByte()) line[idx] = '0'.code.toByte() else idx -= 1
         steps += 1
     }
     return steps - 1
