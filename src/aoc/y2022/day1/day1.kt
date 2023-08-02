@@ -10,10 +10,7 @@ fun main() {
 
 private fun part1(input: List<String>, count: Int): Int {
     return input.fold(mutableListOf(0)) { acc, s ->
-        when {
-            s.isNotBlank() -> acc[acc.lastIndex] = s.toInt() + acc.last()
-            else -> acc.add(0)
-        }
+        if (s.isNotBlank()) acc[acc.lastIndex] = s.toInt() + acc.last() else acc.add(0)
         acc
     }
         .sortedDescending()
