@@ -7,27 +7,21 @@ import kotlin.math.sign
 
 class Grid<T> private constructor(private var grid: MutableList<MutableList<T>>) {
     operator fun set(p: Point, value: T) {
-        this.grid[p.y][p.x] = value
+        grid[p.y][p.x] = value
     }
 
     operator fun set(x: Int, y: Int, value: T) {
-        this.grid[y][x] = value
+        grid[y][x] = value
     }
 
-    operator fun get(p: Point): T {
-        return this.grid[p.y][p.x]
-    }
+    operator fun get(p: Point) = this.grid[p.y][p.x]
 
-    operator fun get(x: Int, y: Int): T {
-        return this.grid[y][x]
-    }
+    operator fun get(x: Int, y: Int) = this.grid[y][x]
 
     fun data() = grid
 
     companion object {
-        fun <T> of(input: List<String>, mapper: (Char) -> T): Grid<T> {
-            return Grid(input.map { row -> row.map(mapper).toMutableList() }.toMutableList())
-        }
+        fun <T> of(input: List<String>, mapper: (Char) -> T) = Grid(input.map { row -> row.map(mapper).toMutableList() }.toMutableList())
     }
 
     fun rotate2D(): Grid<T> {
@@ -35,10 +29,7 @@ class Grid<T> private constructor(private var grid: MutableList<MutableList<T>>)
         return Grid(grid)
     }
 
-    fun edgeAsNumber(edge: List<T>, mapper: (T) -> Char): Long {
-        return edge.map(mapper).joinToString("").toLong(2)
-    }
-
+    fun edgeAsNumber(edge: List<T>, mapper: (T) -> Char) = edge.map(mapper).joinToString("").toLong(2)
     fun topEdge() = data().first()
     fun bottomEdge() = data().last()
     fun leftEdge() = MutableList(data().size) { y -> data()[y].first() }
@@ -105,29 +96,15 @@ class Grid<T> private constructor(private var grid: MutableList<MutableList<T>>)
     fun clone(transformer: Grid<T>.(x: Int, y: Int, e: T) -> T): Grid<T> {
         val cloned = Grid(MutableList(data().size) { data()[it].toMutableList() })
         for (y in data().indices) {
-            for (x in data()[y].indices) {
-                val v = transformer(x, y, this[x, y])
-                cloned[x, y] = v
-            }
+            for (x in data()[y].indices) cloned[x, y] = transformer(x, y, this[x, y])
         }
         return cloned
     }
 
-    override fun toString(): String {
-        val data = data()
-        return buildString {
-            for (line in data) {
-                line.forEach { this.append(it) }
-                append("\n")
-            }
-        }
-    }
-
-    fun all(): Sequence<T> {
-        return sequence {
-            for (line in data()) line.forEach { yield(it) }
-        }
-    }
+    override fun toString() = buildString { for (line in data()) appendLine(line.joinToString("")) }
+    fun all() = sequence { for (line in data()) line.forEach { yield(it) } }
+    fun maxX() = data().first().lastIndex
+    fun maxY() = data().lastIndex
 }
 
 data class Point(val x: Int, val y: Int) {
