@@ -3,32 +3,33 @@ package aoc.y2015.day19
 import gears.puzzle
 
 private fun main() {
-    puzzle { medicine(linesFrom("input.txt")) }
+    puzzle { medicine(linesFrom("input.txt").asF()) }
 }
 
-private fun medicine(lines: List<String>): Int {
+private fun medicine(input: Pair<Map<String, List<String>>, List<String>>): Int {
+    return buildSet {
+        input.second.onEachIndexed { i, p ->
+            for (v in input.first.getOrDefault(p, listOf())) {
+                input.second.toMutableList().apply { set(i, v) }.joinToString("").also { add(it) }
+            }
+        }
+    }.size
+}
 
-    val map = lines.takeWhile { it.isNotEmpty() }
+private fun List<String>.asF(): Pair<Map<String, List<String>>, List<String>> {
+    val map = this.takeWhile { it.isNotEmpty() }
         .map { it.split(" => ") }
         .map { it.first() to it.last() }
         .groupBy({ it.first }, { it.second })
 
+    var formula = last()
     val parts = buildList {
-        var formula = lines.last()
         while (formula.isNotEmpty()) {
             val k = map.keys.firstOrNull { formula.startsWith(it) } ?: formula.first().toString()
             add(k)
             formula = formula.drop(k.length)
         }
     }
-
-    val molecules = buildSet {
-        parts.onEachIndexed { i, p ->
-            for (v in map.getOrDefault(p, listOf())) {
-                parts.toMutableList().apply { set(i, v) }.joinToString("").also { add(it) }
-            }
-        }
-    }
-
-    return molecules.size
+    return Pair(map, parts)
 }
+
