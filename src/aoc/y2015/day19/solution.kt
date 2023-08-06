@@ -3,7 +3,7 @@ package aoc.y2015.day19
 import gears.puzzle
 
 private fun main() {
-    puzzle { medicine(linesFrom("input.txt").asF()) }
+    puzzle { medicine(linesFrom("input.txt").asPair()) }
 }
 
 private fun medicine(input: Pair<Map<String, List<String>>, List<String>>): Int {
@@ -16,7 +16,7 @@ private fun medicine(input: Pair<Map<String, List<String>>, List<String>>): Int 
     }.size
 }
 
-private fun List<String>.asF(): Pair<Map<String, List<String>>, List<String>> {
+private fun List<String>.asPair(): Pair<Map<String, List<String>>, List<String>> {
     val map = this.takeWhile { it.isNotEmpty() }
         .map { it.split(" => ") }
         .map { it.first() to it.last() }
