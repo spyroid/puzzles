@@ -13,14 +13,13 @@ private fun medicine(lines: List<String>): Int {
         .map { it.first() to it.last() }
         .groupBy({ it.first }, { it.second })
 
-    var formula = lines.last()
-
-    val parts = mutableListOf<String>()
-
-    while (formula.isNotEmpty()) {
-        val k = map.keys.firstOrNull { formula.startsWith(it) } ?: formula.first().toString()
-        parts.add(k)
-        formula = formula.drop(k.length)
+    val parts = buildList {
+        var formula = lines.last()
+        while (formula.isNotEmpty()) {
+            val k = map.keys.firstOrNull { formula.startsWith(it) } ?: formula.first().toString()
+            add(k)
+            formula = formula.drop(k.length)
+        }
     }
 
     val molecules = buildSet {
