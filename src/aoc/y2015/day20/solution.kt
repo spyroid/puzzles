@@ -7,7 +7,7 @@ private fun main() {
     puzzle { infinite(29000000, 11, 50) }
 }
 
-fun infinite(input: Int, visit: Int, maxValue: Int): Int {
+private fun infinite(input: Int, visit: Int, maxValue: Int): Int {
     val house = Array(750_000) { 0 }
     for (i in 1..house.lastIndex) {
         for ((count, j) in (i..house.lastIndex step i).withIndex()) {

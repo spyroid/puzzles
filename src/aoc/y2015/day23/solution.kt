@@ -7,7 +7,7 @@ private fun main() {
     puzzle { turing(linesFrom("input.txt"), 1) }
 }
 
-fun turing(program: List<String>, a: Int = 0): Int? {
+private fun turing(program: List<String>, a: Int = 0): Int? {
     val regs = mutableMapOf<String, Int>().apply { put("a", a) }
     var ip = 0
     while (ip in program.indices) {
