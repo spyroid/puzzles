@@ -107,7 +107,7 @@ class Grid<T> private constructor(private var grid: MutableList<MutableList<T>>)
     fun maxY() = data().lastIndex
 }
 
-data class Point(val x: Int, val y: Int) {
+data class Point(var x: Int, var y: Int) {
     operator fun plus(other: Point) = Point(x + other.x, y + other.y)
     operator fun plus(dir: Direction) = Point(x + dir.x, y + dir.y)
 
