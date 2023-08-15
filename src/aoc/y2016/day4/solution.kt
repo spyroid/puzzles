@@ -24,13 +24,6 @@ private fun obscurity(lines: List<String>): Int {
 
 private fun parse(s: String) = Pair(s.substringBeforeLast("-"), s.substringAfterLast("-").substringBefore("[").toInt())
 
-private fun hash(s: String): String {
-    return s
-        .replace("-", "")
-        .groupingBy { it }
-        .eachCount()
-        .toList()
-        .sortedWith(compareByDescending<Pair<Char, Int>> { it.second }.thenBy { it.first })
-        .map { it.first }
-        .joinToString("")
-}
+private fun hash(s: String) = s.replace("-", "").groupingBy { it }.eachCount().toList()
+    .sortedWith(compareByDescending<Pair<Char, Int>> { it.second }.thenBy { it.first })
+    .map { it.first }.joinToString("")
