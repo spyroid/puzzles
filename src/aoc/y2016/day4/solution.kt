@@ -7,7 +7,7 @@ private fun main() {
     puzzle { obscurity2(linesFrom("input.txt")) }
 }
 
-fun obscurity2(lines: List<String>): Int {
+private fun obscurity2(lines: List<String>): Int {
     return lines.map {
         val s = it.substringBeforeLast("-")
         val id = it.substringAfterLast("-").substringBefore("[").toInt()
