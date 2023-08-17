@@ -22,6 +22,7 @@ class Grid<T> private constructor(private var grid: MutableList<MutableList<T>>)
 
     companion object {
         fun <T> of(input: List<String>, mapper: (Char) -> T) = Grid(input.map { row -> row.map(mapper).toMutableList() }.toMutableList())
+        fun <T> of(cols: Int, rows: Int, v: T) = Grid(Array(rows) { mutableListOf<T>().apply { repeat(cols) { add(v) } } }.toMutableList())
     }
 
     fun rotate2D(): Grid<T> {
@@ -105,6 +106,38 @@ class Grid<T> private constructor(private var grid: MutableList<MutableList<T>>)
     fun all() = sequence { for (line in data()) line.forEach { yield(it) } }
     fun maxX() = data().first().lastIndex
     fun maxY() = data().lastIndex
+
+    fun rotateColDown(col: Int, n: Int) {
+        repeat(n) {
+            val v = at(col, maxY()) ?: throw RuntimeException()
+            for (y in maxY() downTo 1) this[col, y] = this[col, y - 1]
+            this[col, 0] = v
+        }
+    }
+
+    fun rotateColUp(col: Int, n: Int) {
+        repeat(n) {
+            val v = at(col, 0) ?: throw RuntimeException()
+            for (y in 1..maxY()) this[col, y - 1] = this[col, y]
+            this[col, maxY()] = v
+        }
+    }
+
+    fun rotateRowRight(row: Int, n: Int) {
+        repeat(n) {
+            val v = at(maxX(), row) ?: throw RuntimeException()
+            for (x in maxX() downTo 1) this[x, row] = this[x - 1, row]
+            this[0, row] = v
+        }
+    }
+
+    fun rotateRowLeft(row: Int, n: Int) {
+        repeat(n) {
+            val v = at(0, row) ?: throw RuntimeException()
+            for (x in 1..maxX()) this[x - 1, row] = this[x, row]
+            this[maxX(), row] = v
+        }
+    }
 }
 
 data class Point(var x: Int, var y: Int) {
