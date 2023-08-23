@@ -6,41 +6,42 @@ private fun main() {
     puzzle { bots(linesFrom("input.txt")) }
 }
 
-private val re1 = "\\d+".toRegex()
-private val re2 = "(bot|output)".toRegex()
+private fun bots(lines: List<String>): Pair<String, Int> {
+    val bots = mutableMapOf<String, MutableList<Int>>()
+    val outs = mutableMapOf<String, MutableList<Int>>()
+    val connections = mutableMapOf<String, List<Pair<String, String>>>()
+    val pipe = ArrayDeque<String>()
 
-private fun bots(lines: List<String>): Int {
-    val bots = mutableMapOf<Int, MutableList<Int>>()
-    val outs = mutableMapOf<Int, MutableList<Int>>()
-    val pipe = mutableMapOf<Int, List<Pair<String, Int>>>()
+    fun add(bot: String, v: Int) {
+        bots.putIfAbsent(bot, mutableListOf())
+        bots[bot]?.also {
+            it.add(v)
+            if (it.size == 2) pipe.add(bot)
+        }
+    }
+
+    fun send(o: Pair<String, String>, v: Int) {
+        if (o.first == "bot") add(o.second, v) else outs.compute(o.second) { _, l -> (l ?: mutableListOf()).also { it.add(v) } }
+    }
+
     for (line in lines) {
-        if (line.startsWith("value")) {
-            val (v, b) = re1.findAll(line).map { it.groupValues.first() }.toList()
-            bots[b.toInt()] = bots.getOrDefault(b.toInt(), mutableListOf()).also { it.add(v.toInt()) }
-        } else {
-            val (b, v1, v2) = re1.findAll(line).map { it.groupValues.first() }.toList()
-            val (o1, o2) = re2.findAll(line).map { it.groupValues.first() }.toList()
-            pipe[b.toInt()] = listOf(o1 to v1.toInt(), o2 to v2.toInt())
-//            println(pipe[b.toInt()])
-            bots.putIfAbsent(v1.toInt(), mutableListOf())
-            bots.putIfAbsent(v2.toInt(), mutableListOf())
+        line.split(" ").also {
+            if (it[0] == "value") add(it[5], it[1].toInt()) else connections[it[1]] = listOf(it[5] to it[6], it[10] to it[11])
         }
     }
 
-    while (bots.count { it.value.size == 2 } > 0) {
-        for ((k, v) in bots.filter { it.value.size == 2 }) {
-            val vv = v.sorted().also { v.clear() }
-            if (vv[0] == 17 && vv[1] == 61) println(k)
-            pipe[k]?.forEachIndexed { i, p ->
-                if (p.first == "bot") {
-                    bots[p.second] = bots.getOrDefault(p.second, mutableListOf()).also { it.add(vv[i]) }
-                } else {
-                    println(p)
-                    outs[p.second] = outs.getOrDefault(p.second, mutableListOf()).also { it.add(vv[i]) }
-                }
-            }
+    var bot = "0"
+
+    while (pipe.isNotEmpty()) {
+        val b = pipe.removeLast()
+        val (low, high) = bots[b]?.sorted() ?: throw Error()
+        if (low == 17 && high == 61) bot = b
+        connections[b]?.also { (p1, p2) ->
+            send(p1, low)
+            send(p2, high)
         }
     }
+    val mul = outs.filterKeys { it in setOf("0", "1", "2") }.values.map { it.first() }.fold(1) { acc, v -> acc * v }
 
-    return 0
+    return Pair(bot, mul)
 }
