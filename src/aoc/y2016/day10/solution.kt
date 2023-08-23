@@ -21,25 +21,25 @@ private fun bots(lines: List<String>): Int {
             val (b, v1, v2) = re1.findAll(line).map { it.groupValues.first() }.toList()
             val (o1, o2) = re2.findAll(line).map { it.groupValues.first() }.toList()
             pipe[b.toInt()] = listOf(o1 to v1.toInt(), o2 to v2.toInt())
+//            println(pipe[b.toInt()])
+            bots.putIfAbsent(v1.toInt(), mutableListOf())
+            bots.putIfAbsent(v2.toInt(), mutableListOf())
         }
     }
 
-    while (bots.isNotEmpty()) {
-
-        for ((k, v) in bots.entries.toList()) {
-            if (v.size == 2) {
-                val vv = v.sorted().also { bots.remove(k) }
-                if (vv[0] == 17 && vv[1] == 61) println(k)
-                pipe[k]?.forEachIndexed { i, p ->
-                    if (p.first == "bot") {
-                        bots[p.second] = bots.getOrDefault(p.second, mutableListOf()).also { it.add(vv[i]) }
-                    } else {
-                        outs[p.second] = outs.getOrDefault(p.second, mutableListOf()).also { it.add(vv[i]) }
-                    }
+    while (bots.count { it.value.size == 2 } > 0) {
+        for ((k, v) in bots.filter { it.value.size == 2 }) {
+            val vv = v.sorted().also { v.clear() }
+            if (vv[0] == 17 && vv[1] == 61) println(k)
+            pipe[k]?.forEachIndexed { i, p ->
+                if (p.first == "bot") {
+                    bots[p.second] = bots.getOrDefault(p.second, mutableListOf()).also { it.add(vv[i]) }
+                } else {
+                    println(p)
+                    outs[p.second] = outs.getOrDefault(p.second, mutableListOf()).also { it.add(vv[i]) }
                 }
             }
         }
-        val w = 1
     }
 
     return 0
