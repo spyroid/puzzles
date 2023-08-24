@@ -1,36 +1,26 @@
 package aoc.y2021.day08
 
+import gears.puzzle
+
 fun main() {
-
-    fun part1(seq: Sequence<Box>) = seq.map { box -> box.numbers().count { it in listOf(1, 4, 7, 8) } }.sum()
-
-    fun part2(seq: Sequence<Box>) = seq.map { box -> box.asValue() }.sum()
-
-
-//    val testSeq = readDigits(readInput("day08/test"))
-//    val inputSeq = readDigits(readInput("day08/input"))
-//
-//    var res1 = part1(testSeq)
-//    check(res1 == 26) { "Expected 26 but got $res1" }
-//
-//    var time = measureTimeMillis { res1 = part1(inputSeq) }
-//    println("Part1: $res1 in $time ms")
-//
-//    time = measureTimeMillis { res1 = part2(inputSeq) }
-//    println("Part2: $res1 in $time ms")
+    puzzle { part1(linesFrom("input.txt")) }
+    puzzle { part2(linesFrom("input.txt")) }
 }
 
-fun readDigits(list: List<String>): Sequence<Box> {
+private fun part1(seq: List<String>) = readDigits(seq).map { box -> box.numbers().count { it in listOf(1, 4, 7, 8) } }.sum()
+
+private fun part2(seq: List<String>) = readDigits(seq).map { box -> box.asValue() }.sum()
+
+private fun readDigits(list: List<String>): Sequence<Box> {
     return list.map { line ->
-        line
-            .split("|", " ")
+        line.split("|", " ")
             .filter { it.isNotBlank() }
             .map { it.toSet() }
             .let { Box(it.take(10), it.takeLast(4)) }
     }.asSequence()
 }
 
-data class Box(val left: List<Set<Char>>, var right: List<Set<Char>>) {
+private data class Box(val left: List<Set<Char>>, var right: List<Set<Char>>) {
 
     private val mappings = findMappings()
 
