@@ -163,13 +163,16 @@ data class Point(var x: Int, var y: Int) {
     fun withinBounds(bounds: Point) = withinBounds(0, bounds.x, 0, bounds.y)
     fun withinBounds(minX: Int, maxX: Int, minY: Int, maxY: Int) = x in minX..maxX && y in minY..maxY
 
-    fun neighbors() = Direction.values().map { this + it }
-    fun neighbors(bounds: Point) = Direction.values().map { this + it }.filter { it.withinBounds(bounds) }
+    fun neighbors() = Direction.entries.map { this + it }
+    fun neighbors(bounds: Point) = Direction.entries.map { this + it }.filter { it.withinBounds(bounds) }
 
     fun neighbors9() = (-1..1)
         .flatMap { x -> (-1..1).map { y -> Point(x, y) } }
         .filter { it.x != 0 || it.y != 0 }
         .map { this + it }
+
+    fun around8() = Direction.entries.take(8).map { this + it }
+    fun around4() = Direction.entries.take(4).map { this + it }
 
     companion object {
         val zero = Point(0, 0)
@@ -223,10 +226,10 @@ data class Point(var x: Int, var y: Int) {
 enum class Direction(var x: Int, var y: Int) {
     RIGHT(1, 0),
     DOWN(0, -1),
-    DOWN_RIGHT(1, -1),
-    DOWN_LEFT(-1, -1),
     LEFT(-1, 0),
     UP(0, 1),
+    DOWN_RIGHT(1, -1),
+    DOWN_LEFT(-1, -1),
     UP_RIGHT(1, 1),
     UP_LEFT(-1, 1),
     NOTHING(0, 0);
