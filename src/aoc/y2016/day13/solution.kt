@@ -1,7 +1,6 @@
 package aoc.y2016.day13
 
 import gears.Point
-import gears.bitCount1
 import gears.puzzle
 
 private fun main() {
@@ -10,7 +9,7 @@ private fun main() {
 }
 
 private fun maze(part2: Boolean = false): Int {
-    fun isWall(x: Int, y: Int) = (x * x + 3 * x + 2 * x * y + y + y * y + 1364).bitCount1() % 2 == 0
+    fun isWall(x: Int, y: Int) = (x * x + 3 * x + 2 * x * y + y + y * y + 1364).toString(2).count { it == '1' } % 2 == 0
     val pipe = ArrayDeque<Pair<Point, Int>>().apply { add(Point(1, 1) to 0) }
     val seen = mutableSetOf<Point>()
     while (pipe.isNotEmpty()) {

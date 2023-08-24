@@ -14,10 +14,3 @@ fun ByteArray.hasLeadingZeros(n: Int): Boolean {
 }
 
 fun ByteArray.toHex(): String = java.util.HexFormat.of().formatHex(this)
-
-fun Int.bitCount1(): Int {
-    var vv = this
-    var count = 0
-    while (vv != 0) count += (vv and 1).also { vv = vv shr 1 }
-    return count
-}
