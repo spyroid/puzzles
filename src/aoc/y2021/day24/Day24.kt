@@ -1,8 +1,5 @@
 package aoc.y2021.day24
 
-import gears.readInput
-import kotlin.system.measureTimeMillis
-
 // Some thoughts about that
 // https://docs.google.com/spreadsheets/d/1eSizAHZFgb7XiQsDK7oG2U-f8c0M01F-c8K9nf68akg/edit?usp=sharing
 
@@ -102,7 +99,7 @@ fun main() {
     fun part2(input: List<String>) = 0
 
 //    check(part1(gears.readInput("day24/input")) == 1)
-    measureTimeMillis { print("⭐️ Part1: ${part1(readInput("day24/test"))}") }.also { time -> println(" in $time ms") }
+//    measureTimeMillis { print("⭐️ Part1: ${part1(readInput("day24/test"))}") }.also { time -> println(" in $time ms") }
 
 //    check(part2(4, 8) == 1)
 //    measureTimeMillis { print("⭐️ Part2: ${part2(7, 1)}") }.also { time -> println(" in $time ms") }

@@ -1,7 +1,5 @@
 package aoc.y2021.day06
 
-import gears.readInput
-
 fun main() {
 
     fun liveOneDay(map: Map<Int, Long>): Map<Int, Long> {
@@ -33,11 +31,11 @@ fun main() {
             .mapValues { (_, v) -> v.toLong() }
     }
 
-    val testSeq = readInput("day06/test").map { inputToMap(it) }.first()
-    val inputSeq = readInput("day06/input").map { inputToMap(it) }.first()
-
-    val res1 = part1(testSeq, 80)
-    check(res1 == 5934L) { "Expected 5934 but got $res1" }
-    println("Part1: ${part1(inputSeq, 80)}")
-    println("Part2: ${part1(inputSeq, 256)}")
+//    val testSeq = readInput("day06/test").map { inputToMap(it) }.first()
+//    val inputSeq = readInput("day06/input").map { inputToMap(it) }.first()
+//
+//    val res1 = part1(testSeq, 80)
+//    check(res1 == 5934L) { "Expected 5934 but got $res1" }
+//    println("Part1: ${part1(inputSeq, 80)}")
+//    println("Part2: ${part1(inputSeq, 256)}")
 }

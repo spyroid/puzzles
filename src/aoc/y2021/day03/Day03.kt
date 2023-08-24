@@ -1,7 +1,5 @@
 package aoc.y2021.day03
 
-import gears.readInput
-
 enum class Type(val order: Int) {
     OXY(1), CO2(-1)
 }
@@ -36,14 +34,14 @@ fun main() {
         return oxy * co2
     }
 
-    val testSeq = readInput("day03/test")
-    val inputSeq = readInput("day03/input")
-
-    val res1 = part1(testSeq)
-    check(res1 == 198) { "Expected 198 but got $res1" }
-    println("Part1: ${part1(inputSeq)}")
-
-    val res2 = part2(testSeq)
-    check(res2 == 230) { "Expected 900 but got $res2" }
-    println("Part2: ${part2(inputSeq)}")
+//    val testSeq = readInput("day03/test")
+//    val inputSeq = readInput("day03/input")
+//
+//    val res1 = part1(testSeq)
+//    check(res1 == 198) { "Expected 198 but got $res1" }
+//    println("Part1: ${part1(inputSeq)}")
+//
+//    val res2 = part2(testSeq)
+//    check(res2 == 230) { "Expected 900 but got $res2" }
+//    println("Part2: ${part2(inputSeq)}")
 }

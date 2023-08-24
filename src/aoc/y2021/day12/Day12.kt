@@ -1,8 +1,5 @@
 package aoc.y2021.day12
 
-import gears.readInput
-import kotlin.system.measureTimeMillis
-
 fun main() {
 
     fun find1(map: Map<String, List<String>>, el: String, target: String, visited: MutableSet<String>, cPath: MutableList<String>, distinctPaths: MutableSet<List<String>>) {
@@ -86,16 +83,16 @@ fun main() {
     }
 
 
-    val testData = readInput("day12/test")
-    val inputData = readInput("day12/input")
-
-    var res1 = part1(testData)
-    check(res1 == 10) { "Expected 10 but got $res1" }
-
-    var time = measureTimeMillis { res1 = part1(inputData) }
-    println("Part1: $res1 in $time ms")
-
-    time = measureTimeMillis { res1 = part2(inputData) }
-    println("Part2: $res1 in $time ms")
+//    val testData = readInput("day12/test")
+//    val inputData = readInput("day12/input")
+//
+//    var res1 = part1(testData)
+//    check(res1 == 10) { "Expected 10 but got $res1" }
+//
+//    var time = measureTimeMillis { res1 = part1(inputData) }
+//    println("Part1: $res1 in $time ms")
+//
+//    time = measureTimeMillis { res1 = part2(inputData) }
+//    println("Part2: $res1 in $time ms")
 }
 

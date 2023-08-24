@@ -1,8 +1,6 @@
 package aoc.y2021.day19
 
-import gears.readRawInput
 import kotlin.math.abs
-import kotlin.system.measureTimeMillis
 
 class Scanners(input: String) {
 
@@ -95,20 +93,20 @@ fun main() {
             .maxOf { (first, second) -> first distanceTo second }
     }
 
-    val testData = readRawInput("day19/test")
-    val inputData = readRawInput("day19/input")
-
-    var res1 = part1(testData)
-    check(res1 == 79) { "Expected 79 but got $res1" }
-
-    measureTimeMillis { res1 = part1(inputData) }
-        .also { time ->
-            println("⭐️ Part1: $res1 in $time ms")
-        }
-    measureTimeMillis { res1 = part2(inputData) }
-        .also { time ->
-            println("⭐️ Part2: $res1 in $time ms")
-        }
+//    val testData = readRawInput("day19/test")
+//    val inputData = readRawInput("day19/input")
+//
+//    var res1 = part1(testData)
+//    check(res1 == 79) { "Expected 79 but got $res1" }
+//
+//    measureTimeMillis { res1 = part1(inputData) }
+//        .also { time ->
+//            println("⭐️ Part1: $res1 in $time ms")
+//        }
+//    measureTimeMillis { res1 = part2(inputData) }
+//        .also { time ->
+//            println("⭐️ Part2: $res1 in $time ms")
+//        }
 }
 
 

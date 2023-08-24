@@ -1,8 +1,5 @@
 package aoc.y2021.day14
 
-import gears.readInput
-import kotlin.system.measureTimeMillis
-
 fun main() {
 
     class Polymer(input: List<String>) {
@@ -63,16 +60,16 @@ fun main() {
     fun part2(input: List<String>) = Polymer(input).calculate(40)
 
 
-    val testData = readInput("day14/test")
-    val inputData = readInput("day14/input")
-
-    var res1 = part1(testData)
-    check(res1 == 1588L) { "Expected 1588 but got $res1" }
-
-    var time = measureTimeMillis { res1 = part1(inputData) }
-    println("⭐️ Part1: $res1 in $time ms")
-
-    time = measureTimeMillis { res1 = part2(inputData) }
-    println("⭐️ Part2: $res1 in $time ms")
+//    val testData = readInput("day14/test")
+//    val inputData = readInput("day14/input")
+//
+//    var res1 = part1(testData)
+//    check(res1 == 1588L) { "Expected 1588 but got $res1" }
+//
+//    var time = measureTimeMillis { res1 = part1(inputData) }
+//    println("⭐️ Part1: $res1 in $time ms")
+//
+//    time = measureTimeMillis { res1 = part2(inputData) }
+//    println("⭐️ Part2: $res1 in $time ms")
 }
 

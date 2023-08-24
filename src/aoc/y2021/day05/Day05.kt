@@ -1,6 +1,5 @@
 package aoc.y2021.day05
 
-import gears.readInput
 import java.awt.Point
 import kotlin.math.sign
 
@@ -30,16 +29,16 @@ fun main() {
     fun part2(seq: Sequence<Pair<Point, Point>>) = overlaps(seq)
 
 
-    val testSeq = readInput("day05/test").asSequence().map { toPairPoints(it) }
-    val inputSeq = readInput("day05/input").asSequence().map { toPairPoints(it) }
-
-    val res1 = part1(testSeq)
-    check(res1 == 5) { "Expected 5 but got $res1" }
-    println("Part1: ${part1(inputSeq)}")
-
-    val res2 = part2(testSeq)
-    check(res2 == 12) { "Expected 12 but got $res2" }
-    println("Part2: ${part2(inputSeq)}")
+//    val testSeq = readInput("day05/test").asSequence().map { toPairPoints(it) }
+//    val inputSeq = readInput("day05/input").asSequence().map { toPairPoints(it) }
+//
+//    val res1 = part1(testSeq)
+//    check(res1 == 5) { "Expected 5 but got $res1" }
+//    println("Part1: ${part1(inputSeq)}")
+//
+//    val res2 = part2(testSeq)
+//    check(res2 == 12) { "Expected 12 but got $res2" }
+//    println("Part2: ${part2(inputSeq)}")
 }
 
 val regex = "(\\d+),(\\d+) -> (\\d+),(\\d+)".toRegex()

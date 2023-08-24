@@ -1,11 +1,10 @@
 package aoc.y2021.day25
 
-import gears.readInput
 import kotlin.system.measureTimeMillis
 
 fun main() {
 
-    val input = readInput("day25/input")
+    val input = listOf<String>()// readInput("day25/input")
     val height = input.size
     val width = input.first().length
     var area = Array(height) { y -> Array(width) { x -> input[y][x] } }

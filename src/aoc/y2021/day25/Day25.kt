@@ -1,8 +1,5 @@
 package aoc.y2021.day25
 
-import gears.readInput
-import kotlin.system.measureTimeMillis
-
 
 data class Area(val input: List<String>) {
     private val width = input.first().length
@@ -68,7 +65,7 @@ fun part1(input: List<String>): Int {
 }
 
 fun main() {
-    check(part1(readInput("day25/test3")) == 58)
-    measureTimeMillis { print("⭐️ Part1: ${part1(readInput("day25/input"))}") }.also { time -> println(" in $time ms") }
+//    check(part1(readInput("day25/test3")) == 58)
+//    measureTimeMillis { print("⭐️ Part1: ${part1(readInput("day25/input"))}") }.also { time -> println(" in $time ms") }
 }
 

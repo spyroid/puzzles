@@ -1,8 +1,6 @@
 package aoc.y2021.day10
 
-import gears.readInput
 import kotlin.math.absoluteValue
-import kotlin.system.measureTimeMillis
 
 fun main() {
 
@@ -31,23 +29,23 @@ fun main() {
 
 
 
-    val testData = readInput("day10/test")
-    val inputData = readInput("day10/input")
-
-    var res1 = part1(testData)
-    check(res1 == 26397L) { "Expected 26397 but got $res1" }
-
-    var time = measureTimeMillis { res1 = part1(inputData) }
-    println("Part1: $res1 in $time ms")
-
-    res1 = part2(testData)
-    check(res1 == 288957L) { "Expected 288957 but got $res1" }
-
-    time = measureTimeMillis { res1 = part2(inputData) }
-    println("Part2: $res1 in $time ms")
-
-    var res2: Pair<Long, Long>
-    time = measureTimeMillis { res2 = parts12(inputData) }
-    println("Parts 1&2: Corrupted ${res2.first}, Incompleted ${res2.second} in $time ms")
+//    val testData = readInput("day10/test")
+//    val inputData = readInput("day10/input")
+//
+//    var res1 = part1(testData)
+//    check(res1 == 26397L) { "Expected 26397 but got $res1" }
+//
+//    var time = measureTimeMillis { res1 = part1(inputData) }
+//    println("Part1: $res1 in $time ms")
+//
+//    res1 = part2(testData)
+//    check(res1 == 288957L) { "Expected 288957 but got $res1" }
+//
+//    time = measureTimeMillis { res1 = part2(inputData) }
+//    println("Part2: $res1 in $time ms")
+//
+//    var res2: Pair<Long, Long>
+//    time = measureTimeMillis { res2 = parts12(inputData) }
+//    println("Parts 1&2: Corrupted ${res2.first}, Incompleted ${res2.second} in $time ms")
 }
 

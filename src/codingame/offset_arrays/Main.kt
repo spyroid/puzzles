@@ -1,8 +1,5 @@
 package codingame.offset_arrays
 
-import gears.readLocal
-import kotlin.system.measureTimeMillis
-
 class OffsetArrays(private val input: List<String>) {
     fun solve(): String {
         val map = mutableMapOf<String, List<Int>>()
@@ -24,8 +21,8 @@ class OffsetArrays(private val input: List<String>) {
 }
 
 fun main() {
-    measureTimeMillis { print("⭐️ Result: ${OffsetArrays(readLocal(Main(), "input.txt")).solve()}") }
-        .also { time -> println(" in $time ms") }
+//    measureTimeMillis { print("⭐️ Result: ${OffsetArrays(readLocal(Main(), "input.txt")).solve()}") }
+//        .also { time -> println(" in $time ms") }
 }
 
 class Main {}

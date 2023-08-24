@@ -1,8 +1,5 @@
 package codingame.green_valleys
 
-import gears.readLocal
-import kotlin.system.measureTimeMillis
-
 typealias XY = Pair<Int, Int>
 
 class GreenValleys(private val input: List<String>) {
@@ -37,8 +34,8 @@ class GreenValleys(private val input: List<String>) {
 }
 
 fun main() {
-    measureTimeMillis { print("⭐️ Result: ${GreenValleys(readLocal(Main(), "input.txt")).solve()}") }
-        .also { time -> println(" in $time ms") }
+//    measureTimeMillis { print("⭐️ Result: ${GreenValleys(readLocal(Main(), "input.txt")).solve()}") }
+//        .also { time -> println(" in $time ms") }
 }
 
 class Main

@@ -1,8 +1,5 @@
 package codingame.going_in_circles
 
-import gears.readLocal
-import kotlin.system.measureTimeMillis
-
 class GoingInCircles(input: List<String>) {
     private val width = input.first().length
     private val height = input.size
@@ -36,8 +33,8 @@ class GoingInCircles(input: List<String>) {
 }
 
 fun main() {
-    measureTimeMillis { print("⭐️ Result: ${GoingInCircles(readLocal(Main(), "input.txt")).solve()}") }
-        .also { time -> println(" in $time ms") }
+//    measureTimeMillis { print("⭐️ Result: ${GoingInCircles(readLocal(Main(), "input.txt")).solve()}") }
+//        .also { time -> println(" in $time ms") }
 }
 
 class Main {}

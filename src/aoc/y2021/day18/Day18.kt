@@ -1,9 +1,7 @@
 package aoc.y2021.day18
 
-import gears.readInput
 import kotlin.math.ceil
 import kotlin.math.floor
-import kotlin.system.measureTimeMillis
 
 val simplePairRegex = "\\[(-?\\d+),(-?\\d+)]".toRegex()
 
@@ -143,8 +141,8 @@ fun main() {
         return allNodes.map { (it.first + it.second).magnitude() }.maxOf { it }
     }
 
-    val input = readInput("day18/input")
-    measureTimeMillis { print("⭐️ Part1: ${part1(input)}") }.also { time -> println(" in $time ms") }
-    measureTimeMillis { print("⭐️ Part2: ${part2(input)}") }.also { time -> println(" in $time ms") }
+//    val input = readInput("day18/input")
+//    measureTimeMillis { print("⭐️ Part1: ${part1(input)}") }.also { time -> println(" in $time ms") }
+//    measureTimeMillis { print("⭐️ Part2: ${part2(input)}") }.also { time -> println(" in $time ms") }
 }
 

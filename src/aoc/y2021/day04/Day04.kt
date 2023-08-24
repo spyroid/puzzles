@@ -1,7 +1,5 @@
 package aoc.y2021.day04
 
-import gears.readInput
-
 fun main() {
 
     data class Cell(var value: Int = 0, var marked: Boolean = false)
@@ -60,14 +58,14 @@ fun main() {
     }
 
 
-    val testSeq = readInput("day04/test")
-    val inputSeq = readInput("day04/input")
-
-    val res1 = part1(testSeq)
-    check(res1 == 4512) { "Expected 4512 but got $res1" }
-    println("Part1: ${part1(inputSeq)}")
-
-    val res2 = part2(testSeq)
-    check(res2 == 1924) { "Expected 1924 but got $res2" }
-    println("Part2: ${part2(inputSeq)}")
+//    val testSeq = readInput("day04/test")
+//    val inputSeq = readInput("day04/input")
+//
+//    val res1 = part1(testSeq)
+//    check(res1 == 4512) { "Expected 4512 but got $res1" }
+//    println("Part1: ${part1(inputSeq)}")
+//
+//    val res2 = part2(testSeq)
+//    check(res2 == 1924) { "Expected 1924 but got $res2" }
+//    println("Part2: ${part2(inputSeq)}")
 }

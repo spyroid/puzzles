@@ -1,8 +1,5 @@
 package aoc.y2021.day16
 
-import gears.readInput
-import kotlin.system.measureTimeMillis
-
 
 class Decoder(input: String) {
 
@@ -87,17 +84,17 @@ fun main() {
     }
 
 
-    val testData = readInput("day16/test")
-    val inputData = readInput("day16/input")
-
-    var res1 = part1(testData)
-    check(res1 == 31) { "Expected 31 but got $res1" }
-
-    var time = measureTimeMillis { res1 = part1(inputData) }
-    println("⭐️ Part1: $res1 in $time ms")
-
-    var res2: Long
-    time = measureTimeMillis { res2 = part2(inputData) }
-    println("⭐️ Part2: $res2 in $time ms")
+//    val testData = readInput("day16/test")
+//    val inputData = readInput("day16/input")
+//
+//    var res1 = part1(testData)
+//    check(res1 == 31) { "Expected 31 but got $res1" }
+//
+//    var time = measureTimeMillis { res1 = part1(inputData) }
+//    println("⭐️ Part1: $res1 in $time ms")
+//
+//    var res2: Long
+//    time = measureTimeMillis { res2 = part2(inputData) }
+//    println("⭐️ Part2: $res2 in $time ms")
 }
 

@@ -1,8 +1,6 @@
 package aoc.y2021.day15
 
-import gears.readInput
 import java.util.*
-import kotlin.system.measureTimeMillis
 
 
 private fun solve(input: List<List<Int>>): Int {
@@ -52,16 +50,16 @@ fun main() {
     }
 
 
-    val testData = readInput("day15/test")
-    val inputData = readInput("day15/input")
-
-    var res1 = part1(testData)
-    check(res1 == 40) { "Expected 40 but got $res1" }
-
-    var time = measureTimeMillis { res1 = part1(inputData) }
-    println("⭐️ Part1: $res1 in $time ms")
-
-    time = measureTimeMillis { res1 = part2(inputData) }
-    println("⭐️ Part2: $res1 in $time ms")
+//    val testData = readInput("day15/test")
+//    val inputData = readInput("day15/input")
+//
+//    var res1 = part1(testData)
+//    check(res1 == 40) { "Expected 40 but got $res1" }
+//
+//    var time = measureTimeMillis { res1 = part1(inputData) }
+//    println("⭐️ Part1: $res1 in $time ms")
+//
+//    time = measureTimeMillis { res1 = part2(inputData) }
+//    println("⭐️ Part2: $res1 in $time ms")
 }
 

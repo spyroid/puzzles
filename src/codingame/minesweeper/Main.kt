@@ -1,8 +1,5 @@
 package codingame.minesweeper
 
-import gears.readLocal
-import kotlin.system.measureTimeMillis
-
 data class Point(val x: Int, val y: Int, var v: Double?)
 
 fun solve(input: List<String>) {
@@ -47,8 +44,8 @@ fun solve(input: List<String>) {
 }
 
 fun main() {
-    measureTimeMillis { print("⭐️ Result: ${solve(readLocal(Main(), "input.txt"))}") }
-        .also { time -> println(" in $time ms") }
+//    measureTimeMillis { print("⭐️ Result: ${solve(readLocal(Main(), "input.txt"))}") }
+//        .also { time -> println(" in $time ms") }
 }
 
 class Main {}

@@ -1,8 +1,5 @@
 package aoc.y2021.day13
 
-import gears.readInput
-import kotlin.system.measureTimeMillis
-
 fun main() {
 
     data class Point(var x: Int, var y: Int)
@@ -59,21 +56,21 @@ fun main() {
         return paper.toString()
     }
 
-    val testData = readInput("day13/test")
-    val inputData = readInput("day13/input")
-
-    var res1 = part1(testData)
-    check(res1 == 17) { "Expected 17 but got $res1" }
-
-    var time = measureTimeMillis { res1 = part1(inputData) }
-    println("⭐️ Part1: $res1 in $time ms")
-
-    var res2: String
-    time = measureTimeMillis { res2 = part2(inputData) }
-    println("⭐️ Part2: in $time ms\n\n\n\n\n")
-    res2.split("\n").forEach {
-//        val c = term.colors.hsl(Random.nextInt(0, 25) * 10, 1_00, 60)
-        println("\t\t" + it)
-    }.let { println("\n\n") }
+//    val testData = readInput("day13/test")
+//    val inputData = readInput("day13/input")
+//
+//    var res1 = part1(testData)
+//    check(res1 == 17) { "Expected 17 but got $res1" }
+//
+//    var time = measureTimeMillis { res1 = part1(inputData) }
+//    println("⭐️ Part1: $res1 in $time ms")
+//
+//    var res2: String
+//    time = measureTimeMillis { res2 = part2(inputData) }
+//    println("⭐️ Part2: in $time ms\n\n\n\n\n")
+//    res2.split("\n").forEach {
+////        val c = term.colors.hsl(Random.nextInt(0, 25) * 10, 1_00, 60)
+//        println("\t\t" + it)
+//    }.let { println("\n\n") }
 }
 

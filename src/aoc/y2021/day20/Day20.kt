@@ -1,8 +1,5 @@
 package aoc.y2021.day20
 
-import gears.readInput
-import kotlin.system.measureTimeMillis
-
 data class Pixel(val x: Int, val y: Int, var color: Int)
 
 data class Image(val width: Int, val height: Int, val bgColor: Int, val algo: List<Int>, val pixels: List<Pixel>) {
@@ -60,19 +57,19 @@ fun solve(input: List<String>, iterations: Int) = generateSequence(Image.of(inpu
 
 fun main() {
 
-    val testData = readInput("day20/test")
-    val inputData = readInput("day20/input")
-
-    var res1 = solve(testData, 2)
-    check(res1 == 35) { "Expected 35 but got $res1" }
-
-    measureTimeMillis { res1 = solve(inputData, 2) }
-        .also { time ->
-            println("⭐️ Part1: $res1 in $time ms")
-        }
-    measureTimeMillis { res1 = solve(inputData, 50) }
-        .also { time ->
-            println("⭐️ Part2: $res1 in $time ms")
-        }
+//    val testData = readInput("day20/test")
+//    val inputData = readInput("day20/input")
+//
+//    var res1 = solve(testData, 2)
+//    check(res1 == 35) { "Expected 35 but got $res1" }
+//
+//    measureTimeMillis { res1 = solve(inputData, 2) }
+//        .also { time ->
+//            println("⭐️ Part1: $res1 in $time ms")
+//        }
+//    measureTimeMillis { res1 = solve(inputData, 50) }
+//        .also { time ->
+//            println("⭐️ Part2: $res1 in $time ms")
+//        }
 }
 

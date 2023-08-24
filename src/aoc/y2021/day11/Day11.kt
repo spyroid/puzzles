@@ -1,8 +1,5 @@
 package aoc.y2021.day11
 
-import gears.readInput
-import kotlin.system.measureTimeMillis
-
 fun main() {
 
     data class Point(val x: Int, val y: Int, var v: Int) {
@@ -86,16 +83,16 @@ fun main() {
     }
 
 
-    val testData = readInput("day11/test")
-    val inputData = readInput("day11/input")
-
-    var res1 = part1(testData)
-    check(res1 == 1656) { "Expected 1656 but got $res1" }
-
-    var time = measureTimeMillis { res1 = part1(inputData) }
-    println("Part1: $res1 in $time ms") // 1637
-
-    time = measureTimeMillis { res1 = part2(inputData) }
-    println("Part2: $res1 in $time ms") // 242
+//    val testData = readInput("day11/test")
+//    val inputData = readInput("day11/input")
+//
+//    var res1 = part1(testData)
+//    check(res1 == 1656) { "Expected 1656 but got $res1" }
+//
+//    var time = measureTimeMillis { res1 = part1(inputData) }
+//    println("Part1: $res1 in $time ms") // 1637
+//
+//    time = measureTimeMillis { res1 = part2(inputData) }
+//    println("Part2: $res1 in $time ms") // 242
 }
 

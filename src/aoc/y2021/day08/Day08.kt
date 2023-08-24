@@ -1,8 +1,5 @@
 package aoc.y2021.day08
 
-import gears.readInput
-import kotlin.system.measureTimeMillis
-
 fun main() {
 
     fun part1(seq: Sequence<Box>) = seq.map { box -> box.numbers().count { it in listOf(1, 4, 7, 8) } }.sum()
@@ -10,17 +7,17 @@ fun main() {
     fun part2(seq: Sequence<Box>) = seq.map { box -> box.asValue() }.sum()
 
 
-    val testSeq = readDigits(readInput("day08/test"))
-    val inputSeq = readDigits(readInput("day08/input"))
-
-    var res1 = part1(testSeq)
-    check(res1 == 26) { "Expected 26 but got $res1" }
-
-    var time = measureTimeMillis { res1 = part1(inputSeq) }
-    println("Part1: $res1 in $time ms")
-
-    time = measureTimeMillis { res1 = part2(inputSeq) }
-    println("Part2: $res1 in $time ms")
+//    val testSeq = readDigits(readInput("day08/test"))
+//    val inputSeq = readDigits(readInput("day08/input"))
+//
+//    var res1 = part1(testSeq)
+//    check(res1 == 26) { "Expected 26 but got $res1" }
+//
+//    var time = measureTimeMillis { res1 = part1(inputSeq) }
+//    println("Part1: $res1 in $time ms")
+//
+//    time = measureTimeMillis { res1 = part2(inputSeq) }
+//    println("Part2: $res1 in $time ms")
 }
 
 fun readDigits(list: List<String>): Sequence<Box> {
