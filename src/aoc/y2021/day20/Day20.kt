@@ -1,8 +1,15 @@
 package aoc.y2021.day20
 
-data class Pixel(val x: Int, val y: Int, var color: Int)
+import gears.puzzle
 
-data class Image(val width: Int, val height: Int, val bgColor: Int, val algo: List<Int>, val pixels: List<Pixel>) {
+fun main() {
+    puzzle { solve(linesFrom("input.txt"), 2) }
+    puzzle { solve(linesFrom("input.txt"), 50) }
+}
+
+private data class Pixel(val x: Int, val y: Int, var color: Int)
+
+private data class Image(val width: Int, val height: Int, val bgColor: Int, val algo: List<Int>, val pixels: List<Pixel>) {
 
     companion object {
         private fun mapPixel(ch: Char) = if (ch == '#') 1 else 0
@@ -43,33 +50,14 @@ data class Image(val width: Int, val height: Int, val bgColor: Int, val algo: Li
         .toInt(2)
         .let { algo[it] }
 
-    fun enhance() = clone()
-        .also { it.pixels.onEach { p -> p.color = colorAt(p.x - 1, p.y - 1) } }
+    fun enhance() = clone().also { it.pixels.onEach { p -> p.color = colorAt(p.x - 1, p.y - 1) } }
 
     fun litPixels() = pixels.filter { it.color == 1 }
 }
 
-fun solve(input: List<String>, iterations: Int) = generateSequence(Image.of(input)) { it.enhance() }
+private fun solve(input: List<String>, iterations: Int) = generateSequence(Image.of(input)) { it.enhance() }
     .drop(iterations)
     .first()
     .litPixels()
     .count()
-
-fun main() {
-
-//    val testData = readInput("day20/test")
-//    val inputData = readInput("day20/input")
-//
-//    var res1 = solve(testData, 2)
-//    check(res1 == 35) { "Expected 35 but got $res1" }
-//
-//    measureTimeMillis { res1 = solve(inputData, 2) }
-//        .also { time ->
-//            println("⭐️ Part1: $res1 in $time ms")
-//        }
-//    measureTimeMillis { res1 = solve(inputData, 50) }
-//        .also { time ->
-//            println("⭐️ Part2: $res1 in $time ms")
-//        }
-}
 

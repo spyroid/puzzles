@@ -1,20 +1,25 @@
 package aoc.y2021.day21
 
-import kotlin.system.measureTimeMillis
+import gears.puzzle
 
-data class Die(var rolls: Int = 0) {
+fun main() {
+    puzzle { part1(7, 1) }
+    puzzle { part2(7, 1) }
+}
+
+private data class Die(var rolls: Int = 0) {
     private fun roll() = ++rolls % 100
     fun rolls(times: Int) = generateSequence { roll() }.take(times).sum()
 }
 
-data class Player(var space: Int, var score: Int = 0) {
+private data class Player(var space: Int, var score: Int = 0) {
     fun move(steps: Int) {
         space = (space + steps) % 10
         score += space + 1
     }
 }
 
-fun part1(s1: Int, s2: Int): Int {
+private fun part1(s1: Int, s2: Int): Int {
     val die = Die()
     val p1 = Player(s1 - 1)
     val p2 = Player(s2 - 1)
@@ -26,7 +31,7 @@ fun part1(s1: Int, s2: Int): Int {
     }
 }
 
-fun part2(s1: Int, s2: Int): Long {
+private fun part2(s1: Int, s2: Int): Long {
     val allRolls = mapOf(3 to 1L, 4 to 3L, 5 to 6L, 6 to 7L, 7 to 6L, 8 to 3L, 9 to 1L)
 
     fun play(pos: List<Int>, scores: List<Int>, turn: Int): Pair<Long, Long> {
@@ -48,13 +53,5 @@ fun part2(s1: Int, s2: Int): Long {
 
     val result = play(listOf(s1 - 1, s2 - 1), listOf(0, 0), 0)
     return maxOf(result.first, result.second)
-}
-
-fun main() {
-    check(part1(4, 8) == 739785)
-    measureTimeMillis { print("⭐️ Part1: ${part1(7, 1)}") }.also { time -> println(" in $time ms") }
-
-    check(part2(4, 8) == 444356092776315)
-    measureTimeMillis { print("⭐️ Part2: ${part2(7, 1)}") }.also { time -> println(" in $time ms") }
 }
 

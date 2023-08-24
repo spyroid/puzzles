@@ -1,7 +1,12 @@
 package aoc.y2021.day25
 
+import gears.puzzle
 
-data class Area(val input: List<String>) {
+fun main() {
+    puzzle { part1(linesFrom("input.txt")) }
+}
+
+private data class Area(val input: List<String>) {
     private val width = input.first().length
     private val height = input.size
 
@@ -59,13 +64,7 @@ data class Area(val input: List<String>) {
     }
 }
 
-fun part1(input: List<String>): Int {
+private fun part1(input: List<String>): Int {
     val area = Area(input)
     return generateSequence(2) { it + 1 }.takeWhile { area.step() != 0 }.last()
 }
-
-fun main() {
-//    check(part1(readInput("day25/test3")) == 58)
-//    measureTimeMillis { print("⭐️ Part1: ${part1(readInput("day25/input"))}") }.also { time -> println(" in $time ms") }
-}
-
