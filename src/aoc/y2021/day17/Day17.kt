@@ -1,10 +1,14 @@
 package aoc.y2021.day17
 
+import gears.puzzle
 import kotlin.math.absoluteValue
-import kotlin.system.measureTimeMillis
 
+fun main() {
+    puzzle { Simulation(48, 70, -189, -148).find().first }
+    puzzle { Simulation(48, 70, -189, -148).find().second }
+}
 
-class Simulation(val x1: Int, val x2: Int, val y1: Int, val y2: Int) {
+private class Simulation(val x1: Int, val x2: Int, val y1: Int, val y2: Int) {
 
     data class Bullet(var dx: Int, var dy: Int, var x: Int = 0, var y: Int = 0) {
         var maxY = y
@@ -42,18 +46,3 @@ class Simulation(val x1: Int, val x2: Int, val y1: Int, val y2: Int) {
         return Pair(maxY, count)
     }
 }
-
-
-fun main() {
-    var res = Simulation(20, 30, -10, -5).find()
-    check(res.first == 45) { "Expected 45 but got ${res.first}" }
-    check(res.second == 112) { "Expected 112 but got ${res.second}" }
-
-    measureTimeMillis {
-        res = Simulation(48, 70, -189, -148).find()
-    }.also { time ->
-        println("⭐️ Part1: ${res.first} in $time ms")
-        println("⭐️ Part2: ${res.second} in $time ms")
-    }
-}
-

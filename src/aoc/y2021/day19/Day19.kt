@@ -1,8 +1,21 @@
 package aoc.y2021.day19
 
+import gears.puzzle
 import kotlin.math.abs
 
-class Scanners(input: String) {
+fun main() {
+    puzzle { part1(allFrom("input.txt")) }
+    puzzle { part2(allFrom("input.txt")) }
+}
+
+private fun part1(input: String) = Scanners(input).assembleMap().beacons.size
+
+private fun part2(input: String) = Scanners(input).assembleMap().scannersPositions.let { positions ->
+    positions.flatMapIndexed { index, first -> positions.drop(index + 1).map { second -> first to second } }
+        .maxOf { (first, second) -> first distanceTo second }
+}
+
+private class Scanners(input: String) {
 
     private val scanners = input
         .split("\n\n")
@@ -83,30 +96,3 @@ class Scanners(input: String) {
         }
     }
 }
-
-fun main() {
-
-    fun part1(input: String) = Scanners(input).assembleMap().beacons.size
-
-    fun part2(input: String) = Scanners(input).assembleMap().scannersPositions.let { positions ->
-        positions.flatMapIndexed { index, first -> positions.drop(index + 1).map { second -> first to second } }
-            .maxOf { (first, second) -> first distanceTo second }
-    }
-
-//    val testData = readRawInput("day19/test")
-//    val inputData = readRawInput("day19/input")
-//
-//    var res1 = part1(testData)
-//    check(res1 == 79) { "Expected 79 but got $res1" }
-//
-//    measureTimeMillis { res1 = part1(inputData) }
-//        .also { time ->
-//            println("⭐️ Part1: $res1 in $time ms")
-//        }
-//    measureTimeMillis { res1 = part2(inputData) }
-//        .also { time ->
-//            println("⭐️ Part2: $res1 in $time ms")
-//        }
-}
-
-

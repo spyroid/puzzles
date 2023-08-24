@@ -1,7 +1,22 @@
 package aoc.y2021.day15
 
+import gears.puzzle
 import java.util.*
 
+fun main() {
+    puzzle { part1(linesFrom("input.txt")) }
+    puzzle { part2(linesFrom("input.txt")) }
+}
+
+fun part1(input: List<String>): Int {
+    val data = input.map { line -> line.map { it.toString().toInt() } }
+    return solve(data)
+}
+
+fun part2(input: List<String>): Int {
+    val data = input.map { line -> line.map { it.toString().toInt() } }
+    return solve(expandInput(data))
+}
 
 private fun solve(input: List<List<Int>>): Int {
     val start = Point(0, 0)
@@ -36,30 +51,3 @@ private fun expandInput(input: List<List<Int>>): List<List<Int>> {
     val rows = input.map { generateSequence(it) { row -> row.map(valueMapper) }.take(5).toList().flatten() }
     return generateSequence(rows) { chunk -> chunk.map { row -> row.map(valueMapper) } }.take(5).toList().flatten()
 }
-
-fun main() {
-
-    fun part1(input: List<String>): Int {
-        val data = input.map { line -> line.map { it.toString().toInt() } }
-        return solve(data)
-    }
-
-    fun part2(input: List<String>): Int {
-        val data = input.map { line -> line.map { it.toString().toInt() } }
-        return solve(expandInput(data))
-    }
-
-
-//    val testData = readInput("day15/test")
-//    val inputData = readInput("day15/input")
-//
-//    var res1 = part1(testData)
-//    check(res1 == 40) { "Expected 40 but got $res1" }
-//
-//    var time = measureTimeMillis { res1 = part1(inputData) }
-//    println("⭐️ Part1: $res1 in $time ms")
-//
-//    time = measureTimeMillis { res1 = part2(inputData) }
-//    println("⭐️ Part2: $res1 in $time ms")
-}
-

@@ -1,7 +1,21 @@
 package aoc.y2021.day16
 
+import gears.puzzle
 
-class Decoder(input: String) {
+fun main() {
+    puzzle { part1(linesFrom("input.txt")) }
+    puzzle { part2(linesFrom("input.txt")) }
+}
+
+private fun part1(input: List<String>): Int {
+    return Decoder(input.first()).root.getAllVersions().sum()
+}
+
+private fun part2(input: List<String>): Long {
+    return Decoder(input.first()).root.value()
+}
+
+private class Decoder(input: String) {
 
     data class Packet(val version: Int, val type: Int) {
         val packets = mutableListOf<Packet>()
@@ -71,30 +85,5 @@ class Decoder(input: String) {
         }
         return Pair(packet, local)
     }
-}
-
-fun main() {
-
-    fun part1(input: List<String>): Int {
-        return Decoder(input.first()).root.getAllVersions().sum()
-    }
-
-    fun part2(input: List<String>): Long {
-        return Decoder(input.first()).root.value()
-    }
-
-
-//    val testData = readInput("day16/test")
-//    val inputData = readInput("day16/input")
-//
-//    var res1 = part1(testData)
-//    check(res1 == 31) { "Expected 31 but got $res1" }
-//
-//    var time = measureTimeMillis { res1 = part1(inputData) }
-//    println("⭐️ Part1: $res1 in $time ms")
-//
-//    var res2: Long
-//    time = measureTimeMillis { res2 = part2(inputData) }
-//    println("⭐️ Part2: $res2 in $time ms")
 }
 
