@@ -14,5 +14,3 @@ private fun jo11(input: Int) = input.toString(2).let { it.drop(1) + it[0] }.toIn
 private fun jo12(input: Int): Int = (1..input).fold(Pair(0, 1)) { v, i ->
     if (i.toDouble() == 2.0.pow(v.first)) Pair(v.first + 1, 1) else Pair(v.first, v.second + 2)
 }.second
-
-data class Node(val id: Int, var v: Int)

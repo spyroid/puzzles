@@ -1,8 +1,8 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.9.10"
-    id("com.github.ben-manes.versions") version "0.47.0"
+    kotlin("jvm") version "1.9.20-Beta"
+    id("com.github.ben-manes.versions") version "0.48.0"
 }
 
 repositories {

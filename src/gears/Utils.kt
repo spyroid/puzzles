@@ -15,8 +15,9 @@ fun ByteArray.hasLeadingZeros(n: Int): Boolean {
 
 fun ByteArray.toHex(): String = java.util.HexFormat.of().formatHex(this)
 
-infix fun IntRange.isFullyOverlaps(other: IntRange): Boolean = first <= other.first && last >= other.last
-infix fun IntRange.isOverlaps(other: IntRange): Boolean = first <= other.last && other.first <= last
+infix fun IntRange.isFullyOverlaps(other: IntRange) = first <= other.first && last >= other.last
+infix fun IntRange.isOverlaps(other: IntRange) = first <= other.last && other.first <= last
+infix fun LongRange.isOverlaps(other: LongRange) = first <= other.last && other.first <= last
 
 // gift from Matsemann
 fun <E, F> cartesian(list1: List<E>, list2: List<F>): Sequence<Pair<E, F>> =
