@@ -8,11 +8,12 @@ private fun main() {
 }
 
 private fun captcha(items: List<Int>): Int {
-    return items.zipWithNext { a, b -> if (a - b == 0) a else 0 }
-        .sum().let { if (items.first() - items.last() == 0) it + items.first() else it }
+    return items
+        .zipWithNext { a, b -> if (a - b == 0) a else 0 }
+        .sum()
+        .let { if (items.first() == items.last()) it + items.first() else it }
 }
 
-private fun captcha2(items: List<Int>): Int {
-    return (0..items.lastIndex / 2)
-        .sumOf { i -> if (items[i] - items[i + items.size / 2] == 0) items[i] else 0 } * 2
-}
+private fun captcha2(items: List<Int>) =
+    (0..items.lastIndex / 2)
+        .sumOf { i -> if (items[i] == items[i + items.size / 2]) items[i] else 0 } * 2
