@@ -6,12 +6,22 @@ private fun main() {
     puzzle { wall(linesFrom("input.txt")) }
 }
 
-private fun wall(lines: List<String>): Long {
-    val all = lines.map { s -> s.split('-').map { it.toLong() }.let { it[0]..it[1] } }.sortedBy { it.first }
+private fun wall(lines: List<String>): Pair<Long, Long> {
+    var (a, b) = 0L to 0L
+    val ranges = mutableListOf<LongRange>()
+    lines.map { s -> s.split('-').map { it.toLong() }.let { it[0] to it[1] } }
+        .sortedBy { it.first }
+        .forEach { range ->
+            if (range.first > b + 1) {
+                ranges.add(a..b)
+                a = range.first
+                b = range.second
+            } else {
+                b = maxOf(b, range.second)
+            }
+        }
+    ranges.add(a..b)
 
-    var lowest = 0L
-    for (r in all) {
-        if (r.first <= lowest + 1) lowest = maxOf(lowest, r.last) else break
-    }
-    return lowest + 1
+    val allowed = ranges.fold(4294967296) { acc, range -> acc - (range.last - range.first + 1) }
+    return (ranges.first().last + 1) to allowed
 }
