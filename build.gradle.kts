@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     kotlin("jvm") version "1.9.20-Beta"
     id("com.github.ben-manes.versions") version "0.48.0"
@@ -19,37 +17,9 @@ dependencies {
 }
 
 tasks {
-    withType<Test>().all {
-        allJvmArgs = listOf("--enable-preview")
-        testLogging.showStandardStreams = true
-        testLogging.showExceptions = true
-        useJUnitPlatform {
-        }
-    }
-
-    withType<KotlinCompile> {
-        kotlinOptions {
-            jvmTarget = "19"
-        }
-    }
-
-    withType<JavaExec>().all {
-        allJvmArgs = listOf("--enable-preview")
-    }
-
-    withType(JavaCompile::class.java).all {
-        options.compilerArgs.addAll(listOf("--enable-preview", "-Xlint:preview"))
-    }
-
     sourceSets {
         main {
             java.srcDirs("src")
         }
     }
 }
-
-java {
-    sourceCompatibility = JavaVersion.VERSION_19
-    targetCompatibility = JavaVersion.VERSION_19
-}
-
