@@ -7,20 +7,11 @@ private fun main() {
 }
 
 private fun wall(lines: List<String>): Long {
-    val all = lines
-        .map { s -> s.split('-').map { it.toLong() }.let { it[0]..it[1] } }
-        .sortedBy { it.first }
+    val all = lines.map { s -> s.split('-').map { it.toLong() }.let { it[0]..it[1] } }.sortedBy { it.first }
 
     var lowest = 0L
-
     for (r in all) {
-        if (r.first > lowest + 1) {
-            break
-        } else {
-            lowest = maxOf(lowest, r.last)
-        }
+        if (r.first <= lowest + 1) lowest = maxOf(lowest, r.last) else break
     }
     return lowest + 1
 }
-
-
