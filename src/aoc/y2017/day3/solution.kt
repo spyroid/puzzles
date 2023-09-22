@@ -14,10 +14,8 @@ fun spiral11(input: Int) {
 }
 
 private fun spiral(input: Int): Int {
-    val side = generateSequence(1) { it + 2 }.first { input < it * it }
-    val level = (side - 1) / 2
-    var a = side * side
-    while (a > input) a -= side - 1
+    val (side, level) = generateSequence(1) { it + 2 }.first { input < it * it }.let { it to (it - 1) / 2 }
+    val a = generateSequence(side * side) { it - side + 1 }.takeWhile { it + side - 1 > input }.last()
     val offset = input - a - (side / 2)
     return offset.absoluteValue + level
 }
