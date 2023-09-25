@@ -58,3 +58,9 @@ fun <T> permutations(list: List<T>): List<List<T>> = when {
             }
         }.flatten()
 }
+
+fun <T> MutableList<T>.setCircular(i: Int, v: T) {
+    this[i % size] = v
+}
+
+fun <T> MutableList<T>.getCircular(i: Int) = this[i % size]
