@@ -11,7 +11,7 @@ private fun circus(input: List<String>, part2: Boolean = false): String {
     val all = input.map { line ->
         val (name, a) = line.split(" (")
         val (age, b) = a.split(")")
-        val others = if (b.contains("->")) b.split(" -> ").let { it.last().split(", ") } else listOf()
+        val others = if (b.contains("->")) b.split(" -> ").last().split(", ") else listOf()
         Triple(name, age, others.toSet())
     }
 
