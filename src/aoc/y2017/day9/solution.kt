@@ -11,6 +11,6 @@ private fun stream(input: String): Any {
     var s = input.replace("!\\S".toRegex(), "")
     while (s.contains('<')) s = s.removeRange(s.indexOf('<'), s.indexOf('>') + 1).also { garbage += s.length - it.length - 2 }
     var stack = 0
-    var sum = s.filter { it != ',' }.sumOf { c -> if (c == '{') stack++.let { 0 } else stack-- }
+    val sum = s.filter { it != ',' }.sumOf { c -> if (c == '{') stack++.let { 0 } else stack-- }
     return sum to garbage
 }
