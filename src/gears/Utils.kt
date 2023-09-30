@@ -19,7 +19,6 @@ infix fun IntRange.isFullyOverlaps(other: IntRange) = first <= other.first && la
 infix fun IntRange.isOverlaps(other: IntRange) = first <= other.last && other.first <= last
 infix fun LongRange.isOverlaps(other: LongRange) = first <= other.last && other.first <= last
 
-// gift from Matsemann
 fun <E, F> cartesian(list1: List<E>, list2: List<F>): Sequence<Pair<E, F>> =
     cartesian(listOf(list1, list2)).map { it[0] as E to it[1] as F }
 
@@ -64,3 +63,11 @@ fun <T> MutableList<T>.setCircular(i: Int, v: T) {
 }
 
 fun <T> MutableList<T>.getCircular(i: Int) = this[i % size]
+
+fun <T> MutableList<T>.reverseSubList(a: Int, b: Int) {
+    for (j in 0..((b - a) / 2)) {
+        val x = getCircular(a + j)
+        setCircular(a + j, getCircular(b - j))
+        setCircular(b - j, x)
+    }
+}

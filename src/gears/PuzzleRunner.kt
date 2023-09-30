@@ -21,7 +21,7 @@ fun <T> puzzle(title: String = "", code: PuzzleRunner.() -> T): T {
         if (timed.value !is Unit) {
             paddedRes = timed.value.toString()
         }
-        println("$paddedTitle${items.random()} ${paddedRes.padEnd(30)} ⏳ ${timed.duration}")
+        println("$paddedTitle${items.random()} ${paddedRes.padEnd(40)} ⏳ ${timed.duration}")
         return timed.value
     }
 }
