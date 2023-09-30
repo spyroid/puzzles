@@ -58,16 +58,16 @@ fun <T> permutations(list: List<T>): List<List<T>> = when {
         }.flatten()
 }
 
-fun <T> MutableList<T>.setCircular(i: Int, v: T) {
+fun <T> MutableList<T>.safeSet(i: Int, v: T) {
     this[i % size] = v
 }
 
-fun <T> MutableList<T>.getCircular(i: Int) = this[i % size]
+fun <T> MutableList<T>.safeGet(i: Int) = this[i % size]
 
-fun <T> MutableList<T>.reverseSubList(a: Int, b: Int) {
-    for (j in 0..((b - a) / 2)) {
-        val x = getCircular(a + j)
-        setCircular(a + j, getCircular(b - j))
-        setCircular(b - j, x)
+fun <T> MutableList<T>.reverseSubList(start: Int, end: Int) {
+    for (j in 0..((end - start) / 2)) {
+        val x = safeGet(start + j)
+        safeSet(start + j, safeGet(end - j))
+        safeSet(end - j, x)
     }
 }

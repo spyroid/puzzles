@@ -1,8 +1,8 @@
 package aoc.y2017.day6
 
-import gears.getCircular
+import gears.safeGet
 import gears.puzzle
-import gears.setCircular
+import gears.safeSet
 
 private fun main() {
     puzzle { malloc(linesFrom("input.txt").first().split("\\s+".toRegex()).map { it.toInt() }) }
@@ -15,8 +15,8 @@ private fun malloc(input: List<Int>, part2: Boolean = false): Pair<Int, Int> {
     while (true) {
         val max = mem.max()
         var idx = mem.indexOf(max)
-        mem.setCircular(idx, 0)
-        repeat(max) { mem.setCircular(++idx, mem.getCircular(idx) + 1) }
+        mem.safeSet(idx, 0)
+        repeat(max) { mem.safeSet(++idx, mem.safeGet(idx) + 1) }
 
         map.computeIfAbsent(mem.hashCode()) { mutableListOf() }.run {
             add(steps++)
