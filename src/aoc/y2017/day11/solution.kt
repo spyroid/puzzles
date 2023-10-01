@@ -8,24 +8,21 @@ private fun main() {
 }
 
 private fun hexed(input: List<String>): Any {
-    var p = Cube(0, 0, 0)
+    var (s, q, r) = Triple(0, 0, 0)
     var max = 0
 
-    input.forEach {
-        p = when (it) {
-            "n" -> Cube(p.s + 1, p.q, p.r - 1)
-            "s" -> Cube(p.s - 1, p.q, p.r + 1)
-            "ne" -> Cube(p.s, p.q + 1, p.r - 1)
-            "sw" -> Cube(p.s, p.q - 1, p.r + 1)
-            "nw" -> Cube(p.s + 1, p.q - 1, p.r)
-            "se" -> Cube(p.s - 1, p.q + 1, p.r)
-            else -> Cube(0, 0, 0)
-        }
-        max = maxOf(max, p.dist())
-    }
-    return p.dist() to max
-}
-
-private data class Cube(val s: Int, val q: Int, val r: Int) {
     fun dist() = (abs(s) + abs(q) + abs(r)) / 2
+
+    input.forEach {
+        when (it) {
+            "n" -> s = s.inc().also { r = r.dec() }
+            "s" -> s = s.dec().also { r = r.inc() }
+            "ne" -> q = q.inc().also { r = r.dec() }
+            "sw" -> q = q.dec().also { r = r.inc() }
+            "nw" -> s = s.inc().also { q = q.dec() }
+            "se" -> s = s.dec().also { q = q.inc() }
+        }
+        max = maxOf(max, dist())
+    }
+    return dist() to max
 }
