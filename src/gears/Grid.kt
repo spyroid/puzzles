@@ -1,10 +1,5 @@
 package gears
 
-import kotlin.math.abs
-import kotlin.math.max
-import kotlin.math.min
-import kotlin.math.sign
-
 class Grid<T> private constructor(private var grid: MutableList<MutableList<T>>) {
     operator fun set(p: Point, value: T) {
         grid[p.y][p.x] = value
@@ -48,7 +43,7 @@ class Grid<T> private constructor(private var grid: MutableList<MutableList<T>>)
 
     fun at(x: Int, y: Int): T? = if (y in this.grid.indices && x in this.grid.first().indices) this.grid[y][x] else null
     fun at(p: Point): T? = at(p.x, p.y)
-    fun pointAt(x: Int, y: Int): Point? =
+    private fun pointAt(x: Int, y: Int): Point? =
         if (y in this.grid.indices && x in this.grid.first().indices) Point(x, y) else null
 
     fun around(x: Int, y: Int): List<T> {
@@ -103,7 +98,10 @@ class Grid<T> private constructor(private var grid: MutableList<MutableList<T>>)
     }
 
     override fun toString() = buildString { for (line in data()) appendLine(line.joinToString("")) }
+
     fun all() = sequence { for (line in data()) line.forEach { yield(it) } }
+    fun allPoints() = sequence { for (y in 0..maxY()) for (x in 0..maxX()) yield(Point(x, y)) }
+
     fun maxX() = data().first().lastIndex
     fun maxY() = data().lastIndex
 

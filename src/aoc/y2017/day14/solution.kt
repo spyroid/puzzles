@@ -2,6 +2,7 @@ package aoc.y2017.day14
 
 import aoc.y2017.day10.knot2
 import gears.Grid
+import gears.Point
 import gears.puzzle
 import java.math.BigInteger
 
@@ -18,14 +19,14 @@ private fun defragmentator(input: String): Any {
             .mapIndexed { x, c -> disk[x, y] = c.digitToInt(); c.digitToInt() }.sum()
     }
 
-    fun markGroup(x: Int, y: Int) {
-        if (disk[x, y] == 1) {
-            disk[x, y] = 0
-            disk.pointsAround(x, y).forEach { markGroup(it.x, it.y) }
+    fun markGroup(point: Point) {
+        if (disk[point] == 1) {
+            disk[point] = 0
+            disk.pointsAround(point).forEach { markGroup(it) }
         }
     }
 
     var part2 = 0
-    disk.pointsOf { x, y, v -> if (v == 1) markGroup(x, y).also { part2++ }; false }
+    disk.allPoints().forEach { if (disk[it] == 1) markGroup(it).also { part2++ } }
     return part1 to part2
 }
