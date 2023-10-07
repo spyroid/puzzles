@@ -11,12 +11,11 @@ private fun main() {
 
 private fun defragmentator(input: String): Any {
     val disk = Grid.of(128, 128, 0)
-    var part1 = 0
-    for (y in 0..127) {
+    val part1 = (0..127).sumOf { y ->
         BigInteger(knot2("$input-$y"), 16)
             .toString(2)
             .padStart(128, '0')
-            .forEachIndexed { x, c -> disk[x, y] = c.digitToInt().also { part1 += it } }
+            .mapIndexed { x, c -> disk[x, y] = c.digitToInt(); c.digitToInt() }.sum()
     }
 
     fun markGroup(x: Int, y: Int) {
