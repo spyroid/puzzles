@@ -6,6 +6,7 @@ import kotlin.math.min
 import kotlin.math.sign
 
 data class Point(var x: Int, var y: Int) {
+    var value = 0
     operator fun plus(other: Point) = Point(x + other.x, y + other.y)
     operator fun plus(dir: Direction) = Point(x + dir.x, y + dir.y)
 

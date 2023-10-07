@@ -1,6 +1,7 @@
 package aoc.y2017.day14
 
 import aoc.y2017.day10.knot2
+import gears.Point
 import gears.puzzle
 
 private fun main() {
@@ -8,12 +9,12 @@ private fun main() {
 }
 
 private fun defragmentator(input: String): Any {
-    var part1 = 0
+    val all = mutableSetOf<Point>()
     for (y in 0..127) {
-        val hash = knot2("$input-$y")
+        knot2("$input-$y")
             .map { it.digitToInt(16).toString(2).padStart(4, '0') }
             .joinToString("")
-        part1 += hash.count { it == '1' }
+            .forEachIndexed { x, c -> if (c == '1') all.add(Point(x, y)) }
     }
-    return part1
+    return all.size
 }
