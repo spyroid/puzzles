@@ -9,7 +9,7 @@ private fun main() {
 }
 
 @OptIn(ExperimentalStdlibApi::class)
-private fun knot2(str: String): Any {
+fun knot2(str: String): String {
     val offsets = str.map { it.code }.plus(listOf(17, 31, 73, 47, 23))
     return rotated(offsets, 64)
         .windowed(16, 16)
