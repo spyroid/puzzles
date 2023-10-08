@@ -8,9 +8,7 @@ private fun main() {
 
 private fun spinlock(step: Int): Any {
     val spin = mutableListOf(0)
-    var pos = 0
-    var part1 = 0
-    var part2 = 0
+    var (pos, part1, part2) = listOf(0, 0, 0)
 
     for (i in 1..50_000_000) {
         pos = (pos + step) % i + 1
