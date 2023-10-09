@@ -3,9 +3,8 @@ package aoc.y2017.day18
 import gears.puzzle
 import kotlinx.coroutines.async
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.time.withTimeoutOrNull
+import kotlinx.coroutines.time.withTimeout
 import java.time.Duration
 import java.util.*
 import java.util.concurrent.ConcurrentLinkedQueue
@@ -19,8 +18,8 @@ private fun main() {
 private fun duet2(lines: List<String>): Any = runBlocking {
     val p1 = ConcurrentLinkedQueue<Long>()
     val p0 = ConcurrentLinkedQueue<Long>()
-    async { CPU1(p0, p1, true).apply { regs["p"] = 1 }.run(lines) }
-    async { CPU1(p1, p0, true).apply { regs["p"] = 0 }.run(lines).sent }.await()
+    async { CPU1(p0, p1, true).apply { regs["p"] = 0 }.run(lines) }
+    async { CPU1(p1, p0, true).apply { regs["p"] = 1 }.run(lines).sent }.await()
 }
 
 private fun duet(lines: List<String>): Any = runBlocking {
@@ -59,9 +58,16 @@ private class CPU1(
             "mod" -> regs[rx] = regs.v(rx) % regs.v(op)
             "rcv" -> {
                 if (part2) {
-                    delay(1000)
-                    val v = incoming.poll()
-                    if (v == null) ip = -2 else regs[rx] = v
+                    try {
+                        val v = withTimeout(Duration.ofMillis(55)) {
+                            incoming.poll()
+                        }
+                        regs[rx] = v
+                    } catch (e: Exception) {
+                        println("234234")
+                        ip = -2
+                    }
+
                 } else {
                     if (regs.v(rx) != 0L) ip = -2
                 }
@@ -126,9 +132,13 @@ class Day18Coroutines(private val input: List<String>) {
                 "mul" -> registers[parts[1]] = registers.deref(parts[1]) * registers.deref(parts[2])
                 "mod" -> registers[parts[1]] = registers.deref(parts[1]) % registers.deref(parts[2])
                 "rcv" ->
-                    if (withTimeoutOrNull(Duration.ofMillis(33)) {
+                    try {
+                        withTimeout(Duration.ofMillis(33)) {
                             registers[parts[1]] = receive.receive()
-                        } == null) ip = -2
+                        }
+                    } catch (e: Exception) {
+                        ip = -2
+                    }
 
                 "jgz" ->
                     if (registers.deref(parts[1]) > 0L) ip += registers.deref(parts[2]).toInt().dec()
