@@ -5,7 +5,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.time.withTimeout
+import kotlinx.coroutines.time.withTimeoutOrNull
 import java.time.Duration
 import java.util.*
 import java.util.concurrent.ConcurrentLinkedQueue
@@ -102,18 +102,14 @@ class Day18Coroutines(private val input: List<String>) {
 
     data class MachinePart2(
         private val registers: MutableMap<String, Long> = mutableMapOf(),
-        private var pc: Int = 0,
+        private var ip: Int = 0,
         private var sent: Long = 0,
         private val send: Channel<Long>,
         private val receive: Channel<Long>
     ) {
 
         suspend fun runUntilStop(instructions: List<String>): Long {
-            do {
-                instructions.getOrNull(pc)?.let {
-                    execute(it)
-                }
-            } while (pc in instructions.indices)
+            while (ip in instructions.indices) execute(instructions[ip])
             return sent
         }
 
@@ -130,22 +126,14 @@ class Day18Coroutines(private val input: List<String>) {
                 "mul" -> registers[parts[1]] = registers.deref(parts[1]) * registers.deref(parts[2])
                 "mod" -> registers[parts[1]] = registers.deref(parts[1]) % registers.deref(parts[2])
                 "rcv" ->
-                    try {
-                        withTimeout(Duration.ofSeconds(1)) {
+                    if (withTimeoutOrNull(Duration.ofMillis(33)) {
                             registers[parts[1]] = receive.receive()
-                        }
-                    } catch (e: Exception) {
-                        pc = -2 // Die
-                    }
+                        } == null) ip = -2
 
                 "jgz" ->
-                    if (registers.deref(parts[1]) > 0L) {
-                        pc += registers.deref(parts[2]).toInt().dec()
-                    }
-
-                else -> throw IllegalArgumentException("No such instruction ${parts[0]}")
+                    if (registers.deref(parts[1]) > 0L) ip += registers.deref(parts[2]).toInt().dec()
             }
-            pc += 1
+            ip += 1
         }
     }
 }
