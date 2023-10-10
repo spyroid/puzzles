@@ -1,34 +1,28 @@
 package aoc.y2017.day18
 
 import gears.puzzle
-import kotlinx.coroutines.async
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.time.withTimeout
-import java.time.Duration
-import java.util.*
-import java.util.concurrent.ConcurrentLinkedQueue
+import java.util.concurrent.ArrayBlockingQueue
+import java.util.concurrent.BlockingQueue
+import java.util.concurrent.CompletableFuture
+import java.util.concurrent.TimeUnit
 
 private fun main() {
-//    puzzle { duet(inputLines()) }
-//    puzzle { duet2(inputLines()) }
-    puzzle { Day18Coroutines(inputLines()).solvePart2() }
+    puzzle { duet(inputLines()) }
+    puzzle { duet2(inputLines()) }
 }
 
-private fun duet2(lines: List<String>): Any = runBlocking {
-    val p1 = ConcurrentLinkedQueue<Long>()
-    val p0 = ConcurrentLinkedQueue<Long>()
-    async { CPU1(p0, p1, true).apply { regs["p"] = 0 }.run(lines) }
-    async { CPU1(p1, p0, true).apply { regs["p"] = 1 }.run(lines).sent }.await()
+private fun duet2(lines: List<String>): Any {
+    val p1 = ArrayBlockingQueue<Long>(1000)
+    val p0 = ArrayBlockingQueue<Long>(1000)
+    CPU(p0, p1, true).apply { regs["p"] = 0 }.run(lines)
+    return CPU(p1, p0, true).apply { regs["p"] = 1 }.run(lines).get().sent
 }
 
-private fun duet(lines: List<String>): Any = runBlocking {
-    async { CPU1().run(lines).outgoing.last() }.await()
-}
+private fun duet(lines: List<String>) = CPU().run(lines).get().outgoing.last()
 
-private class CPU1(
-    val incoming: Queue<Long> = ConcurrentLinkedQueue(),
-    val outgoing: Queue<Long> = ConcurrentLinkedQueue(),
+private class CPU(
+    val incoming: BlockingQueue<Long> = ArrayBlockingQueue(1000),
+    val outgoing: BlockingQueue<Long> = ArrayBlockingQueue(1000),
     val part2: Boolean = false
 ) {
 
@@ -36,19 +30,12 @@ private class CPU1(
     private var ip = 0
     var sent = 0
 
-    suspend fun run(instructions: List<String>): CPU1 {
-        var counter = 0
-        while (ip in instructions.indices) {
-            execute(instructions[ip])
-            counter++
-//            println("${this}")
-//            delay(20)
-        }
-        println(counter)
-        return this
+    fun run(instructions: List<String>): CompletableFuture<CPU> = CompletableFuture.supplyAsync {
+        while (ip in instructions.indices) execute(instructions[ip])
+        this
     }
 
-    private suspend fun execute(instruction: String) {
+    private fun execute(instruction: String) {
         val (inst, rx, op) = instruction.split(" ").plus("x")
         when (inst) {
             "snd" -> outgoing.add(regs.v(rx)).also { sent++ }
@@ -56,22 +43,11 @@ private class CPU1(
             "add" -> regs[rx] = regs.v(rx) + regs.v(op)
             "mul" -> regs[rx] = regs.v(rx) * regs.v(op)
             "mod" -> regs[rx] = regs.v(rx) % regs.v(op)
-            "rcv" -> {
-                if (part2) {
-                    try {
-                        val v = withTimeout(Duration.ofMillis(55)) {
-                            incoming.poll()
-                        }
-                        regs[rx] = v
-                    } catch (e: Exception) {
-                        println("234234")
-                        ip = -2
-                    }
-
-                } else {
-                    if (regs.v(rx) != 0L) ip = -2
-                }
-            }
+            "rcv" -> if (part2) try {
+                regs[rx] = incoming.poll(1, TimeUnit.MILLISECONDS) ?: throw Exception()
+            } catch (e: Exception) {
+                ip = -2
+            } else if (regs.v(rx) != 0L) ip = -2
 
             "jgz" -> if (regs.v(rx) > 0L) ip += regs.v(op).toInt().dec()
         }
@@ -80,70 +56,3 @@ private class CPU1(
 }
 
 private fun MutableMap<String, Long>.v(v: String) = v.toLongOrNull() ?: getOrPut(v) { 0 }
-private fun MutableMap<String, Long>.deref(v: String) = v.toLongOrNull() ?: getOrPut(v) { 0 }
-
-class Day18Coroutines(private val input: List<String>) {
-
-    fun solvePart2(): Long = runBlocking {
-        val program0Receive = Channel<Long>(Channel.UNLIMITED)
-        val program1Receive = Channel<Long>(Channel.UNLIMITED)
-
-        async {
-            MachinePart2(
-                registers = mutableMapOf("p" to 0L),
-                send = program1Receive,
-                receive = program0Receive
-            ).runUntilStop(input)
-        }
-
-        async {
-            MachinePart2(
-                registers = mutableMapOf("p" to 1L),
-                send = program0Receive,
-                receive = program1Receive
-            ).runUntilStop(input)
-        }.await()
-
-    }
-
-    data class MachinePart2(
-        private val registers: MutableMap<String, Long> = mutableMapOf(),
-        private var ip: Int = 0,
-        private var sent: Long = 0,
-        private val send: Channel<Long>,
-        private val receive: Channel<Long>
-    ) {
-
-        suspend fun runUntilStop(instructions: List<String>): Long {
-            while (ip in instructions.indices) execute(instructions[ip])
-            return sent
-        }
-
-        private suspend fun execute(instruction: String) {
-            val parts = instruction.split(" ")
-            when (parts[0]) {
-                "snd" -> {
-                    send.send(registers.deref(parts[1]))
-                    sent += 1
-                }
-
-                "set" -> registers[parts[1]] = registers.deref(parts[2])
-                "add" -> registers[parts[1]] = registers.deref(parts[1]) + registers.deref(parts[2])
-                "mul" -> registers[parts[1]] = registers.deref(parts[1]) * registers.deref(parts[2])
-                "mod" -> registers[parts[1]] = registers.deref(parts[1]) % registers.deref(parts[2])
-                "rcv" ->
-                    try {
-                        withTimeout(Duration.ofMillis(33)) {
-                            registers[parts[1]] = receive.receive()
-                        }
-                    } catch (e: Exception) {
-                        ip = -2
-                    }
-
-                "jgz" ->
-                    if (registers.deref(parts[1]) > 0L) ip += registers.deref(parts[2]).toInt().dec()
-            }
-            ip += 1
-        }
-    }
-}
