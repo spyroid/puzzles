@@ -13,9 +13,11 @@ private fun inventory(input: List<String>) = input
     .let { m -> m.count { it.first } * m.count { it.second } }
 
 private fun inventory2(input: List<String>): Any {
-    for (i in input.indices - 1) for (j in (i + 1)..input.lastIndex) {
-        val s = input[i].zip(input[j]).map { if (it.first != it.second) 0.toChar() else it.first }
-        if (s.count { it.code == 0 } == 1) return s.filter { it.code != 0 }.joinToString("")
+    for (i in input.indices) for (j in (i + 1)..input.lastIndex) {
+        input[i].zip(input[j])
+            .filter { it.first == it.second }
+            .map { it.first }
+            .let { if (it.size + 1 == input[i].length) return it.joinToString("") }
     }
     return 0
 }
