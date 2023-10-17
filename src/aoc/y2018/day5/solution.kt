@@ -13,17 +13,13 @@ private fun reduction2(input: String) = input.toSet()
     .minOf { c -> reduction(input.filter { it != c && it != c + 32 }) }
 
 private fun reduction(input: String): Int {
-    var all = input.toMutableList()
+    var all = input.toList()
     do {
+        val idx = mutableSetOf<Int>()
         for (i in (0..<all.lastIndex)) {
-            if (abs(all[i] - all[i + 1]) == 32) {
-                all[i] = 0.toChar()
-                all[i + 1] = 0.toChar()
-            }
+            if (abs(all[i] - all[i + 1]) == 32 && !idx.contains(i)) idx.add(i).also { idx.add(i + 1) }
         }
-        val all2 = all.filter { it != 0.toChar() }.toMutableList()
-        if (all2.size == all.size) break
-        all = all2
-    } while (true)
+        all = all.filterIndexed { i, _ -> !idx.contains(i) }
+    } while (idx.isNotEmpty())
     return all.size
 }
