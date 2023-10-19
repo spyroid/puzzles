@@ -18,7 +18,7 @@ private fun stars(input: List<Particle>): Any {
 
 private fun List<Particle>.update(back: Boolean = false) = this.onEach { it.update(back) }.map { it.pos }
 
-private fun List<String>.toParticles() = mapNotNull { s -> s.findIntNumbers().toList() }
+private fun List<String>.toParticles() = map { s -> s.findIntNumbers().toList() }
     .map { v -> Particle(Point(v[0], v[1]), Point(v[2], v[3])) }
 
 private data class Particle(var pos: Point, val velocity: Point) {
