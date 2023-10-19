@@ -47,44 +47,21 @@ data class Point(var x: Int, var y: Int) {
             val split = str.split(delim)
             return Point(split[0].toInt(), split[1].toInt())
         }
+    }
+}
 
-        fun String.toIntVec(delim: String = ",") = fromStr(this, delim)
+fun Iterable<Point>.bounds() = this.fold(listOf(Int.MAX_VALUE, Int.MIN_VALUE, Int.MAX_VALUE, Int.MIN_VALUE)) { acc, p ->
+    listOf(min(acc[0], p.x), max(acc[1], p.x), min(acc[2], p.y), max(acc[3], p.y))
+}
 
-        /**
-         * Calculates the min and max of x and y for all the vectors
-         */
-        fun Iterable<Point>.bounds() = this.fold(
-            listOf(
-                Int.MAX_VALUE,
-                Int.MIN_VALUE,
-                Int.MAX_VALUE,
-                Int.MIN_VALUE
-            )
-        ) { acc, vec ->
-            listOf(
-                min(acc[0], vec.x),
-                max(acc[1], vec.x),
-                min(acc[2], vec.y),
-                max(acc[3], vec.y)
-            )
-        }
+fun Iterable<Point>.toStringGrid(char: Char = fullBlock): String {
+    val (minX, maxX, minY, maxY) = this.bounds()
+    return this.toStringGrid(minX..maxX, minY..maxY, char)
+}
 
-        fun Iterable<Point>.showAsGrid(char: Char = fullBlock): String {
-            val (minX, maxX, minY, maxY) = this.bounds()
-            return this.showAsGrid(minX..maxX, minY..maxY, char)
-        }
-
-        fun Iterable<Point>.showAsGrid(xRange: IntRange, yRange: IntRange, char: Char = fullBlock): String {
-            return yRange.joinToString("\n") { y ->
-                xRange.joinToString("") { x ->
-                    if (Point(x, y) in this) {
-                        char.toString()
-                    } else {
-                        " "
-                    }
-                }
-            }
-        }
-
+fun Iterable<Point>.toStringGrid(xRange: IntRange, yRange: IntRange, char: Char = fullBlock): String {
+    val all = this.toSet()
+    return yRange.joinToString("\n") { y ->
+        xRange.joinToString("") { x -> if (Point(x, y) in all) char.toString() else " " }
     }
 }

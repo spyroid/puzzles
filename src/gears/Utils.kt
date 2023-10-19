@@ -71,3 +71,9 @@ fun <T> MutableList<T>.reverseSubList(start: Int, end: Int) {
         safeSet(end - j, x)
     }
 }
+
+fun String.toIntVec(delim: String = ",") = Point.fromStr(this, delim)
+
+private val re = "[-0-9]+".toRegex()
+fun String.findIntNumbers() = re.findAll(this).map { it.value.toInt() }
+fun String.findLongNumbers() = re.findAll(this).map { it.value.toLong() }
