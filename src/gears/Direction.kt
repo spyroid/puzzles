@@ -44,10 +44,10 @@ enum class Direction(var x: Int, var y: Int) {
         fun of(s: String) = of(s.getOrElse(0) { '!' })
         fun of(ch: Char) =
             when (ch) {
-                'N', 'U' -> UP
-                'S', 'D' -> DOWN
-                'E', 'R', 'F' -> RIGHT
-                'W', 'L' -> LEFT
+                'N', 'U', '^' -> UP
+                'S', 'D', 'v', 'V' -> DOWN
+                'E', 'R', 'F', '>' -> RIGHT
+                'W', 'L', '<' -> LEFT
                 else -> NOTHING
             }
 
