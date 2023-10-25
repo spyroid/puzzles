@@ -11,6 +11,7 @@ data class Point(var x: Int, var y: Int) {
     operator fun plus(dir: Direction) = Point(x + dir.x, y + dir.y)
 
     operator fun minus(other: Point) = Point(x - other.x, y - other.y)
+    operator fun minus(dir: Direction) = Point(x - dir.x, y - dir.y)
     operator fun unaryMinus() = Point(-x, -y)
 
     operator fun times(factor: Int) = Point(x * factor, y * factor)

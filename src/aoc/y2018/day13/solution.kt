@@ -18,34 +18,30 @@ private fun madness(input: List<String>): Any {
         when (val dir = Direction.of(grid.at(p) ?: return@mapNotNull null)) {
             UP, DOWN, LEFT, RIGHT -> {
                 Cart(p, dir).also {
+                    it.grid = grid
                     if (dir == LEFT || dir == RIGHT) grid[p] = '-'
                     if (dir == UP || dir == DOWN) grid[p] = '|'
                 }
             }
-
             else -> null
         }
     }.toList()
-    println(carts)
-    println(grid)
-    repeat(10) {
-        carts.forEach { grid.at(it.p)?.let { it1 -> it.drive(it1) } }
-    }
-    println(carts)
-
+    repeat(20) { carts.forEach { it.drive() } }
     return mx
 }
 
 private data class Cart(var p: Point, var dir: Direction) {
+    lateinit var grid: Grid<Char>
     var meters = 0
 
-    fun drive(c: Char) {
-        if (c == '+') println("crossroad $p")
-        dir = when (c to dir) {
-            '\\' to RIGHT, '/' to DOWN, '\\' to LEFT, '/' to UP -> dir.turnCw()
-            '/' to LEFT, '\\' to DOWN, '/' to RIGHT, '\\' to UP -> dir.turnCcw()
-            else -> dir
-        }
+    fun drive() {
         p += dir
+        val c = grid[p]
+        if (c == '+') println("crossroad $p")
+        when (c to dir) {
+            '\\' to RIGHT, '/' to DOWN, '\\' to LEFT, '/' to UP -> dir = dir.turnCcw()
+            '/' to LEFT, '\\' to DOWN, '/' to RIGHT, '\\' to UP -> dir = dir.turnCw()
+        }
     }
 }
+
