@@ -32,7 +32,8 @@ private fun madness(input: List<String>): Any {
 
 private data class Cart(var p: Point, var dir: Direction) {
     lateinit var grid: Grid<Char>
-    var meters = 0
+    var cross = 0
+    var crossDir = 1
 
     fun drive() {
         p += dir
