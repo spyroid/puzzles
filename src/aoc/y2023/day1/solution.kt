@@ -14,14 +14,13 @@ private fun part1(lines: List<String>) = lines.sumOf { s ->
 private fun part2(lines: List<String>): Any {
     val nums = listOf("zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine")
     val res = lines.map { s ->
-        var ss = ""
-        s.foldIndexed(s) { i, acc, c ->
-            val ni = nums.indexOfFirst { acc.startsWith(it, i) }
-            if (ni >= 0) ss += ni.toString()
-            if (c.isDigit()) ss += c
-            acc
-        }
-        ss
+        s.fold(Pair(s, "")) { p, c ->
+            var ss = ""
+            val ni = nums.indexOfFirst { p.first.startsWith(it) }
+            if (ni >= 0) ss = ni.toString()
+            if (c.isDigit()) ss = c.toString()
+            Pair(p.first.drop(1), p.second + ss)
+        }.second
     }
     return part1(res)
 }
