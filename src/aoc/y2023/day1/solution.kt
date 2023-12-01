@@ -8,7 +8,7 @@ private fun main() {
 }
 
 private fun part1(lines: List<String>) = lines.sumOf { s ->
-    s.filter { it.isDigit() }.let { it.first().plus(it.last().toString()) }.toInt()
+    s.filter { it.isDigit() }.let { "${it.first()}${it.last()}" }.toInt()
 }
 
 private fun part2(lines: List<String>): Any {
