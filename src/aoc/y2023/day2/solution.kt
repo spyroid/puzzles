@@ -8,11 +8,10 @@ private fun main() {
 
 private fun conundrum(lines: List<String>): Any {
     val draws = lines.map { s ->
-        val (a, b) = s.split(":")
-        val id = a.drop(5).toInt()
-        val cubes = b.drop(1).replace(";", ",").split(", ")
+        val (a, b) = s.split(": ")
+        val cubes = b.replace(";", ",").split(", ")
             .map { it.split(" ").let { a -> a.last() to a.first().toInt() } }
-        id to cubes.groupBy({ it.first }, { it.second }).mapValues { it.value.max() }
+        a.drop(5).toInt() to cubes.groupBy({ it.first }, { it.second }).mapValues { it.value.max() }
     }
     val possibles = draws.filter {
         it.second.all { c ->
