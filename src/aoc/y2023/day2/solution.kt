@@ -12,21 +12,16 @@ private fun conundrum(lines: List<String>): Any {
         val id = a.drop(5).toInt()
         val cubes = b.drop(1).replace(";", ",").split(", ")
             .map { it.split(" ").let { a -> a.last() to a.first().toInt() } }
-        id to cubes
+        id to cubes.groupBy({ it.first }, { it.second }).mapValues { it.value.max() }
     }
     val possible = draws.filter { g ->
         g.second.all { c ->
-            when (c.first) {
-                "red" -> c.second <= 12
-                "green" -> c.second <= 13
-                else -> c.second <= 14
+            when (c.key) {
+                "red" -> c.value <= 12
+                "green" -> c.value <= 13
+                else -> c.value <= 14
             }
         }
     }
-    val powers = draws.map { d ->
-        d.second.groupBy({ it.first }, { it.second })
-            .mapValues { it.value.max() }
-            .values.fold(1) { a, b -> a * b }
-    }
-    return possible.sumOf { it.first } to powers.sum()
+    return possible.sumOf { it.first } to draws.sumOf { it.second.values.fold(1L) { a, b -> a * b } }
 }
