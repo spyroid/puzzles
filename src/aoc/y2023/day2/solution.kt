@@ -14,14 +14,14 @@ private fun conundrum(lines: List<String>): Any {
             .map { it.split(" ").let { a -> a.last() to a.first().toInt() } }
         id to cubes.groupBy({ it.first }, { it.second }).mapValues { it.value.max() }
     }
-    val possible = draws.filter { g ->
-        g.second.all { c ->
+    val possibles = draws.filter {
+        it.second.all { c ->
             when (c.key) {
                 "red" -> c.value <= 12
                 "green" -> c.value <= 13
                 else -> c.value <= 14
             }
         }
-    }
-    return possible.sumOf { it.first } to draws.sumOf { it.second.values.fold(1L) { a, b -> a * b } }
+    }.sumOf { it.first }
+    return possibles to draws.sumOf { it.second.values.fold(1L) { a, b -> a * b } }
 }
