@@ -101,8 +101,8 @@ class Grid<T> private constructor(private var grid: MutableList<MutableList<T>>)
 
     override fun toString() = buildString { for (line in data()) appendLine(line.joinToString("")) }
 
-    fun all() = sequence { for (line in data()) line.forEach { yield(it) } }
     fun allPoints() = sequence { for (y in 0..maxY()) for (x in 0..maxX()) yield(Point(x, y)) }
+    fun all() = sequence { for (y in 0..maxY()) for (x in 0..maxX()) yield(Pair(Point(x, y), at(x, y)!!)) }
 
     fun maxX() = data().first().lastIndex
     fun maxY() = data().lastIndex
