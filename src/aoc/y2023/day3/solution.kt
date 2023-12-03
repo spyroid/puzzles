@@ -17,9 +17,7 @@ private fun gear(input: List<String>): Any {
     return grid.all().mapNotNull { (p, c) ->
         if (c.isDigit()) {
             around.addAll(p.around8().mapNotNull {
-                val c = grid.at(it)
-                if (c == '*') gears.add(it)
-                c
+                grid.at(it).also { c -> if (c == '*') gears.add(it) }
             }).also { number += c }
         } else if (number.isNotEmpty()) {
             val res = if (around.any { it != '.' && !it.isDigit() }) {
