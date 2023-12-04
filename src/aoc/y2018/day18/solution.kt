@@ -22,7 +22,7 @@ private fun seq(grid: Grid<Char>): Sequence<Grid<Char>> = generateSequence(grid)
 private fun pole(input: List<String>) = seq(Grid.of(input) { it })
     .drop(10)
     .first()
-    .let { grid -> grid.all().count { it == '|' } * grid.all().count { it == '#' } }
+    .let { grid -> grid.all().count { it.v == '|' } * grid.all().count { it.v == '#' } }
 
 private fun pole2(input: List<String>): Any {
     val seen = mutableMapOf<Int, Int>()
@@ -35,5 +35,5 @@ private fun pole2(input: List<String>): Any {
     val cycle = gen - seen[grid.deepHashCode()]!!
     val moreSteps = (1_000_000_000 - gen) % cycle
     grid = seq(grid).drop(moreSteps).first()
-    return grid.all().count { it == '|' } * grid.all().count { it == '#' }
+    return grid.all().count { it.v == '|' } * grid.all().count { it.v == '#' }
 }

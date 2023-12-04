@@ -57,7 +57,7 @@ private fun part2(grid: Grid<Char>): Int {
         count += 1
         if (!changed) break
     }
-    return g.all().count { it == '#' }
+    return g.all().count { it.v == '#' }
 }
 
 private fun part1(grid: Grid<Char>): Int {
@@ -84,6 +84,6 @@ private fun part1(grid: Grid<Char>): Int {
         count += 1
         if (!changed) break
     }
-    return g.all().count { it == '#' }
+    return g.all().count { it.v == '#' }
 }
 

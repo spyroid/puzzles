@@ -27,5 +27,5 @@ private fun factor(lines: List<String>): Int {
         }
     }
     println(grid)
-    return grid.all().count { it == fullBlock }
+    return grid.all().count { it.v == fullBlock }
 }

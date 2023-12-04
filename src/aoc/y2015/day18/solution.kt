@@ -27,5 +27,5 @@ private fun gif(lines: List<String>, isStuck: Boolean = false): Int {
             }
         }
     }
-    return grid.all().count { it == '#' }
+    return grid.all().count { it.v == '#' }
 }
