@@ -17,7 +17,7 @@ private fun scratch(input: String): Any {
     val part1 = seeds.minOf { location(it) }
 
     val seeds2 = seeds.windowed(2, 2).map { (a, b) -> a until b + a }
-    val part2 = seeds2.minOf { r -> r.minOf { it } }
+    val part2 = seeds2.minOf { r -> r.minOf { location(it) } }
     return part1 to part2
 }
 
