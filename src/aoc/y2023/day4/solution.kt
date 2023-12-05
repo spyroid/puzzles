@@ -5,7 +5,7 @@ import gears.puzzle
 import gears.splitBy
 
 private fun main() {
-    puzzle { scratch(inputLines()) }
+    puzzle("parts 1 & 2") { scratch(inputLines()) }
 }
 
 private fun scratch(input: List<String>): Any {
