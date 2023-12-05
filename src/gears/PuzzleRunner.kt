@@ -8,7 +8,7 @@ class PuzzleRunner {
     private val localDir by lazy { File(("src." + klass.javaClass.packageName).replace(".", File.separatorChar.toString())) }
     fun linesFrom(filename: String) = File(localDir, filename).readLines()
     fun allFrom(filename: String) = File(localDir, filename).readText()
-    fun input() = allFrom("input.txt")
+    fun input() = allFrom("input.txt").trim()
     fun inputLines() = linesFrom("input.txt")
 }
 
