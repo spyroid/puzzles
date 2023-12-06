@@ -27,8 +27,7 @@ private fun wait2(input: List<String>): Any {
 
 private fun race(pairs: List<Pair<Long, Long>>) = pairs.fold(1L) { acc, p ->
     val dx = sqrt(p.first * p.first - 4.0 * p.second)
-    val minR = floor((p.first - dx) / 2 + 1)
-    val maxR = ceil((p.first + dx) / 2 - 1)
-    val diff = maxR - minR + 1
-    (acc * diff).roundToLong()
+    val min = floor((p.first - dx) / 2 + 1)
+    val max = ceil((p.first + dx) / 2 - 1)
+    (acc * (max - min + 1)).roundToLong()
 }
