@@ -62,7 +62,8 @@ fun <T> MutableList<T>.safeSet(i: Int, v: T) {
     this[i % size] = v
 }
 
-fun <T> MutableList<T>.safeGet(i: Int) = this[i % size]
+fun <T> List<T>.safeGet(i: Int) = this[i % size]
+fun <T> List<T>.safeGet(i: Long) = this[(i % size).toInt()]
 
 fun <T> MutableList<T>.reverseSubList(start: Int, end: Int) {
     for (j in 0..((end - start) / 2)) {
