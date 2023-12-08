@@ -87,4 +87,4 @@ fun <T> List<T>.splitBy(idx: Set<Int>) = foldIndexed(mutableListOf<MutableList<T
 
 fun Iterable<Long>.lcm() = this.reduce { total, next -> lcm(total, next) }
 fun lcm(a: Long, b: Long) = a / gcd(a, b) * b
-fun gcd(a: Long, b: Long): Long = if (b == 0L) a else gcd(b, a % b)
+tailrec fun gcd(a: Long, b: Long): Long = if (b == 0L) a else gcd(b, a % b)
