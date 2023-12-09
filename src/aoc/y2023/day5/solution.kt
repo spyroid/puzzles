@@ -1,6 +1,6 @@
 package aoc.y2023.day5
 
-import gears.findLongNumbers
+import gears.findLongs
 import gears.puzzle
 import java.lang.System.lineSeparator
 
@@ -10,7 +10,7 @@ private fun main() {
 
 private fun scratch(input: String): Any {
     val blocks = input.split("${lineSeparator()}${lineSeparator()}")
-    val seeds = blocks.first().findLongNumbers()
+    val seeds = blocks.first().findLongs()
     val mappers = blocks.drop(1).map { Mapper(it.split(lineSeparator()).drop(1)) }
     fun location(v: Long) = mappers.fold(v) { vv, mapper -> mapper.remap(vv) }
 
@@ -22,7 +22,7 @@ private fun scratch(input: String): Any {
 }
 
 private data class Mapper(private val lines: List<String>) {
-    private val ranges = lines.map { s -> s.findLongNumbers().let { Range(it[1], it[0], it[2]) } }
+    private val ranges = lines.map { s -> s.findLongs().let { Range(it[1], it[0], it[2]) } }
     fun remap(v: Long) = ranges.map { it.remap(v) }.firstNotNullOfOrNull { it } ?: v
     data class Range(val a: Long, val b: Long, val len: Long) {
         fun remap(v: Long) = if (v >= a && v < a + len) b + (v - a) else null

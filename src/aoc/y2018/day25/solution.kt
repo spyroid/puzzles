@@ -1,6 +1,6 @@
 package aoc.y2018.day25
 
-import gears.findIntNumbers
+import gears.findInts
 import gears.puzzle
 import kotlin.math.abs
 
@@ -9,7 +9,7 @@ private fun main() {
 }
 
 private fun solution(input: List<String>): Any {
-    val all = ArrayDeque(input.map { it.findIntNumbers().let { p -> Point4E(p[0], p[1], p[2], p[3]) } })
+    val all = ArrayDeque(input.map { it.findInts().let { p -> Point4E(p[0], p[1], p[2], p[3]) } })
     val constellations = mutableListOf(mutableSetOf(all.removeFirst()))
     while (all.isNotEmpty()) {
         val added = all.toList().count { if (constellations.last().offer(it)) all.remove(it) else false }

@@ -1,6 +1,6 @@
 package aoc.y2023.day6
 
-import gears.findLongNumbers
+import gears.findLongs
 import gears.findNumbers
 import gears.puzzle
 import kotlin.math.ceil
@@ -14,8 +14,8 @@ private fun main() {
 }
 
 private fun wait1(input: List<String>): Any {
-    val pairs = input.first().findLongNumbers()
-        .zip(input.last().findLongNumbers())
+    val pairs = input.first().findLongs()
+        .zip(input.last().findLongs())
     return race(pairs)
 }
 

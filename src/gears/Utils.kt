@@ -76,8 +76,8 @@ fun <T> MutableList<T>.reverseSubList(start: Int, end: Int) {
 fun String.toIntVec(delim: String = ",") = Point.fromStr(this, delim)
 
 private val re = "[-0-9]+".toRegex()
-fun String.findIntNumbers() = re.findAll(this).map { it.value.toInt() }.toList()
-fun String.findLongNumbers() = re.findAll(this).map { it.value.toLong() }.toList()
+fun String.findInts() = re.findAll(this).map { it.value.toInt() }.toList()
+fun String.findLongs() = re.findAll(this).map { it.value.toLong() }.toList()
 fun String.findNumbers() = re.findAll(this).map { it.value }.toList()
 
 fun <T> List<T>.splitBy(idx: Set<Int>) = foldIndexed(mutableListOf<MutableList<T>>()) { i, list, v ->
