@@ -10,10 +10,8 @@ private fun main() {
 private fun mirage(input: List<String>) = input.map { it.findIntNumbers() }
     .let { list -> list.sumOf { it.guessNext() } to list.sumOf { it.reversed().guessNext() } }
 
-private fun List<Int>.guessNext(): Int {
-    val self = mutableListOf(this.last())
-    generateSequence(this) { acc ->
-        acc.zipWithNext { a, b -> b - a }.also { self.add(it.last()) }
-    }.takeWhile { it.any { v -> v != 0 } }.count()
-    return self.fold(0) { a, v -> v + a }
-}
+private fun List<Int>.guessNext() = mutableListOf<Int>().also { list ->
+    generateSequence(this) { acc -> acc.zipWithNext { a, b -> b - a } }
+        .onEach { list.add(it.last()) }
+        .takeWhile { it.any { v -> v != 0 } }.count()
+}.fold(0) { a, v -> v + a }
