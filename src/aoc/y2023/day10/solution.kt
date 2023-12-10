@@ -6,20 +6,19 @@ import gears.Point
 import gears.puzzle
 
 private fun main() {
-    puzzle("1") { pipeMaze(inputLines()) }
-    puzzle("2") { pipeMaze2(inputLines()) }
+    puzzle("1 & 2") { pipeMaze(inputLines()) }
 }
 
-private fun pipeMaze2(input: List<String>): Any {
+private fun pipeMaze(input: List<String>): Any {
     var grid = Grid.of(input) { it }
     var now = grid.all().first { it.v == 'S' }
-    val seen = mutableSetOf(now)
+    val seen = mutableSetOf(now.p)
     val q = ArrayDeque(listOf(now))
     var predict = setOf('|', '-', 'J', 'L', '7', 'F')
     while (q.isNotEmpty()) {
         now = q.removeFirst()
         val around = grid.gvAround(now.p)
-            .filter { it.v != '.' && it !in seen }
+            .filter { it.v != '.' && it.p !in seen }
             .filter { gv ->
                 (now.v in "S|JL" && gv.p == now.p - Direction.UP && gv.v in "|7F") ||
                         (now.v in "S|7F" && gv.p == now.p - Direction.DOWN && gv.v in "|JL") ||
@@ -35,12 +34,11 @@ private fun pipeMaze2(input: List<String>): Any {
                     }
                 }
             }
-        seen.addAll(around).also { q.addAll(around) }
+        seen.addAll(around.map { it.p }).also { q.addAll(around) }
     }
-    val seenPoints = seen.map { it.p }
     grid = grid.clone { x, y, e ->
         when {
-            Point(x, y) in seenPoints -> if (e == 'S') predict.first() else e
+            Point(x, y) in seen -> if (e == 'S') predict.first() else e
             else -> '.'
         }
     }
@@ -62,26 +60,6 @@ private fun pipeMaze2(input: List<String>): Any {
             if (!inside) others.add(Point(x, y))
         }
     }
-    others.addAll(seenPoints)
-    return (grid.maxX() + 1) * (grid.maxY() + 1) - others.size
-}
-
-private fun pipeMaze(input: List<String>): Any {
-    val grid = Grid.of(input) { it }
-    var now = grid.all().first { it.v == 'S' }
-    val seen = mutableSetOf(now)
-    val q = ArrayDeque(listOf(now))
-    while (q.isNotEmpty()) {
-        now = q.removeFirst()
-        val around = grid.gvAround(now.p)
-            .filter { it.v != '.' && it !in seen }
-            .filter { gv ->
-                (now.v in "S|JL" && gv.p == now.p - Direction.UP && gv.v in "|7F") ||
-                        (now.v in "S|7F" && gv.p == now.p - Direction.DOWN && gv.v in "|JL") ||
-                        (now.v in "S-J7" && gv.p == now.p - Direction.RIGHT && gv.v in "-LF") ||
-                        (now.v in "S-LF" && gv.p == now.p - Direction.LEFT && gv.v in "-J7")
-            }
-        seen.addAll(around).also { q.addAll(around) }
-    }
-    return seen.size / 2
+    others.addAll(seen)
+    return seen.size / 2 to (grid.maxX() + 1) * (grid.maxY() + 1) - others.size
 }
