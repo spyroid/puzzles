@@ -3,7 +3,7 @@ package aoc.y2016.day20
 import gears.puzzle
 
 private fun main() {
-    puzzle { wall(linesFrom("input.txt")) }
+    puzzle { wall(inputLines("input.txt")) }
 }
 
 private fun wall(lines: List<String>): Pair<Long, Long> {

@@ -4,7 +4,7 @@ import gears.puzzle
 
 fun main() {
     puzzle {
-        val input = linesFrom("input.txt")
+        val input = inputLines("input.txt")
         val height = input.size
         val width = input.first().length
         var area = Array(height) { y -> Array(width) { x -> input[y][x] } }

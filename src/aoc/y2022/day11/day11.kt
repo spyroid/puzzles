@@ -3,10 +3,10 @@ package aoc.y2022.day11
 import gears.puzzle
 
 fun main() {
-    puzzle("1") { monkeys(linesFrom("test.txt"), 20) }
-    puzzle("1") { monkeys(linesFrom("input.txt"), 20) }
-    puzzle("2") { monkeys(linesFrom("test.txt"), 10_000, true) }
-    puzzle("2") { monkeys(linesFrom("input.txt"), 10_000, true) }
+    puzzle("1") { monkeys(inputLines("test.txt"), 20) }
+    puzzle("1") { monkeys(inputLines("input.txt"), 20) }
+    puzzle("2") { monkeys(inputLines("test.txt"), 10_000, true) }
+    puzzle("2") { monkeys(inputLines("input.txt"), 10_000, true) }
 }
 
 private data class Monkey(var items: ArrayDeque<Long>, val divBy: Long, val throwTo: Pair<Int, Int>, val type: String, val op2: Long?) {

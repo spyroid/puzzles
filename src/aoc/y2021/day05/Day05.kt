@@ -12,8 +12,8 @@ private fun toPairPoints(line: String): Pair<Point, Point> {
 }
 
 fun main() {
-    puzzle { part1(linesFrom("input.txt").asSequence().map { toPairPoints(it) }) }
-    puzzle { part2(linesFrom("input.txt").asSequence().map { toPairPoints(it) }) }
+    puzzle { part1(inputLines("input.txt").asSequence().map { toPairPoints(it) }) }
+    puzzle { part2(inputLines("input.txt").asSequence().map { toPairPoints(it) }) }
 }
 
 private fun move(p1: Point, p2: Point): Sequence<Point> = sequence {

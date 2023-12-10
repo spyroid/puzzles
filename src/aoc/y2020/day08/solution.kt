@@ -3,10 +3,10 @@ package aoc.y2020.day08
 import gears.puzzle
 
 private fun main() {
-    puzzle { part1(linesFrom("test.txt").asCPU()) }
-    puzzle { part1(linesFrom("input.txt").asCPU()) }
-    puzzle { part2(linesFrom("test.txt").asCPU()) }
-    puzzle { part2(linesFrom("input.txt").asCPU()) }
+    puzzle { part1(inputLines("test.txt").asCPU()) }
+    puzzle { part1(inputLines("input.txt").asCPU()) }
+    puzzle { part2(inputLines("test.txt").asCPU()) }
+    puzzle { part2(inputLines("input.txt").asCPU()) }
 }
 
 private fun part1(cpu: List<Pair<String, Int>>): Pair<Int, Int> {

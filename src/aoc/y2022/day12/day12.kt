@@ -5,10 +5,10 @@ import gears.Point
 import gears.puzzle
 
 fun main() {
-    puzzle("1") { part1(linesFrom("test.txt"), true) }
-    puzzle("1") { part1(linesFrom("input.txt"), true) }
-    puzzle("2") { part1(linesFrom("test.txt"), false) }
-    puzzle("2") { part1(linesFrom("input.txt"), false) }
+    puzzle("1") { part1(inputLines("test.txt"), true) }
+    puzzle("1") { part1(inputLines("input.txt"), true) }
+    puzzle("2") { part1(inputLines("test.txt"), false) }
+    puzzle("2") { part1(inputLines("input.txt"), false) }
 }
 
 private fun part1(input: List<String>, directionUp: Boolean): Int {

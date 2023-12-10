@@ -5,9 +5,9 @@ import kotlin.math.min
 
 private fun main() {
     puzzle { cyberspace("X(8x2)(3x3)ABCY") }
-    puzzle { cyberspace(linesFrom("input.txt").first()) }
+    puzzle { cyberspace(inputLines("input.txt").first()) }
     puzzle { cyberspace2("X(8x2)(3x3)ABCY") }
-    puzzle { cyberspace2(linesFrom("input.txt").first()) }
+    puzzle { cyberspace2(inputLines("input.txt").first()) }
 }
 
 private fun cyberspace2(line: String): Long {

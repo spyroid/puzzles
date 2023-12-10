@@ -3,11 +3,11 @@ package aoc.y2022.day3
 import gears.puzzle
 
 fun main() {
-    puzzle { part1(linesFrom("test.txt")) }
-    puzzle { part1(linesFrom("input.txt")) }
+    puzzle { part1(inputLines("test.txt")) }
+    puzzle { part1(inputLines("input.txt")) }
 
-    puzzle { part2(linesFrom("test.txt")) }
-    puzzle { part2(linesFrom("input.txt")) }
+    puzzle { part2(inputLines("test.txt")) }
+    puzzle { part2(inputLines("input.txt")) }
 }
 
 private fun part1(input: List<String>): Int = input.asSequence()

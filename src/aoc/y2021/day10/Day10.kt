@@ -4,9 +4,9 @@ import gears.puzzle
 import kotlin.math.absoluteValue
 
 fun main() {
-    puzzle { part1(linesFrom("input.txt")) }
-    puzzle { part2(linesFrom("input.txt")) }
-    puzzle { parts12(linesFrom("input.txt")) }
+    puzzle { part1(inputLines("input.txt")) }
+    puzzle { part2(inputLines("input.txt")) }
+    puzzle { parts12(inputLines("input.txt")) }
 }
 
 private val pairs = mapOf('}' to '{', '>' to '<', ')' to '(', ']' to '[')

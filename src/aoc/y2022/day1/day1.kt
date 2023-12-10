@@ -3,9 +3,9 @@ package aoc.y2022.day1
 import gears.puzzle
 
 fun main() {
-    puzzle { part1(linesFrom("day1.test.txt"), 1) }
-    puzzle { part1(linesFrom("day1.input.txt"), 1) }
-    puzzle { part1(linesFrom("day1.input.txt"), 3) }
+    puzzle { part1(inputLines("day1.test.txt"), 1) }
+    puzzle { part1(inputLines("day1.input.txt"), 1) }
+    puzzle { part1(inputLines("day1.input.txt"), 3) }
 }
 
 private fun part1(input: List<String>, count: Int): Int {

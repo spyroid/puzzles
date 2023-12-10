@@ -5,11 +5,9 @@ import kotlin.time.measureTimedValue
 
 class PuzzleRunner {
     lateinit var klass: Any
-    private val localDir by lazy { File(("src." + klass.javaClass.packageName).replace(".", File.separatorChar.toString())) }
-    fun linesFrom(filename: String) = File(localDir, filename).readLines()
-    fun allFrom(filename: String) = File(localDir, filename).readText()
-    fun input() = allFrom("input.txt").trim()
-    fun inputLines() = linesFrom("input.txt")
+    private val localDir by lazy { File(("src." + klass.javaClass.packageName).replace('.', File.separatorChar)) }
+    fun inputLines(fileName: String = "input.txt") = File(localDir, fileName).readLines()
+    fun input(fileName: String = "input.txt") = File(localDir, fileName).readText().trim()
 }
 
 fun <T> puzzle(title: String = "", code: PuzzleRunner.() -> T): T {

@@ -3,8 +3,8 @@ package aoc.y2016.day12
 import gears.puzzle
 
 private fun main() {
-    puzzle { leo(linesFrom("input.txt"), 0) }
-    puzzle { leo(linesFrom("input.txt"), 1) }
+    puzzle { leo(inputLines("input.txt"), 0) }
+    puzzle { leo(inputLines("input.txt"), 1) }
 }
 
 private fun leo(lines: List<String>, c: Int): Int? {

@@ -4,8 +4,8 @@ import gears.puzzle
 import java.util.*
 
 fun main() {
-    puzzle { part1(linesFrom("input.txt")) }
-    puzzle { part2(linesFrom("input.txt")) }
+    puzzle { part1(inputLines("input.txt")) }
+    puzzle { part2(inputLines("input.txt")) }
 }
 
 fun part1(input: List<String>): Int {

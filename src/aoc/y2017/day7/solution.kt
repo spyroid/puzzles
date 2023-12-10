@@ -3,8 +3,8 @@ package aoc.y2017.day7
 import gears.puzzle
 
 private fun main() {
-    puzzle { circus(linesFrom("input.txt")) }
-    puzzle { circus(linesFrom("input.txt"), true) }
+    puzzle { circus(inputLines("input.txt")) }
+    puzzle { circus(inputLines("input.txt"), true) }
 }
 
 private fun circus(input: List<String>, part2: Boolean = false): Any {

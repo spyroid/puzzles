@@ -3,8 +3,8 @@ package aoc.y2017.day4
 import gears.puzzle
 
 private fun main() {
-    puzzle { phrase(linesFrom("input.txt")) }
-    puzzle { phrase(linesFrom("input.txt"), true) }
+    puzzle { phrase(inputLines("input.txt")) }
+    puzzle { phrase(inputLines("input.txt"), true) }
 }
 
 private fun phrase(input: List<String>, part2: Boolean = false) = input.map { line ->

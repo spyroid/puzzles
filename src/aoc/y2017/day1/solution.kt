@@ -3,8 +3,8 @@ package aoc.y2017.day1
 import gears.puzzle
 
 private fun main() {
-    puzzle { captcha(linesFrom("input.txt").first().map { it.digitToInt() }) }
-    puzzle { captcha2(linesFrom("input.txt").first().map { it.digitToInt() }) }
+    puzzle { captcha(inputLines("input.txt").first().map { it.digitToInt() }) }
+    puzzle { captcha2(inputLines("input.txt").first().map { it.digitToInt() }) }
 }
 
 private fun captcha(items: List<Int>): Int {

@@ -3,10 +3,10 @@ package aoc.y2022.day2
 import gears.puzzle
 
 fun main() {
-    puzzle { getScore(linesFrom("day2.test.txt"), strategy1) }
-    puzzle { getScore(linesFrom("day2.input.txt"), strategy1) }
-    puzzle { getScore(linesFrom("day2.test.txt"), strategy2) }
-    puzzle { getScore(linesFrom("day2.input.txt"), strategy2) }
+    puzzle { getScore(inputLines("day2.test.txt"), strategy1) }
+    puzzle { getScore(inputLines("day2.input.txt"), strategy1) }
+    puzzle { getScore(inputLines("day2.test.txt"), strategy2) }
+    puzzle { getScore(inputLines("day2.input.txt"), strategy2) }
 }
 
 private val strategy1 = mapOf(

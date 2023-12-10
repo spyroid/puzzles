@@ -4,9 +4,9 @@ import gears.permutations
 import gears.puzzle
 
 private fun main() {
-    puzzle { part1(linesFrom("test.txt")).min() }
-    puzzle { part1(linesFrom("input.txt")).min() }
-    puzzle { part1(linesFrom("input.txt")).max() }
+    puzzle { part1(inputLines("test.txt")).min() }
+    puzzle { part1(inputLines("input.txt")).min() }
+    puzzle { part1(inputLines("input.txt")).max() }
 }
 
 private val r = "(\\w+) to (\\w+) = (\\d+)".toRegex()

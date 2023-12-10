@@ -5,16 +5,16 @@ import kotlin.math.min
 
 private fun main() {
     puzzle {
-        part1(linesFrom("test.txt"), 1000)
+        part1(inputLines("test.txt"), 1000)
     }
     puzzle {
-        part1(linesFrom("input.txt"), 2503)
+        part1(inputLines("input.txt"), 2503)
     }
     puzzle {
-        part2(linesFrom("test.txt"), 1000)
+        part2(inputLines("test.txt"), 1000)
     }
     puzzle {
-        part2(linesFrom("input.txt"), 2503)
+        part2(inputLines("input.txt"), 2503)
     }
 }
 

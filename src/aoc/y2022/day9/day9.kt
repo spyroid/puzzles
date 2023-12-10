@@ -5,9 +5,9 @@ import gears.Point
 import gears.puzzle
 
 fun main() {
-    puzzle("t1") { rope(linesFrom("test.txt"), 2) }
-    puzzle("1") { rope(linesFrom("input.txt"), 2) }
-    puzzle("2") { rope(linesFrom("input.txt"), 10) }
+    puzzle("t1") { rope(inputLines("test.txt"), 2) }
+    puzzle("1") { rope(inputLines("input.txt"), 2) }
+    puzzle("2") { rope(inputLines("input.txt"), 10) }
 }
 
 private fun rope(input: List<String>, knots: Int): Int = buildSet {

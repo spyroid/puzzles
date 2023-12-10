@@ -4,10 +4,10 @@ import gears.Point
 import gears.puzzle
 
 private fun main() {
-    puzzle { part1(linesFrom("test.txt").first()).size }
-    puzzle { part1(linesFrom("input.txt").first()).size }
-    puzzle { part2(linesFrom("test.txt").first()).size }
-    puzzle { part2(linesFrom("input.txt").first()).size }
+    puzzle { part1(inputLines("test.txt").first()).size }
+    puzzle { part1(inputLines("input.txt").first()).size }
+    puzzle { part2(inputLines("test.txt").first()).size }
+    puzzle { part2(inputLines("input.txt").first()).size }
 }
 
 private fun part1(all: String): MutableSet<Point> {

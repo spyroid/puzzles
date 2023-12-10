@@ -4,8 +4,8 @@ import gears.puzzle
 import kotlin.math.abs
 
 fun main() {
-    puzzle { part1And2(linesFrom("input.txt").first()) }
-    puzzle { part1And2(linesFrom("input.txt").first(), true) }
+    puzzle { part1And2(inputLines("input.txt").first()) }
+    puzzle { part1And2(inputLines("input.txt").first(), true) }
 }
 
 private fun part1And2(line: String, expensiveFuel: Boolean = false): Int {

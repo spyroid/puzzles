@@ -5,7 +5,7 @@ import gears.fullBlock
 import gears.puzzle
 
 private fun main() {
-    puzzle { factor(linesFrom("input.txt")) }
+    puzzle { factor(inputLines("input.txt")) }
 }
 
 private fun factor(lines: List<String>): Int {

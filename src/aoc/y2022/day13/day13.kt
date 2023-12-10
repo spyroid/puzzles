@@ -3,10 +3,10 @@ package aoc.y2022.day13
 import gears.puzzle
 
 fun main() {
-    puzzle("t1") { part1(linesFrom("test.txt")) }
-    puzzle("1") { part1(linesFrom("input.txt")) }
-    puzzle("t2") { part2(linesFrom("test.txt")) }
-    puzzle("2") { part2(linesFrom("input.txt")) }
+    puzzle("t1") { part1(inputLines("test.txt")) }
+    puzzle("1") { part1(inputLines("input.txt")) }
+    puzzle("t2") { part2(inputLines("test.txt")) }
+    puzzle("2") { part2(inputLines("input.txt")) }
 }
 
 private fun parseList(line: String, idx: Int = 1): Pair<Value, Int> {

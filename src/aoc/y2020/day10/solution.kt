@@ -4,10 +4,10 @@ import gears.puzzle
 import gears.toInts
 
 private fun main() {
-    puzzle { part1(linesFrom("test.txt").toInts()) }
-    puzzle { part1(linesFrom("input.txt").toInts()) }
-    puzzle { part2(linesFrom("test.txt").toInts()) }
-    puzzle { part2(linesFrom("input.txt").toInts()) }
+    puzzle { part1(inputLines("test.txt").toInts()) }
+    puzzle { part1(inputLines("input.txt").toInts()) }
+    puzzle { part2(inputLines("test.txt").toInts()) }
+    puzzle { part2(inputLines("input.txt").toInts()) }
 }
 
 private fun part1(input: List<Int>): Int {

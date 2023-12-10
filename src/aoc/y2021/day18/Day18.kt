@@ -5,8 +5,8 @@ import kotlin.math.ceil
 import kotlin.math.floor
 
 fun main() {
-    puzzle { part1(linesFrom("input.txt")) }
-    puzzle { part2(linesFrom("input.txt")) }
+    puzzle { part1(inputLines("input.txt")) }
+    puzzle { part2(inputLines("input.txt")) }
 }
 
 private fun part1(input: List<String>) = input.map { Node.of(it) }.reduce { a, b -> a + b }.magnitude()

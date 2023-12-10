@@ -4,8 +4,8 @@ import gears.puzzle
 import gears.toInts
 
 private fun main() {
-    puzzle { maze(linesFrom("input.txt").toInts()) }
-    puzzle { maze(linesFrom("input.txt").toInts(), true) }
+    puzzle { maze(inputLines("input.txt").toInts()) }
+    puzzle { maze(inputLines("input.txt").toInts(), true) }
 }
 
 private fun maze(input: List<Int>, part2: Boolean = false): Int {

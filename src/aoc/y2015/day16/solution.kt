@@ -3,8 +3,8 @@ package aoc.y2015.day16
 import gears.puzzle
 
 private fun main() {
-    puzzle { sue1(linesFrom("input.txt")) }
-    puzzle { sue2(linesFrom("input.txt")) }
+    puzzle { sue1(inputLines("input.txt")) }
+    puzzle { sue2(inputLines("input.txt")) }
 }
 
 private fun sue2(lines: List<String>): Int {

@@ -3,8 +3,8 @@ package aoc.y2016.day7
 import gears.puzzle
 
 private fun main() {
-    puzzle { ip71(linesFrom("input.txt")) }
-    puzzle { ip72(linesFrom("input.txt")) }
+    puzzle { ip71(inputLines("input.txt")) }
+    puzzle { ip72(inputLines("input.txt")) }
 }
 
 private val re = "(\\[\\w+])".toRegex()

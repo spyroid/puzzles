@@ -4,16 +4,16 @@ import gears.puzzle
 
 private fun main() {
     puzzle("test") {
-        part1(linesFrom("test.txt"))
+        part1(inputLines("test.txt"))
     }
     puzzle {
-        part1(linesFrom("input.txt"))
+        part1(inputLines("input.txt"))
     }
     puzzle("test") {
-        part2(linesFrom("test.txt"))
+        part2(inputLines("test.txt"))
     }
     puzzle {
-        part2(linesFrom("input.txt"))
+        part2(inputLines("input.txt"))
     }
 }
 

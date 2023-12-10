@@ -3,8 +3,8 @@ package aoc.y2016.day6
 import gears.puzzle
 
 private fun main() {
-    puzzle { noise(linesFrom("input.txt")) }
-    puzzle { noise(linesFrom("input.txt"), true) }
+    puzzle { noise(inputLines("input.txt")) }
+    puzzle { noise(inputLines("input.txt"), true) }
 }
 
 private fun noise(lines: List<String>, part2: Boolean = false): String {

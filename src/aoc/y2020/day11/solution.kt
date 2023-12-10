@@ -4,10 +4,10 @@ import gears.Grid
 import gears.puzzle
 
 private fun main() {
-    puzzle { part1(Grid.of(linesFrom("test.txt")) { it }) }
-    puzzle { part1(Grid.of(linesFrom("input.txt")) { it }) }
-    puzzle { part2(Grid.of(linesFrom("test.txt")) { it }) }
-    puzzle { part2(Grid.of(linesFrom("input.txt")) { it }) }
+    puzzle { part1(Grid.of(inputLines("test.txt")) { it }) }
+    puzzle { part1(Grid.of(inputLines("input.txt")) { it }) }
+    puzzle { part2(Grid.of(inputLines("test.txt")) { it }) }
+    puzzle { part2(Grid.of(inputLines("input.txt")) { it }) }
 }
 
 private fun <T> findAll(grid: Grid<T>, x: Int, y: Int): List<List<T>> {

@@ -5,7 +5,7 @@ import gears.puzzle
 import gears.safeSet
 
 private fun main() {
-    puzzle { malloc(linesFrom("input.txt").first().split("\\s+".toRegex()).map { it.toInt() }) }
+    puzzle { malloc(inputLines("input.txt").first().split("\\s+".toRegex()).map { it.toInt() }) }
 }
 
 private fun malloc(input: List<Int>, part2: Boolean = false): Pair<Int, Int> {

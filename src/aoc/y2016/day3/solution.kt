@@ -3,8 +3,8 @@ package aoc.y2016.day3
 import gears.puzzle
 
 private fun main() {
-    puzzle { threeSides(linesFrom("input.txt")) }
-    puzzle { threeSides(linesFrom("input.txt"), true) }
+    puzzle { threeSides(inputLines("input.txt")) }
+    puzzle { threeSides(inputLines("input.txt"), true) }
 }
 
 private fun threeSides(lines: List<String>, part2: Boolean = false): Int {

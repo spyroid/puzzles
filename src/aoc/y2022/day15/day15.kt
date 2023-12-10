@@ -5,10 +5,10 @@ import kotlin.math.abs
 import kotlin.math.max
 
 fun main() {
-    puzzle("t1") { part1(linesFrom("test.txt"), 10) }
-    puzzle("1") { part1(linesFrom("input.txt"), 2000000) }
-    puzzle("t2") { part2(linesFrom("test.txt"), 20) }
-    puzzle("2") { part2(linesFrom("input.txt"), 4000000) }
+    puzzle("t1") { part1(inputLines("test.txt"), 10) }
+    puzzle("1") { part1(inputLines("input.txt"), 2000000) }
+    puzzle("t2") { part2(inputLines("test.txt"), 20) }
+    puzzle("2") { part2(inputLines("input.txt"), 4000000) }
 }
 
 private fun part1(input: List<String>, whichRow: Int): Int {

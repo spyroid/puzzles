@@ -6,8 +6,8 @@ import gears.Point
 import gears.puzzle
 
 private fun main() {
-    puzzle { bathroom(linesFrom("input.txt")) }
-    puzzle { bathroom(linesFrom("input.txt"), true) }
+    puzzle { bathroom(inputLines("input.txt")) }
+    puzzle { bathroom(inputLines("input.txt"), true) }
 }
 
 private fun bathroom(lines: List<String>, fancy: Boolean = false): String {

@@ -3,10 +3,10 @@ package aoc.y2020.day14
 import gears.puzzle
 
 private fun main() {
-    puzzle { part1(linesFrom("test.txt")) }
-    puzzle { part1(linesFrom("input.txt")) }
-    puzzle { part2(linesFrom("test2.txt")) }
-    puzzle { part2(linesFrom("input.txt")) }
+    puzzle { part1(inputLines("test.txt")) }
+    puzzle { part1(inputLines("input.txt")) }
+    puzzle { part2(inputLines("test2.txt")) }
+    puzzle { part2(inputLines("input.txt")) }
 }
 
 private fun part2(input: List<String>): Long {

@@ -5,8 +5,8 @@ import gears.puzzle
 import kotlin.math.abs
 
 fun main() {
-    puzzle { crt(linesFrom("test.txt")) }
-    puzzle { crt(linesFrom("input.txt")) }
+    puzzle { crt(inputLines("test.txt")) }
+    puzzle { crt(inputLines("input.txt")) }
 }
 
 private fun crt(input: List<String>): Int {

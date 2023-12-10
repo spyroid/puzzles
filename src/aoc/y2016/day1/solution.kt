@@ -5,8 +5,8 @@ import gears.Point
 import gears.puzzle
 
 private fun main() {
-    puzzle { taxicab(linesFrom("input.txt")) }
-    puzzle { taxicab(linesFrom("input.txt"), true) }
+    puzzle { taxicab(inputLines("input.txt")) }
+    puzzle { taxicab(inputLines("input.txt"), true) }
 }
 
 private fun taxicab(lines: List<String>, twice: Boolean = false): Int {

@@ -3,8 +3,8 @@ package aoc.y2021.day08
 import gears.puzzle
 
 fun main() {
-    puzzle { part1(linesFrom("input.txt")) }
-    puzzle { part2(linesFrom("input.txt")) }
+    puzzle { part1(inputLines("input.txt")) }
+    puzzle { part2(inputLines("input.txt")) }
 }
 
 private fun part1(seq: List<String>) = readDigits(seq).map { box -> box.numbers().count { it in listOf(1, 4, 7, 8) } }.sum()

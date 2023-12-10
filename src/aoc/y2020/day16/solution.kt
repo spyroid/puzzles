@@ -4,10 +4,10 @@ import gears.puzzle
 
 private fun main() {
     puzzle("test") {
-        all(linesFrom("test.txt").let { Box.of(it) })
+        all(inputLines("test.txt").let { Box.of(it) })
     }
     puzzle {
-        all(linesFrom("input.txt").let { Box.of(it) })
+        all(inputLines("input.txt").let { Box.of(it) })
     }
 }
 

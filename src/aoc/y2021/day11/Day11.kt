@@ -3,8 +3,8 @@ package aoc.y2021.day11
 import gears.puzzle
 
 fun main() {
-    puzzle { part1(linesFrom("input.txt")) }
-    puzzle { part2(linesFrom("input.txt")) }
+    puzzle { part1(inputLines("input.txt")) }
+    puzzle { part2(inputLines("input.txt")) }
 }
 
 private data class Point(val x: Int, val y: Int, var v: Int) {

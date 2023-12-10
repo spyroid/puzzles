@@ -3,7 +3,7 @@ package aoc.y2016.day10
 import gears.puzzle
 
 private fun main() {
-    puzzle { bots(linesFrom("input.txt")) }
+    puzzle { bots(inputLines("input.txt")) }
 }
 
 private fun bots(lines: List<String>): Pair<String, Int> {

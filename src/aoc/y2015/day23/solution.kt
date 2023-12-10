@@ -3,8 +3,8 @@ package aoc.y2015.day23
 import gears.puzzle
 
 private fun main() {
-    puzzle { turing(linesFrom("input.txt")) }
-    puzzle { turing(linesFrom("input.txt"), 1) }
+    puzzle { turing(inputLines("input.txt")) }
+    puzzle { turing(inputLines("input.txt"), 1) }
 }
 
 private fun turing(program: List<String>, a: Int = 0): Int? {

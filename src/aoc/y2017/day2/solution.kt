@@ -3,8 +3,8 @@ package aoc.y2017.day2
 import gears.puzzle
 
 private fun main() {
-    puzzle { checksum(linesFrom("input.txt").asInts()) }
-    puzzle { checksum2(linesFrom("input.txt").asInts()) }
+    puzzle { checksum(inputLines("input.txt").asInts()) }
+    puzzle { checksum2(inputLines("input.txt").asInts()) }
 }
 
 private fun List<String>.asInts() = this.map { s -> s.split("\\s+".toRegex()).map { it.toInt() }.sortedDescending() }

@@ -5,10 +5,10 @@ import gears.Point
 import gears.puzzle
 
 private fun main() {
-    puzzle { part1(linesFrom("test.txt").asCommands()) }
-    puzzle { part1(linesFrom("input.txt").asCommands()) }
-    puzzle { part2(linesFrom("test.txt").asCommands()) }
-    puzzle { part2(linesFrom("input.txt").asCommands()) }
+    puzzle { part1(inputLines("test.txt").asCommands()) }
+    puzzle { part1(inputLines("input.txt").asCommands()) }
+    puzzle { part2(inputLines("test.txt").asCommands()) }
+    puzzle { part2(inputLines("input.txt").asCommands()) }
 }
 
 private fun part2(input: List<Pair<Char, Int>>): Int {

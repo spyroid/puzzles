@@ -3,8 +3,8 @@ package aoc.y2016.day4
 import gears.puzzle
 
 private fun main() {
-    puzzle { obscurity(linesFrom("input.txt")) }
-    puzzle { obscurity2(linesFrom("input.txt")) }
+    puzzle { obscurity(inputLines("input.txt")) }
+    puzzle { obscurity2(inputLines("input.txt")) }
 }
 
 private fun obscurity2(lines: List<String>): Int {

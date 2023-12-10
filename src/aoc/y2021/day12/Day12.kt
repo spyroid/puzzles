@@ -3,8 +3,8 @@ package aoc.y2021.day12
 import gears.puzzle
 
 fun main() {
-    puzzle { part1(linesFrom("input.txt")) }
-    puzzle { part2(linesFrom("input.txt")) }
+    puzzle { part1(inputLines("input.txt")) }
+    puzzle { part2(inputLines("input.txt")) }
 }
 
 private fun find1(map: Map<String, List<String>>, el: String, target: String, visited: MutableSet<String>, cPath: MutableList<String>, distinctPaths: MutableSet<List<String>>) {

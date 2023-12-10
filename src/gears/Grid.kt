@@ -68,6 +68,19 @@ class Grid<T> private constructor(private var grid: MutableList<MutableList<T>>)
         ).mapNotNull { it }
     }
 
+    fun pointsAround8(x: Int, y: Int): List<Point> {
+        return listOf(
+            pointAt(x - 1, y),
+            pointAt(x + 1, y),
+            pointAt(x, y + 1),
+            pointAt(x - 1, y + 1),
+            pointAt(x + 1, y + 1),
+            pointAt(x, y - 1),
+            pointAt(x - 1, y - 1),
+            pointAt(x + 1, y - 1),
+        ).mapNotNull { it }
+    }
+
     fun pointsOf(body: (x: Int, y: Int, v: T) -> Boolean): List<Point> {
         val res = mutableListOf<Point>()
         for (y in this.grid.indices) {
@@ -103,6 +116,9 @@ class Grid<T> private constructor(private var grid: MutableList<MutableList<T>>)
 
     fun allPoints() = sequence { for (y in 0..maxY()) for (x in 0..maxX()) yield(Point(x, y)) }
     fun all() = sequence { for (y in 0..maxY()) for (x in 0..maxX()) yield(GValue(Point(x, y), at(x, y)!!)) }
+
+    fun gvAround(p: Point) = pointsAround(p.x, p.y).map { GValue(it, at(it)!!) }
+    fun gvAround8(p: Point) = pointsAround8(p.x, p.y).map { GValue(it, at(it)!!) }
 
     data class GValue<T>(val p: Point, val v: T)
 

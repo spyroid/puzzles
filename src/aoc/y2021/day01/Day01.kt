@@ -5,10 +5,10 @@ import gears.toInts
 
 fun main() {
     puzzle {
-        part1(linesFrom("input.txt").toInts())
+        part1(inputLines("input.txt").toInts())
     }
     puzzle {
-        part2(linesFrom("input.txt").toInts())
+        part2(inputLines("input.txt").toInts())
     }
 }
 

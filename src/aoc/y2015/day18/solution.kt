@@ -4,8 +4,8 @@ import gears.Grid
 import gears.puzzle
 
 private fun main() {
-    puzzle { gif(linesFrom("input.txt")) }
-    puzzle { gif(linesFrom("input.txt"), true) }
+    puzzle { gif(inputLines("input.txt")) }
+    puzzle { gif(inputLines("input.txt"), true) }
 }
 
 private fun gif(lines: List<String>, isStuck: Boolean = false): Int {

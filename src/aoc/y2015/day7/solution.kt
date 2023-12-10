@@ -3,9 +3,9 @@ package aoc.y2015.day7
 import gears.puzzle
 
 private fun main() {
-    puzzle { part1(linesFrom("test.txt"), "y") }
-    puzzle { part1(linesFrom("input.txt"), "a") }
-    puzzle { part2(linesFrom("input.txt"), "a") }
+    puzzle { part1(inputLines("test.txt"), "y") }
+    puzzle { part1(inputLines("input.txt"), "a") }
+    puzzle { part2(inputLines("input.txt"), "a") }
 }
 
 private fun part2(lines: List<String>, wire: String) = part1(lines, wire, part1(lines, wire))

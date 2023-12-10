@@ -3,8 +3,8 @@ package aoc.y2021.day06
 import gears.puzzle
 
 fun main() {
-    puzzle { part1(linesFrom("input.txt").first(), 80) }
-    puzzle { part1(linesFrom("input.txt").first(), 256) }
+    puzzle { part1(inputLines("input.txt").first(), 80) }
+    puzzle { part1(inputLines("input.txt").first(), 256) }
 }
 
 private fun liveOneDay(map: Map<Int, Long>): Map<Int, Long> {

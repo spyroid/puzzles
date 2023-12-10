@@ -3,8 +3,8 @@ package aoc.y2015.day19
 import gears.puzzle
 
 private fun main() {
-    puzzle { medicine1(linesFrom("input.txt").asPair()) }
-    puzzle { medicine2(linesFrom("input.txt")) }
+    puzzle { medicine1(inputLines("input.txt").asPair()) }
+    puzzle { medicine2(inputLines("input.txt")) }
 }
 
 private fun medicine2(input: List<String>): Int {

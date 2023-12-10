@@ -4,10 +4,10 @@ import gears.puzzle
 
 fun main() {
     puzzle {
-        part1(linesFrom("input.txt").asCommands())
+        part1(inputLines("input.txt").asCommands())
     }
     puzzle {
-        part2(linesFrom("input.txt").asCommands())
+        part2(inputLines("input.txt").asCommands())
     }
 }
 

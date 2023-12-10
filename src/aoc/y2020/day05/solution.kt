@@ -3,9 +3,9 @@ package aoc.y2020.day05
 import gears.puzzle
 
 private fun main() {
-    puzzle { part1(linesFrom("test.txt")) }
-    puzzle { part1(linesFrom("input.txt")) }
-    puzzle { part2(linesFrom("input.txt")) }
+    puzzle { part1(inputLines("test.txt")) }
+    puzzle { part1(inputLines("input.txt")) }
+    puzzle { part2(inputLines("input.txt")) }
 }
 
 private fun part1(lines: List<String>): Int = lines.maxOf { decode(it) }

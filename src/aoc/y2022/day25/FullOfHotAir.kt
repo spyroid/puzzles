@@ -23,6 +23,6 @@ private class FullOfHotAir {
 }
 
 fun main() {
-    puzzle("t1") { FullOfHotAir().part1(linesFrom("test.txt")) }
-    puzzle("1") { FullOfHotAir().part1(linesFrom("input.txt")) }
+    puzzle("t1") { FullOfHotAir().part1(inputLines("test.txt")) }
+    puzzle("1") { FullOfHotAir().part1(inputLines("input.txt")) }
 }

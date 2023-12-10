@@ -4,8 +4,8 @@ import gears.puzzle
 import kotlin.math.abs
 
 fun main() {
-    puzzle { part1(allFrom("input.txt")) }
-    puzzle { part2(allFrom("input.txt")) }
+    puzzle { part1(input("input.txt")) }
+    puzzle { part2(input("input.txt")) }
 }
 
 private fun part1(input: String) = Scanners(input).assembleMap().beacons.size

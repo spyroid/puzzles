@@ -5,10 +5,10 @@ import gears.puzzle
 
 private fun main() {
     puzzle("test") {
-        part1(linesFrom("test.txt").asTiles())
+        part1(inputLines("test.txt").asTiles())
     }
     puzzle {
-        part1(linesFrom("input.txt").asTiles())
+        part1(inputLines("input.txt").asTiles())
     }
 //    puzzle("test") {
 //        part2(linesFrom("test.txt").asTiles())

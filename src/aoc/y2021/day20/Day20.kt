@@ -3,8 +3,8 @@ package aoc.y2021.day20
 import gears.puzzle
 
 fun main() {
-    puzzle { solve(linesFrom("input.txt"), 2) }
-    puzzle { solve(linesFrom("input.txt"), 50) }
+    puzzle { solve(inputLines("input.txt"), 2) }
+    puzzle { solve(inputLines("input.txt"), 50) }
 }
 
 private data class Pixel(val x: Int, val y: Int, var color: Int)

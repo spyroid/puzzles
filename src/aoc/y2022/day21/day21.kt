@@ -4,10 +4,10 @@ import gears.puzzle
 import kotlin.math.abs
 
 fun main() {
-    puzzle("t1") { part1(linesFrom("test.txt")) }
-    puzzle("1") { part1(linesFrom("input.txt")) }
-    puzzle("t2") { part2(linesFrom("test.txt")) }
-    puzzle("2") { part2(linesFrom("input.txt")) }
+    puzzle("t1") { part1(inputLines("test.txt")) }
+    puzzle("1") { part1(inputLines("input.txt")) }
+    puzzle("t2") { part2(inputLines("test.txt")) }
+    puzzle("2") { part2(inputLines("input.txt")) }
 }
 
 private fun part1(lines: List<String>): Long {
