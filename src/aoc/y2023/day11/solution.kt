@@ -9,9 +9,8 @@ private fun main() {
 }
 
 private fun cosmicExpansion(input: List<String>, multiplier: Long): Any {
-    val ri = input.withIndex().filter { s -> s.value.all { it == '.' } }.map { it.index }.toSet()
-    val ci = input.first().indices.asSequence().map { c -> input.map { it[c] } }.withIndex()
-        .filter { l -> l.value.all { it == '.' } }.map { it.index }.toSet()
+    val ri = input.withIndex().filter { s -> s.value.all { it == '.' } }.map { it.index }
+    val ci = input.first().indices.filter { x -> input.none { it[x] == '#' } }
 
     val universe = input.indices.flatMap { r ->
         input[r].indices.filter { input[r][it] == '#' }.map { c ->
