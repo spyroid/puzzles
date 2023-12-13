@@ -16,7 +16,7 @@ private fun pointIncidence(input: String, smudges: Int): Any {
     fun mirrorAt(row: Int, size: Int, block: List<String>) =
         (0..<size).sumOf { diffs(block[row - 1 - it], block[row + it]) } == smudges
 
-    fun rowScore(block: List<String>) = (1..<block.size).singleOrNull { mirrorAt(it, min(it, block.size - it), block) } ?: 0
+    fun rowScore(block: List<String>) = (1..<block.size).firstOrNull { mirrorAt(it, min(it, block.size - it), block) } ?: 0
     fun columnScore(block: List<String>) = rowScore(block.transpose())
     fun score(block: List<String>) = rowScore(block) * 100 + columnScore(block)
 
