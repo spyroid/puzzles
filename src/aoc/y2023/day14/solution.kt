@@ -30,7 +30,7 @@ private fun parabolicReflectorDish(input: List<String>): Any {
 
     fun Map<Point, Char>.summarize() = filterValues { it == 'O' }.keys.sumOf { h - it.y }
 
-    val history = mutableListOf<Pair<Any, Int>>()
+    val map = mutableListOf<Pair<Any, Int>>()
 
     var part1 = 0
     var part2 = 0
@@ -38,15 +38,15 @@ private fun parabolicReflectorDish(input: List<String>): Any {
     while (true) {
         repeat(4) {
             packUp()
-            if (history.isEmpty() && it == 0) part1 = data.summarize()
+            if (map.isEmpty() && it == 0) part1 = data.summarize()
             rotateRight()
         }
 
         val key = data.entries.toSet() as Any to data.summarize()
-        if (key !in history) history.add(key) else {
-            val cycleStart = history.indexOf(key)
-            val cycleLength = history.size - cycleStart
-            part2 = history[cycleStart - 1 + (1_000_000_000 - cycleStart) % cycleLength].second
+        if (key !in map) map.add(key) else {
+            val cycleStart = map.indexOf(key)
+            val cycleLength = map.size - cycleStart
+            part2 = map[cycleStart - 1 + (1_000_000_000 - cycleStart) % cycleLength].second
             break
         }
     }
