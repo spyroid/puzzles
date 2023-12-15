@@ -1,6 +1,5 @@
 package aoc.y2023.day14
 
-import gears.Point
 import gears.puzzle
 
 private fun main() {
@@ -8,47 +7,27 @@ private fun main() {
 }
 
 private fun parabolicReflectorDish(input: List<String>): Any {
-
-    var data = input.flatMapIndexed { y, l ->
-        l.mapIndexedNotNull { x, c -> if (c == '.') null else Point(x, y) to c }
-    }.toMap(mutableMapOf())
-
-    val (w, h) = data.keys.maxOf { it.x } + 1 to data.keys.maxOf { it.y } + 1
-
-    fun packUp() {
-        for (y in 0 until h) for (x in 0 until w) {
-            if (data[Point(x, y)] != 'O') continue
-            val y2 = (0 until y).reversed().takeWhile { data[Point(x, it)] == null }.lastOrNull() ?: continue
-            data -= Point(x, y)
-            data[Point(x, y2)] = 'O'
-        }
+    val seen = mutableMapOf<List<String>, Long>()
+    var cur = input
+    var times = 0L
+    val n = 1_000_000_000L
+    while (cur !in seen) {
+        seen[cur] = times
+        cur = cur.cycle()
+        if (++times == n) break
     }
-
-    fun rotateRight() {
-        data = data.mapKeysTo(mutableMapOf()) { (k, _) -> Point(h - 1 - k.y, k.x) }
-    }
-
-    fun Map<Point, Char>.summarize() = filterValues { it == 'O' }.keys.sumOf { h - it.y }
-
-    val map = mutableListOf<Pair<Any, Int>>()
-
-    var part1 = 0
-    var part2 = 0
-
-    while (true) {
-        repeat(4) {
-            packUp()
-            if (map.isEmpty() && it == 0) part1 = data.summarize()
-            rotateRight()
-        }
-
-        val key = data.entries.toSet() as Any to data.summarize()
-        if (key !in map) map.add(key) else {
-            val cycleStart = map.indexOf(key)
-            val cycleLength = map.size - cycleStart
-            part2 = map[cycleStart - 1 + (1_000_000_000 - cycleStart) % cycleLength].second
-            break
-        }
-    }
-    return part1 to part2
+    val offset = seen[cur] ?: 0
+    val loop = seen.size - offset
+    val afterLoop = (n - offset) % loop
+    val p2 = (1..afterLoop).fold(cur) { total, _ -> total.cycle() }
+    return input.packUp().score() to p2.score()
 }
+
+private fun List<String>.cycle() = (1..4).fold(this) { acc, _ -> acc.packUp().rotateRight() }
+private fun List<String>.packUp() = this.first().indices.map { i ->
+    column(i).split('#').joinToString("#") { it.toCharArray().sortedArrayDescending().joinToString("") }
+}.let { it.first().indices.map { i -> it.column(i) } }
+
+private fun List<String>.rotateRight(): List<String> = first().indices.map { this.column(it).reversed() }
+private fun List<String>.column(c: Int): String = buildString { this@column.forEach { s -> append(s[c]) } }
+private fun List<String>.score() = mapIndexed { i, s -> s.count { it == 'O' } * (this.size - i) }.sum()
