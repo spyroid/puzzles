@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm") version "2.0.0-Beta1"
+    kotlin("jvm") version "2.0.0-Beta2"
     id("com.github.ben-manes.versions") version "0.50.0"
 }
 
@@ -22,5 +22,17 @@ tasks {
         main {
             java.srcDirs("src")
         }
+    }
+    processResources {
+        enabled = false
+    }
+    processTestResources {
+        enabled = false
+    }
+    jar {
+        enabled = false
+    }
+    test {
+        enabled = false
     }
 }
