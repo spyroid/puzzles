@@ -10,7 +10,7 @@ private fun lensLibrary(input: String): Any {
     val lenses = input.split(",")
     val part1 = lenses.sumOf { it.hash() }
     val part2 = buildMap<String, Int>() {
-        lenses.onEach { s -> if (s.contains('-')) remove(s.substringBefore('-')) else s.split('=').let { (a, b) -> this[a] = b.toInt() } }
+        for (l in lenses) if (l.contains('-')) remove(l.substringBefore('-')) else l.split('=').let { (a, b) -> this[a] = b.toInt() }
     }.entries.groupBy { it.key.hash() }
         .map { (it.key + 1) * it.value.foldIndexed(0) { i, acc, lens -> acc + (i + 1) * lens.value } }
         .sum()
