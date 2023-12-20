@@ -11,7 +11,7 @@ private fun lensLibrary(input: String): Any {
     val part1 = data.sumOf { Key(it).hashCode() }
 
     val part2 = buildMap<Key, Int>() {
-        data.onEach { if (it.contains('-')) remove(Key(it.substringBefore('-'))) else it.split('=').let { (a, b) -> this[Key(a)] = b.toInt() } }
+        data.onEach { s -> if (s.contains('-')) remove(Key(s.substringBefore('-'))) else s.split('=').let { (a, b) -> this[Key(a)] = b.toInt() } }
     }.entries.groupBy { it.key.hashCode() }
         .map { (it.key + 1) * it.value.foldIndexed(0) { i, acc, lens -> acc + (i + 1) * lens.value } }
         .sum()
