@@ -23,13 +23,13 @@ private fun lavaFloor(input: List<String>): Any {
             energ.add(place)
 
             val c = grid[place.first][place.second]
-            val dirs = guide[Pair(c, place.third)] ?: listOf()
+            val dirs = guide[c to place.third] ?: listOf()
             for (dir in dirs) {
                 val nextPoint = Triple(place.first + dir.y, place.second + dir.x, dir)
                 if (nextPoint.first in 0..maxY && nextPoint.second in 0..maxX) paths.add(nextPoint)
             }
         }
-        return energ.map { Pair(it.first, it.second) }.toSet().size
+        return energ.map { it.first to it.second }.toSet().size
     }
 
     val part1 = energize(input, Triple(0, 0, RIGHT))
