@@ -23,5 +23,8 @@ private fun lavaductLagoon(input: List<String>): Any {
     }
 
     map.values.onEach { println(it.sorted()) }
+        .map { it.sorted().windowed(2).map { it.last() - it.first() }.sum() }
+        .onEach { println(it) }
+        .sum().also { println(it) }
     return 0
 }
