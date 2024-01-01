@@ -41,11 +41,11 @@ enum class Direction(var x: Int, var y: Int) {
     fun asPoint() = Point(x, y)
 
     companion object {
-        fun of(s: String) = of(s.getOrElse(0) { '!' })
-        fun of(ch: Char) =
+        fun of(s: String, yFlip: Boolean = false) = of(s.getOrElse(0) { '!' }, yFlip)
+        fun of(ch: Char, yFlip: Boolean = false) =
             when (ch) {
-                'N', 'U', '^' -> UP
-                'S', 'D', 'v', 'V' -> DOWN
+                'N', 'U', '^' -> if (yFlip) DOWN else UP
+                'S', 'D', 'v', 'V' -> if (yFlip) UP else DOWN
                 'E', 'R', 'F', '>' -> RIGHT
                 'W', 'L', '<' -> LEFT
                 else -> NOTHING
