@@ -1,30 +1,51 @@
 package aoc.y2023.day18
 
-import gears.Direction
-import gears.Point
 import gears.puzzle
+import kotlin.math.abs
 
 private fun main() {
-    puzzle("1 & 2") { lavaductLagoon(inputLines()) }
+    puzzle("1") { lavaductLagoon(inputLines()) }
+    puzzle("2") { lavaductLagoon(inputLines(), true) }
 }
 
-private fun lavaductLagoon(input: List<String>): Any {
-
-    var p = Point.zero
-    val map = mutableMapOf<Int, MutableSet<Int>>()
-    input.map { s ->
-        val (d, l) = s.split(" ").let { Direction.of(it[0], true) to it[1].toInt() }
-        var pp = p
-        repeat(l) {
-            map.compute(pp.y) { k, v -> (v ?: mutableSetOf()).apply { add(pp.x) } }
-            pp += d.asPoint()
+private fun lavaductLagoon(input: List<String>, part2: Boolean = false): Any {
+    val points = mutableListOf(Point(0, 0))
+    var x = 0L
+    input.onEach { s ->
+        val (a, b, c) = s.split(" ")
+        val (dir, len) = when {
+            part2 -> c.drop(2).dropLast(1).let { Direction.of(it.last()) to it.dropLast(1).toLong(16) }
+            else -> Direction.of(a.first()) to b.toLong()
         }
-        p = pp
+        val pp = points.last() + Point(dir.x, dir.y) * len
+        points.add(pp).also { x += len }
     }
+    return points.shoelaceArea().toLong() - x / 2 + 1 + x
+}
 
-    map.values.onEach { println(it.sorted()) }
-        .map { it.sorted().windowed(2).map { it.last() - it.first() }.sum() }
-        .onEach { println(it) }
-        .sum().also { println(it) }
-    return 0
+private fun List<Point>.shoelaceArea() = zipWithNext { a, b -> a.x * b.y - b.x * a.y }.sum()
+    .let { abs(it + last().x * first().y - first().x * last().y) / 2.0 }
+
+private data class Point(var x: Long, var y: Long) {
+    operator fun plus(other: Point) = Point(x + other.x, y + other.y)
+    operator fun times(factor: Long) = Point(x * factor, y * factor)
+}
+
+private enum class Direction(var x: Long, var y: Long) {
+    RIGHT(1, 0),
+    DOWN(0, 1),
+    LEFT(-1, 0),
+    UP(0, -1),
+    NOTHING(0, 0);
+
+    companion object {
+        fun of(ch: Char) =
+            when (ch) {
+                'R', '0' -> RIGHT
+                'D', '1' -> DOWN
+                'L', '2' -> LEFT
+                'U', '3' -> UP
+                else -> NOTHING
+            }
+    }
 }
