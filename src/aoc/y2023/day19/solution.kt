@@ -45,7 +45,7 @@ private fun aplenty(input: List<String>): Any {
         if (wf == "A") res1 += part["x"]!! + part["m"]!! + part["a"]!! + part["s"]!!
     }
     val queue = ArrayDeque<Pair<String, MutableMap<String, IntRange>>>()
-    queue.add(Pair("in", hashMapOf("x" to 1..4000, "m" to 1..4000, "a" to 1..4000, "s" to 1..4000)))
+    queue.add(Pair("in", mutableMapOf("x" to 1..4000, "m" to 1..4000, "a" to 1..4000, "s" to 1..4000)))
     while (!queue.isEmpty()) {
         val r = queue.removeFirst()
         fun count(category: String) = r.second[category]!!.count().toLong()
