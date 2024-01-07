@@ -64,7 +64,6 @@ private var buttonPresses = 0L
 private class Conjunction(override val name: String) : Broadcast(name) {
     val inputStates = mutableMapOf<Broadcast, State>()
     val inputFlipped = mutableMapOf<Broadcast, Long>()
-    var oldBinary = ""
 
     override fun addInput(input: Broadcast) {
         super.addInput(input)
@@ -154,7 +153,7 @@ private fun pushButton(components: MutableMap<String, Broadcast>, counts: Mutabl
     components["button"]?.pulseIn(Button("none"), State.Low, pulses)
     while (pulses.isNotEmpty()) {
         val (dest, src, state) = pulses.removeFirst()
-        counts.compute(state) { a, b -> (b ?: 0) + 1 }
+        counts.compute(state) { _, b -> (b ?: 0) + 1 }
         dest.pulseIn(src, state, pulses)
     }
 }
