@@ -21,13 +21,11 @@ private fun aplenty2(input: List<String>): Any {
     val feeder = components["rx"]!!.inputs.first() as Conjunction
     feeder.feeder = true
 
-    while (true) {
+    while (!feeder.allFlipped()) {
         buttonPresses += 1
         pushButton(components, counts)
-        if (feeder.allFlipped()) {
-            return feeder.inputFlipped.values.lcm()
-        }
     }
+    return feeder.inputFlipped.values.lcm()
 }
 
 private enum class State {
@@ -42,9 +40,7 @@ private open class Broadcast(open val name: String, var feeder: Boolean = false)
     val outputs = mutableListOf<Broadcast>()
     val inputs = mutableListOf<Broadcast>()
 
-    open fun pulseIn(source: Broadcast, state: State, list: Pulses) {
-        pulseOut(state, list)
-    }
+    open fun pulseIn(source: Broadcast, state: State, list: Pulses) = pulseOut(state, list)
 
     fun pulseOut(state: State, list: Pulses) {
         for (o in outputs) list.add(Triple(o, this, state))
@@ -73,9 +69,7 @@ private class Conjunction(override val name: String) : Broadcast(name) {
 
     override fun pulseIn(source: Broadcast, state: State, list: Pulses) {
         inputStates[source] = state
-        if (state == State.High && inputFlipped[source] == 0L) {
-            inputFlipped[source] = buttonPresses
-        }
+        if (state == State.High && inputFlipped[source] == 0L) inputFlipped[source] = buttonPresses
         val sendState = if (inputStates.values.all { it == State.High }) State.Low else State.High
         pulseOut(sendState, list)
     }
@@ -95,9 +89,7 @@ private class FlipFlop(override val name: String) : Broadcast(name) {
 }
 
 private class Button(override val name: String = "Button") : Broadcast(name) {
-    override fun pulseIn(source: Broadcast, state: State, list: Pulses) {
-        pulseOut(State.Low, list)
-    }
+    override fun pulseIn(source: Broadcast, state: State, list: Pulses) = pulseOut(State.Low, list)
 }
 
 private class Output(override val name: String = "output") : Broadcast(name) {
@@ -108,16 +100,12 @@ private class Output(override val name: String = "output") : Broadcast(name) {
 }
 
 private fun createComponent(name: String, names: MutableMap<String, String>, components: MutableMap<String, Broadcast>) {
-    var component: Broadcast
-    var cleanName = name
-    if (name == "broadcaster") {
-        component = Broadcast(name)
-    } else if (name.startsWith("&")) {
-        cleanName = name.drop(1)
-        component = Conjunction(cleanName)
-    } else {
-        cleanName = name.drop(1)
-        component = FlipFlop(cleanName)
+    val component: Broadcast
+    val cleanName = if (name.first() in "%&") name.drop(1) else name
+    component = when {
+        name == "broadcaster" -> Broadcast(name)
+        name.startsWith("&") -> Conjunction(cleanName)
+        else -> FlipFlop(cleanName)
     }
     names[name] = cleanName
     components[cleanName] = component
@@ -137,11 +125,8 @@ private fun readData(input: List<String>): MutableMap<String, Broadcast> {
     val components = mutableMapOf<String, Broadcast>().apply { put("button", Button()) }
     val names = mutableMapOf<String, String>()
 
-    input.map { it.split(" -> ") }
-        .onEach { (a, _) -> createComponent(a, names, components) }
-
-    input.map { it.split(" -> ") }
-        .onEach { (i, o) -> connectComponents(i, o, names, components) }
+    input.map { createComponent(it.substringBefore(" -> "), names, components) }
+    input.map { it.split(" -> ").let { (i, o) -> connectComponents(i, o, names, components) } }
 
     components["button"]!!.addOutput(components["broadcaster"]!!)
     components["broadcaster"]!!.addInput(components["button"]!!)
