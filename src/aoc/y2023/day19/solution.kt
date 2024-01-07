@@ -3,7 +3,7 @@ package aoc.y2023.day19
 import gears.puzzle
 
 private fun main() {
-    puzzle("1") { aplenty(inputLines()) }
+    puzzle("1 & 2") { aplenty(inputLines()) }
 }
 
 private fun aplenty(input: List<String>): Any {
