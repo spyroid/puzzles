@@ -27,11 +27,13 @@ private fun stepCounter(input: List<String>): Any {
 
     // @see https://github.com/villuna/aoc23/wiki/A-Geometric-solution-to-advent-of-code-2023,-day-21
     val paths = findPaths(size + 1)
-    val oddCorners = paths.count { it.value % 2 == 1L && it.value > size / 2 + 1 }.toLong()
-    val evenCorners = paths.count { it.value % 2 == 0L && it.value > size / 2 + 1 }.toLong()
-    val evenBlock = paths.values.count { it % 2 == 0L }.toLong()
-    val oddBlock = paths.values.count { it % 2 == 1L }.toLong()
+
     val n = (26501365L - (size / 2)) / size
+    val (evenCorners, oddCorners) = paths.values.filter { it > size / 2 + 1 }.let { l ->
+        val ec = l.count { it % 2 == 0L }
+        ec to l.size - ec
+    }
+    val (evenBlock, oddBlock) = paths.values.let { l -> l.size to l.size - l.count { it % 2 == 0L } }
 
     val even = n * n
     val odd = (n + 1) * (n + 1)
