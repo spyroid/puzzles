@@ -13,7 +13,7 @@ fun main() {
     puzzle("2") { part2(inputLines("input.txt")) }
 }
 
-fun parseWalls(input: List<String>) =
+private fun parseWalls(input: List<String>) =
     input.map {
         it.split(" -> ")
             .map { it2 -> it2.split(",") }
