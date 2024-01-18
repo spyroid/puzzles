@@ -12,23 +12,34 @@ private fun sunnyChanceAsteroids(data: List<Int>): Any {
     val input = 1
     var output = 0
 
-    fun readAt(addr: Int, atPointer: Boolean = true): Int = program.getOrElse(addr) { 0 }.let { if (atPointer) it else readAt(it) }
-    fun read(flags: List<Boolean>) = flags.mapIndexed { i, f -> readAt(ip + i + 1, f) }
+    fun read(addr: Int) = program.getOrNull(addr) ?: -999
+    fun readAt(offset: Int = 0, flags: List<Boolean> = emptyList()): Int {
+        val p = read(ip + offset)
+        return if (flags.isNotEmpty() && !flags[offset - 1]) read(p) else p
+    }
+
+    fun writeAt(addr: Int, v: Int) {
+        program[addr] = v
+    }
 
     while (true) {
-        val inst = Instruction.of(readAt(ip))
-        val (a, b, addr) = read(inst.flags)
+        val inst = Instruction.of(readAt())
+        val (a, b, addr) = listOf(readAt(1, inst.flags), readAt(2, inst.flags), readAt(3))
         when (inst.op) {
             1 -> {
-                program[addr] = a + b; ip += 2
+                writeAt(addr, a + b)
+                ip += 2
             }
 
             2 -> {
-                program[addr] = a * b; ip += 2
+                writeAt(addr, a * b)
+                ip += 2
             }
 
-            3 -> program[program[ip + 1]] = input
-            4 -> output = readAt(ip + 1, false)
+            3 -> writeAt(readAt(1), input)
+            4 -> output = readAt(1, inst.flags)
+            5 -> if (readAt(1, inst.flags) != 0) ip = readAt(2, inst.flags)
+            6 -> if (readAt(1, inst.flags) == 0) ip = readAt(2, inst.flags)
             else -> break
         }
         ip += 2
@@ -39,7 +50,7 @@ private fun sunnyChanceAsteroids(data: List<Int>): Any {
 private data class Instruction(val op: Int, val flags: List<Boolean>) {
     companion object {
         fun of(s: Int) = s.toString().padStart(5, '0').let { ss ->
-            Instruction(ss.drop(3).toInt(), listOf(ss[2], ss[1], '1').map { it == '1' })
+            Instruction(ss.drop(3).toInt(), listOf(ss[2], ss[1], ss[0]).map { it == '1' })
         }
     }
 }
