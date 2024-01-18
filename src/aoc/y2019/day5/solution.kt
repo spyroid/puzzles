@@ -12,7 +12,7 @@ private fun sunnyChanceAsteroids(data: List<Int>, input: Int): Any {
     var (program, ip, output) = Triple(data.toTypedArray(), 0, 0)
 
     fun readAt(offset: Int = 0, flags: List<Boolean> = emptyList()): Int {
-        return program.getOrElse(ip + offset) { -99999 }.let { p ->
+        return program[(ip + offset) % program.size].let { p ->
             if (!flags.getOrElse(offset - 1) { true }) readAt(p - ip) else p
         }
     }
