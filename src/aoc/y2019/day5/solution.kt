@@ -14,7 +14,7 @@ private fun sunnyChanceAsteroids(data: List<Int>, input: Int): Any {
 
     fun readAt(offset: Int = 0, flags: List<Boolean> = emptyList()): Int {
         return program.getOrElse(ip + offset) { -99999 }.let { p ->
-            if (flags.isNotEmpty() && !flags[offset - 1]) readAt(p - ip) else p
+            if (!flags.getOrElse(offset - 1) { true }) readAt(p - ip) else p
         }
     }
 
