@@ -37,9 +37,9 @@ private fun sunnyChanceAsteroids(data: List<Int>): Any {
             }
 
             3 -> writeAt(readAt(1), input)
-            4 -> output = readAt(1, inst.flags)
-            5 -> if (readAt(1, inst.flags) != 0) ip = readAt(2, inst.flags)
-            6 -> if (readAt(1, inst.flags) == 0) ip = readAt(2, inst.flags)
+            4 -> output = a
+            5 -> if (a != 0) ip = b
+            6 -> if (a == 0) ip = b
             else -> break
         }
         ip += 2
