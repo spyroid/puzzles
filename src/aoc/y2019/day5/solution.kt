@@ -12,10 +12,10 @@ private fun sunnyChanceAsteroids(data: List<Int>, input: Int): Any {
     var (program, ip) = data.toTypedArray() to 0
     var output = 0
 
-    fun read(addr: Int) = program.getOrElse(addr) { -99999 }
     fun readAt(offset: Int = 0, flags: List<Boolean> = emptyList()): Int {
-        val p = read(ip + offset)
-        return if (flags.isNotEmpty() && !flags[offset - 1]) read(p) else p
+        return program.getOrElse(ip + offset) { -99999 }.let { p ->
+            if (flags.isNotEmpty() && !flags[offset - 1]) readAt(p - ip) else p
+        }
     }
 
     while (true) {
