@@ -13,7 +13,7 @@ private fun sunnyChanceAsteroids(data: List<Int>, input: Int): Any {
 
     fun readAt(offset: Int = 0, flags: List<Boolean> = emptyList()): Int {
         return program[(ip + offset) % program.size].let { p ->
-            if (!flags.getOrElse(offset - 1) { true }) readAt(p - ip) else p
+            if (flags.isEmpty() || flags[offset - 1]) p else readAt(p - ip)
         }
     }
 
