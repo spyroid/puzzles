@@ -18,46 +18,18 @@ private fun sunnyChanceAsteroids(data: List<Int>, input: Int): Any {
         return if (flags.isNotEmpty() && !flags[offset - 1]) read(p) else p
     }
 
-    fun writeAt(addr: Int, v: Int) {
-        program[addr] = v
-    }
-
     while (true) {
         val inst = Instruction.of(readAt())
         val (a, b, addr) = listOf(readAt(1, inst.flags), readAt(2, inst.flags), readAt(3))
         when (inst.op) {
-            1 -> {
-                writeAt(addr, a + b)
-                ip += 4
-            }
-
-            2 -> {
-                writeAt(addr, a * b)
-                ip += 4
-            }
-
-            3 -> {
-                writeAt(readAt(1), input)
-                ip += 2
-            }
-
-            4 -> {
-                output = a
-                ip += 2
-            }
-
+            1 -> program.set(addr, a + b).also { ip += 4 }
+            2 -> program.set(addr, a * b).also { ip += 4 }
+            3 -> program.set(readAt(1), input).also { ip += 2 }
+            4 -> output = a.also { ip += 2 }
             5 -> if (a != 0) ip = b else ip += 3
             6 -> if (a == 0) ip = b else ip += 3
-            7 -> {
-                writeAt(addr, (a < b).compareTo(false))
-                ip += 4
-            }
-
-            8 -> {
-                writeAt(addr, (a == b).compareTo(false))
-                ip += 4
-            }
-
+            7 -> program.set(addr, (a < b).compareTo(false)).also { ip += 4 }
+            8 -> program.set(addr, (a == b).compareTo(false)).also { ip += 4 }
             else -> break
         }
     }
