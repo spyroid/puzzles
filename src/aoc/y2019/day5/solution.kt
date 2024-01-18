@@ -19,7 +19,7 @@ private fun sunnyChanceAsteroids(data: List<Int>, input: Int): Any {
 
     while (true) {
         val inst = Instruction.of(readAt())
-        val (a, b, addr) = listOf(readAt(1, inst.flags), readAt(2, inst.flags), readAt(3))
+        val (a, b, addr) = Triple(readAt(1, inst.flags), readAt(2, inst.flags), readAt(3))
         when (inst.op) {
             1 -> program.set(addr, a + b).also { ip += 4 }
             2 -> program.set(addr, a * b).also { ip += 4 }
@@ -37,7 +37,7 @@ private fun sunnyChanceAsteroids(data: List<Int>, input: Int): Any {
 private data class Instruction(val op: Int, val flags: List<Boolean>) {
     companion object {
         fun of(s: Int) = s.toString().padStart(5, '0').let { ss ->
-            Instruction(ss.drop(3).toInt(), ss.dropLast(2).reversed().map { it == '1' })
+            Instruction(ss.drop(3).toInt(), listOf(ss[2], ss[1]).map { it == '1' })
         }
     }
 }
