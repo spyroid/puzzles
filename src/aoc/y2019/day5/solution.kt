@@ -9,8 +9,7 @@ private fun main() {
 }
 
 private fun sunnyChanceAsteroids(data: List<Int>, input: Int): Any {
-    var (program, ip) = data.toTypedArray() to 0
-    var output = 0
+    var (program, ip, output) = Triple(data.toTypedArray(), 0, 0)
 
     fun readAt(offset: Int = 0, flags: List<Boolean> = emptyList()): Int {
         return program.getOrElse(ip + offset) { -99999 }.let { p ->
@@ -30,10 +29,9 @@ private fun sunnyChanceAsteroids(data: List<Int>, input: Int): Any {
             6 -> if (a == 0) ip = b else ip += 3
             7 -> program.set(addr, (a < b).compareTo(false)).also { ip += 4 }
             8 -> program.set(addr, (a == b).compareTo(false)).also { ip += 4 }
-            else -> break
+            else -> return output
         }
     }
-    return output
 }
 
 private data class Instruction(val op: Int, val flags: List<Boolean>) {
