@@ -1,5 +1,6 @@
 package aoc.y2019.day8
 
+import gears.fullBlock
 import gears.puzzle
 
 private fun main() {
@@ -15,7 +16,7 @@ private fun spaceImageFormat(input: String): Any {
     (0..<iSize).map { idx ->
         generateSequence(idx) { it + iSize }.take(input.length / iSize).map { input[it] }.joinToString("")
     }
-        .map { s -> s.first { it != '2' }.let { if (it == '1') it else ' ' } }
+        .map { s -> s.first { it != '2' }.let { if (it == '1') fullBlock else ' ' } }
         .windowed(w, w)
         .onEach { println(it.joinToString("")) }
 
