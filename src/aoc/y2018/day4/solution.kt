@@ -26,4 +26,4 @@ private fun convert(string: String) = string.split("] ").let { (a, b) ->
     LogEntry(LocalDateTime.parse(a.drop(1), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")), b.split(" "))
 }
 
-data class LogEntry(val timestamp: LocalDateTime, val data: List<String>)
+private data class LogEntry(val timestamp: LocalDateTime, val data: List<String>)
