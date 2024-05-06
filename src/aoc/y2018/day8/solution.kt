@@ -11,7 +11,7 @@ private fun memoryManeuver(nums: List<Int>): Any {
     fun parse(data: List<Int>): Node {
         var payload = data.drop(2)
         return Node().apply {
-            children = IntRange(0, data.first() - 1).map { parse(payload).also { payload = payload.drop(it.len()) } }
+            children = (0..<data.first()).map { parse(payload).also { payload = payload.drop(it.len()) } }
             meta = payload.take(data[1])
         }
     }
