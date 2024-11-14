@@ -1,5 +1,5 @@
 ```kotlin
-fun adventOfCode(year: Int = 2023) {}
+fun adventOfCode(year: Int = 2024) {}
 ```
 
 ![][file:cover]
