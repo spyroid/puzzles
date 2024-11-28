@@ -11,10 +11,10 @@ fun main() {
 private data class Point(val x: Int, val y: Int, var v: Char)
 
 private fun solve(input: List<String>) {
-    val (h, w) = input.first().split(" ").map { it.toInt() }
-    val totalMines = input[1].toInt()
-    val grid = mutableListOf<Point>()
-    input.drop(2).take(h).forEachIndexed { y, line -> line.forEachIndexed { x, ch -> grid.add(Point(x, y, ch)) } }
+    val (h, w, totalMines) = input.take(2).flatMap { s -> s.split(" ").map { it.toInt() } }
+    val grid = buildList<Point> {
+        input.drop(2).take(h).forEachIndexed { y, line -> line.forEachIndexed { x, ch -> add(Point(x, y, ch)) } }
+    }
 
     fun at(x: Int, y: Int): Point? = if (x !in 0 until w || y !in 0 until h) null else grid[x + y * w]
 
