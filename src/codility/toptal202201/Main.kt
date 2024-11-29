@@ -1,6 +1,6 @@
 package codility.toptal202201
 
-fun solve(input: List<String>): Int {
+private fun solve(input: List<String>): Int {
     val arr1 = intArrayOf()
     val arr2 = intArrayOf()
     return solution2(arr1, arr2)
@@ -11,14 +11,14 @@ fun main() {
     println(solution4(listOf(-1, -2).toIntArray()))
 }
 
-fun solution4(A: IntArray): Int {
+private fun solution4(A: IntArray): Int {
     val set = A.filter { it > 0 }.toSet()
     for (i in 1..100_000) if (i !in set) return i
     return 1
 }
 
 
-fun solution2(P: IntArray, S: IntArray): Int {
+private fun solution2(P: IntArray, S: IntArray): Int {
     var freeSeats = 0
     for (i in 0..P.lastIndex) if (S[i] - P[i] > 0) freeSeats += S[i] - P[i]
     P.sort()
@@ -55,10 +55,3 @@ fun solution1(message: String, K: Int): String {
     }
     return message.substring(0, ids)
 }
-
-//fun other.main() {
-//    measureTimeMillis { print("⭐️ Result: ${solve(listOf())}") }
-//        .also { time -> println(" in $time ms") }
-//}
-
-class Main {}
