@@ -5,11 +5,11 @@ import kotlin.math.abs
 
 fun main() {
     puzzle {
-        HistorianHysteria(inputLines())
+        historianHysteria(inputLines())
     }
 }
 
-private fun HistorianHysteria(input: List<String>): Any {
+private fun historianHysteria(input: List<String>): Any {
     val (a1, a2) = input.map { it.split("\\s+".toRegex()).map(String::toInt) }.map { (a, b) -> a to b }.unzip()
     val p1 = a1.sorted().zip(a2.sorted()).sumOf { (a, b) -> abs(a - b) }
     val map = a2.groupingBy { it }.eachCount()
