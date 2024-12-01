@@ -5,11 +5,11 @@ import kotlin.math.abs
 
 fun main() {
     puzzle {
-        solve(inputLines())
+        HistorianHysteria(inputLines())
     }
 }
 
-private fun solve(input: List<String>): Any {
+private fun HistorianHysteria(input: List<String>): Any {
     val a1 = mutableListOf<Int>()
     val a2 = mutableListOf<Int>()
     input.map { it.split("\\s+".toRegex()).map(String::toInt) }.forEach { (a, b) -> a1.add(a); a2.add(b) }
