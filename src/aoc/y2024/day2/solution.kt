@@ -10,11 +10,10 @@ fun main() {
 }
 
 private fun redNosedReports(input: List<String>): Any {
-    val ints = input.map { s -> s.split(" ").map { it.toInt() } }
     fun incOrDec(list: List<Int>) = list.zipWithNext { a, b -> a - b }
         .let { df -> (df.all { it > 0 } || df.all { it < 0 }) && df.all { abs(it) in 1..3 } }
 
-    val (a, b) = ints.map { list ->
+    val (a, b) = input.map { s -> s.split(" ").map { it.toInt() } }.map { list ->
         incOrDec(list) to list.indices.any { incOrDec(list.filterIndexed { i, _ -> i != it }) }
     }.unzip()
     return a.count { it } to b.count { it }
