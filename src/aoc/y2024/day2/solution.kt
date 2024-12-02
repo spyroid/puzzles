@@ -15,9 +15,7 @@ private fun redNosedReports(input: List<String>): Any {
         .let { df -> (df.all { it > 0 } || df.all { it < 0 }) && df.all { abs(it) in 1..3 } }
 
     val (a, b) = ints.map { list ->
-        incOrDec(list) to list.indices.any {
-            incOrDec(list.mapIndexedNotNull { i, v -> if (it == i) null else v })
-        }
+        incOrDec(list) to list.indices.any { incOrDec(list.filterIndexed { i, _ -> i != it }) }
     }.unzip()
     return a.count { it } to b.count { it }
 }
