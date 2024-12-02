@@ -14,16 +14,10 @@ private fun redNosedReports(input: List<String>): Any {
     fun incOrDec(list: List<Int>) = list.zipWithNext { a, b -> a - b }
         .let { df -> (df.all { it > 0 } || df.all { it < 0 }) && df.all { abs(it) in 1..3 } }
 
-    val p1 = ints.count { incOrDec(it) }
-    val extra = ints.count { list ->
-        if (!incOrDec(list)) {
-            for (idx in list.indices) {
-                if (incOrDec(list.mapIndexedNotNull { i, v -> if (idx == i) null else v })) {
-                    return@count true
-                }
-            }
+    val (a, b) = ints.map { list ->
+        incOrDec(list) to list.indices.any {
+            incOrDec(list.mapIndexedNotNull { i, v -> if (it == i) null else v })
         }
-        return@count false
-    }
-    return p1 to p1 + extra
+    }.unzip()
+    return a.count { it } to b.count { it }
 }
