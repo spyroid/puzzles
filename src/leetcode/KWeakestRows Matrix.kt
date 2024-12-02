@@ -7,7 +7,7 @@ fun main() {
 }
 
 
-fun findMedianSortedArrays(nums1: IntArray, nums2: IntArray): Double {
+private fun findMedianSortedArrays(nums1: IntArray, nums2: IntArray): Double {
     val list = mutableListOf<Int>()
     var j = 0
     for (v in nums1) {
@@ -23,7 +23,7 @@ fun findMedianSortedArrays(nums1: IntArray, nums2: IntArray): Double {
     return if (list.size % 2 == 0) (list[idx] + list[idx - 1]) / 2.0 else list[idx].toDouble()
 }
 
-fun isPalindrome(head: ListNode?): Boolean {
+private fun isPalindrome(head: ListNode?): Boolean {
     val list = mutableListOf<Int>()
     var a = head
     while (a != null) {
@@ -33,7 +33,7 @@ fun isPalindrome(head: ListNode?): Boolean {
     return list == list.reversed()
 }
 
-fun canConstruct(ransomNote: String, magazine: String): Boolean {
+private fun canConstruct(ransomNote: String, magazine: String): Boolean {
     val map = magazine.asSequence().groupingBy { it }.eachCount().toMutableMap()
     for (c: Char in ransomNote) {
         val v = map[c] ?: 0
@@ -43,7 +43,7 @@ fun canConstruct(ransomNote: String, magazine: String): Boolean {
     return true
 }
 
-fun kWeakestRows(mat: Array<IntArray>, k: Int): IntArray {
+private fun kWeakestRows(mat: Array<IntArray>, k: Int): IntArray {
     return mat
         .mapIndexed { i, row -> Pair(i, row.sum()) }
         .sortedWith(compareBy({ it.second }, { it.first }))
@@ -52,11 +52,11 @@ fun kWeakestRows(mat: Array<IntArray>, k: Int): IntArray {
         .toIntArray()
 }
 
-class ListNode(var `val`: Int) {
+ class ListNode(var `val`: Int) {
     var next: ListNode? = null
 }
 
-fun middleNode(head: ListNode?): ListNode? {
+private fun middleNode(head: ListNode?): ListNode? {
     var a = head
     var b = head
     while (b?.next != null) {
