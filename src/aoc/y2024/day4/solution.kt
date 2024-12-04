@@ -18,18 +18,17 @@ private fun ceresSearch(input: List<String>): Any {
             .joinToString("") == "XMAS"
     }
 
-    fun check2(gv: Grid.GValue<Char>): Boolean {
-        return listOf(Direction.DOWN_RIGHT, Direction.DOWN_LEFT).all { dir ->
+    fun check2(gv: Grid.GValue<Char>) = listOf(Direction.DOWN_RIGHT, Direction.DOWN_LEFT)
+        .all { dir ->
             generateSequence(gv.p - dir) { it + dir }
                 .take(3)
                 .mapNotNull { grid.at(it) }
                 .joinToString("")
                 .let { it == "MAS" || it == "SAM" }
-        }
-    }
+        }.compareTo(false)
 
     val p1 = grid.all().filter { it.v == 'X' }.sumOf { check(it) }
-    val p2 = grid.all().filter { it.v == 'A' }.count { check2(it) }
+    val p2 = grid.all().filter { it.v == 'A' }.sumOf { check2(it) }
 
     return p1 to p2
 }
