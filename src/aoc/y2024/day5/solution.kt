@@ -26,14 +26,13 @@ private fun printQueue(input: String): Any {
 
     fun MutableList<Int>.mid() = this[size / 2]
 
-    val all = list.map { line ->
-        generateSequence(line.toMutableList() to findInvalid(line)) { (a, b) ->
-            a.swap(a.indexOf(b.first), a.indexOf(b.second))
-            a to findInvalid(a)
+    return list.map { line ->
+        generateSequence(line.toMutableList() to findInvalid(line)) { (line, b) ->
+            line.swap(line.indexOf(b.first), line.indexOf(b.second))
+            line to findInvalid(line)
         }
             .withIndex()
             .first { (_, v) -> v.second.second == 0 }
             .let { (i, v) -> if (i == 0) v.first.mid() to 0 else 0 to v.first.mid() }
-    }.unzip()
-    return all.first.sum() to all.second.sum()
+    }.unzip().let { it.first.sum() to it.second.sum() }
 }
