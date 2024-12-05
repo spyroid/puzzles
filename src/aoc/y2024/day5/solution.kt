@@ -17,11 +17,11 @@ private fun printQueue(input: String): Any {
     fun MutableList<Int>.fix(): Int {
         var idx = 0
         while (true) {
-            val a = indices.map { i ->
-                i to takeLast(size - i - 1).toSet() - (map[get(i)] ?: emptySet())
-            }.find { it.second.isNotEmpty() }
+            val a = indices.map {
+                it to takeLast(size - it - 1).toSet() - (map[get(it)] ?: emptySet())
+            }.find { it.second.isNotEmpty() }?.let { (a, b) -> a to b.last() }
             if (a == null) return idx
-            this[a.first] = this[indexOf(a.second.last())].also { this[indexOf(a.second.last())] = this[a.first] }
+            this[a.first] = this[indexOf(a.second)].also { this[indexOf(a.second)] = this[a.first] }
             idx++
         }
         return idx
