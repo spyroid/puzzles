@@ -25,9 +25,7 @@ private fun printQueue(input: String): Any {
         }.withIndex().first { iv -> iv.value.sumOf { it.second.sum() } == 0 }.index
     }
 
-    fun MutableList<Int>.mid() = this[size / 2]
-
     return list.map { ints ->
-        ints.fix().let { if (it == 0) ints.mid() to 0 else 0 to ints.mid() }
+        ints.fix().let { if (it == 0) ints[ints.size / 2] to 0 else 0 to ints[ints.size / 2] }
     }.unzip().let { it.first.sum() to it.second.sum() }
 }
