@@ -15,16 +15,14 @@ private fun printQueue(input: String): Any {
     }
 
     fun MutableList<Int>.fix(): Int {
-        var idx = 0
-        while (true) {
-            val a = indices.map {
-                it to takeLast(size - it - 1).toSet() - (map[get(it)] ?: emptySet())
-            }.find { it.second.isNotEmpty() }?.let { (a, b) -> a to b.last() }
-            if (a == null) return idx
-            this[a.first] = this[indexOf(a.second)].also { this[indexOf(a.second)] = this[a.first] }
-            idx++
-        }
-        return idx
+        fun diff() = indices.map { it to takeLast(size - it - 1).toSet() - (map[get(it)] ?: emptySet()) }
+
+        return generateSequence(diff()) { a ->
+            a.find { it.second.isNotEmpty() }?.let { (i, set) ->
+                this[i] = this[indexOf(set.last())].also { this[indexOf(set.last())] = this[i] }
+            }
+            diff()
+        }.withIndex().first { iv -> iv.value.sumOf { it.second.sum() } == 0 }.index
     }
 
     fun MutableList<Int>.mid() = this[size / 2]
