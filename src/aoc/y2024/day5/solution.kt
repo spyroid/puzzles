@@ -20,21 +20,20 @@ private fun printQueue(input: String): Any {
         e to list.takeLast(list.size - i - 1).toSet() - (map[e] ?: emptySet())
     }.firstOrNull { it.second.isNotEmpty() }?.let { it.first to it.second.last() } ?: (0 to 0)
 
-    fun swap(list: MutableList<Int>, a: Int, b: Int) {
-        list[a] = list[b].also { list[b] = list[a] }
+    fun MutableList<Int>.swap(a: Int, b: Int) {
+        this[a] = this[b].also { this[b] = this[a] }
     }
 
+    fun MutableList<Int>.mid() = this[size / 2]
+
     val all = list.map { line ->
-        val a = findInvalid(line)
-        if (a.second == 0) {
-            line[line.size / 2] to 0
-        } else {
-            generateSequence(line.toMutableList() to a) { (a, b) ->
-                swap(a, a.indexOf(b.first), a.indexOf(b.second))
-                a to findInvalid(a)
-            }.first { (a, b) -> b.first == 0 }.first
-                .let { 0 to it[it.size / 2] }
+        generateSequence(line.toMutableList() to findInvalid(line)) { (a, b) ->
+            a.swap(a.indexOf(b.first), a.indexOf(b.second))
+            a to findInvalid(a)
         }
+            .withIndex()
+            .first { (_, v) -> v.second.second == 0 }
+            .let { (i, v) -> if (i == 0) v.first.mid() to 0 else 0 to v.first.mid() }
     }.unzip()
     return all.first.sum() to all.second.sum()
 }
