@@ -16,35 +16,25 @@ private fun printQueue(input: String): Any {
         m to l
     }
 
-    val all = list.map { line ->
-        val valid = line.mapIndexed { i, v ->
-            line.subList(i + 1, line.size).all { map[v]?.contains(it) == true }
-        }.all { it }
-        line to valid
-    }
-    val p1 = all.filter { (a, b) -> b }.sumOf { (a, b) -> a[a.size / 2] }
-
-    fun findInvalid(list: List<Int>): Pair<Int, Set<Int>> {
-        val res = list.mapIndexed { i, e ->
-            val after = list.subList(i + 1, list.size).toSet() - (map[e] ?: emptySet())
-            e to after
-        }.firstOrNull { it.second.isNotEmpty() }
-        return res ?: Pair(0, emptySet())
-    }
+    fun findInvalid(list: List<Int>) = list.mapIndexed { i, e ->
+        e to list.takeLast(list.size - i - 1).toSet() - (map[e] ?: emptySet())
+    }.firstOrNull { it.second.isNotEmpty() }?.let { it.first to it.second.last() } ?: (0 to 0)
 
     fun swap(list: MutableList<Int>, a: Int, b: Int) {
         list[a] = list[b].also { list[b] = list[a] }
     }
 
-    val p2 = all.filter { (a, b) -> !b }
-        .map { (a, b) ->
-            val list = a.toMutableList()
-            while (findInvalid(list).first != 0) {
-                val (i, j) = findInvalid(list).let { list.indexOf(it.first) to list.indexOf(it.second.last()) }
-                swap(list, i, j)
-            }
-            list
+    val all = list.map { line ->
+        val a = findInvalid(line)
+        if (a.second == 0) {
+            line[line.size / 2] to 0
+        } else {
+            generateSequence(line.toMutableList() to a) { (a, b) ->
+                swap(a, a.indexOf(b.first), a.indexOf(b.second))
+                a to findInvalid(a)
+            }.first { (a, b) -> b.first == 0 }.first
+                .let { 0 to it[it.size / 2] }
         }
-
-    return p1 to p2.sumOf { it[it.size / 2] }
+    }.unzip()
+    return all.first.sum() to all.second.sum()
 }
