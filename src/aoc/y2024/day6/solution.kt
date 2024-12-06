@@ -9,9 +9,7 @@ fun main() {
     puzzle { guardGallivant(inputLines()) }
 }
 
-private fun guardGallivant(input: List<String>): Any {
-    val grid0 = Grid.of(input) { it }
-
+fun guardGallivant(input: List<String>): Any {
     fun walk(grid: Grid<Char>): Pair<MutableSet<Pair<Point, Direction>>, Int> {
         var pos = grid.all().first { it.v == '^' }.p.also { grid.set(it, '.') }
         var dir = Direction.DOWN
@@ -26,7 +24,7 @@ private fun guardGallivant(input: List<String>): Any {
         }
     }
 
-    var p1 = walk(grid0).first.unzip().first.toSet()
+    var p1 = walk(Grid.of(input) { it }).first.unzip().first.toSet()
     val p2 = p1.drop(1).sumOf { p -> Grid.of(input) { it }.also { it.set(p, '#') }.let { walk(it).second } }
     return p1.size to p2
 }
