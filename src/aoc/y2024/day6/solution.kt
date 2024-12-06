@@ -9,7 +9,7 @@ fun main() {
     puzzle { guardGallivant(inputLines()) }
 }
 
-fun guardGallivant(input: List<String>): Any {
+private fun guardGallivant(input: List<String>): Any {
     fun walk(grid: Grid<Char>): Pair<MutableSet<Pair<Point, Direction>>, Int> {
         var pos = grid.all().first { it.v == '^' }.p
         var dir = Direction.DOWN
