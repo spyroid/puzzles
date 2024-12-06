@@ -13,15 +13,15 @@ fun guardGallivant(input: List<String>): Any {
     fun walk(grid: Grid<Char>): Pair<MutableSet<Pair<Point, Direction>>, Int> {
         var pos = grid.all().first { it.v == '^' }.p
         var dir = Direction.DOWN
-        var steps = mutableSetOf<Pair<Point, Direction>>(pos to dir)
-        while (true) {
+        var steps = mutableSetOf<Pair<Point, Direction>>()
+        while (steps.add(pos to dir)) {
             when (grid.at(pos + dir)) {
                 '#' -> dir = dir.turnCcw()
                 '.', '^' -> pos += dir
                 else -> return steps to 0
             }
-            if (!steps.add(pos to dir)) return steps to 1
         }
+        return steps to 1
     }
 
     var p1 = walk(Grid.of(input) { it }).first.unzip().first.toSet()
