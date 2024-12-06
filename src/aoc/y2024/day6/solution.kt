@@ -6,10 +6,10 @@ import gears.Point
 import gears.puzzle
 
 fun main() {
-    puzzle { xxx(inputLines()) }
+    puzzle { guardGallivant(inputLines()) }
 }
 
-private fun xxx(input: List<String>): Any {
+private fun guardGallivant(input: List<String>): Any {
     val grid0 = Grid.of(input) { it }
 
     fun walk(grid: Grid<Char>): Pair<MutableSet<Pair<Point, Direction>>, Int> {
