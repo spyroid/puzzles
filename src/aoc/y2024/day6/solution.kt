@@ -13,7 +13,7 @@ private fun guardGallivant(input: List<String>): Any {
     fun walk(grid: Grid<Char>): Pair<MutableSet<Pair<Point, Direction>>, Int> {
         var pos = grid.all().first { it.v == '^' }.p
         var dir = Direction.DOWN
-        var steps = mutableSetOf<Pair<Point, Direction>>()
+        val steps = mutableSetOf<Pair<Point, Direction>>()
         while (steps.add(pos to dir)) {
             when (grid.at(pos + dir)) {
                 '#' -> dir = dir.turnCcw()
@@ -24,7 +24,7 @@ private fun guardGallivant(input: List<String>): Any {
         return steps to 1
     }
 
-    var p1 = walk(Grid.of(input) { it }).first.unzip().first.toSet()
+    val p1 = walk(Grid.of(input) { it }).first.unzip().first.toSet()
     val p2 = p1.drop(1).sumOf { p -> Grid.of(input) { it }.also { it[p] = '#' }.let { walk(it).second } }
     return p1.size to p2
 }
