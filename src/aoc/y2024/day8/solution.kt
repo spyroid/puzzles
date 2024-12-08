@@ -9,21 +9,24 @@ fun main() {
 }
 
 private fun resonantCollinearity(input: List<String>): Any {
-    fun Point.nextInLine(other: Point) = Point(other.x * 2 - this.x, other.y * 2 - this.y)
     val grid = Grid.of(input) { if (it == '#') '.' else it }
+    fun Point.nextInLine(other: Point, limit: Int) = generateSequence(other to Point(other.x - this.x, other.y - this.y)) { (a, b) -> a + b to b }
+        .withIndex()
+        .takeWhile { (i, v) -> i <= limit && grid.at(v.first) != null }
+        .drop(1)
+        .map { it.value.first }
 
     val map = grid.all().filter { !".".contains(it.v) }.groupBy({ it.v }, { it.p })
 
-    val p1 = sequence {
+    fun antidotes(limit: Int = Int.MAX_VALUE) = sequence {
         map.values.forEach { list ->
             list.dropLast(1).forEachIndexed { i, a ->
-                list.drop(i + 1).forEach { b -> yield(a.nextInLine(b)); yield(b.nextInLine(a)) }
+                list.drop(i + 1).forEach { b ->
+                    yieldAll(a.nextInLine(b, limit))
+                    yieldAll(b.nextInLine(a, limit))
+                }
             }
         }
     }
-        .filter { grid.at(it) != null }
-        .distinct()
-        .count()
-
-    return p1
+    return antidotes(1).distinct().count() to antidotes().plus(map.values.flatten()).distinct().count()
 }
