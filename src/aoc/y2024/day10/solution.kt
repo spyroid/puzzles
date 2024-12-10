@@ -11,7 +11,7 @@ private fun hoofIt(input: List<String>): Any {
     val grid = Grid.of(input) { it.digitToInt() }
     return grid.all().filter { it.v == 0 }.map { t ->
         val seen = mutableSetOf<Grid.GValue<Int>>()
-        val track = ArrayDeque<Grid.GValue<Int>>().apply { add(t) }
+        val track = ArrayDeque(listOf(t))
         var count = 0
         while (track.isNotEmpty()) {
             val current = track.removeFirst().also { seen.add(it) }
