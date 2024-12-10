@@ -7,11 +7,10 @@ fun main() {
     puzzle { hoofIt(inputLines()) }
 }
 
-private fun hoofIt(input: List<String>): Any {
-    val grid = Grid.of(input) { it.digitToInt() }
-    return grid.all().filter { it.v == 0 }.map { t ->
+private fun hoofIt(input: List<String>) = Grid.of(input) { it.digitToInt() }.let { grid ->
+    grid.all().filter { it.v == 0 }.map { trailhead ->
         val seen = mutableSetOf<Grid.GValue<Int>>()
-        val track = ArrayDeque(listOf(t))
+        val track = ArrayDeque(listOf(trailhead))
         var count = 0
         while (track.isNotEmpty()) {
             val current = track.removeFirst().also { seen.add(it) }
