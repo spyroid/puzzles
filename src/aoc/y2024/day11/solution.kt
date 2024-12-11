@@ -24,6 +24,6 @@ private fun plutonianPebbles(input: String): Any {
     }
 
     var stones = input.split(" ").map { it.toLong() }.associate { it to 1L }
-    val arrangements = generateSequence(stones) { blink(it) }
-    return arrangements.take(26).last().values.sum() to arrangements.take(76).last().values.sum()
+    val arrangements = generateSequence(stones) { blink(it) }.drop(1)
+    return arrangements.take(25).last().values.sum() to arrangements.take(75).last().values.sum()
 }
