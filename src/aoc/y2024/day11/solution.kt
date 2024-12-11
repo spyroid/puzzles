@@ -8,24 +8,27 @@ fun main() {
 
 private fun plutonianPebbles(input: String): Any {
 
-    fun blink(stones: List<Long>) = buildList {
-        stones.forEach { stone ->
-            if (stone == 0L) {
-                add(1)
-            } else if (stone.toString().length % 2 == 0) {
-                stone.toString().also {
-                    add(it.substring(0, it.length / 2).toLong())
-                    add(it.substring(it.length / 2).toLong())
+    fun blink(stones: Map<Long, Long>) = buildMap {
+        for ((stone, count) in stones) {
+            val (str, len) = stone.toString().let { it to it.length }
+            when {
+                stone == 0L -> this[1] = getOrDefault(1, 0L) + count
+                len % 2 == 0 -> {
+                    val a = str.substring(0, len / 2).toLong()
+                    val b = str.substring(len / 2).toLong()
+                    this[a] = (this[a] ?: 0) + count
+                    this[b] = (this[b] ?: 0) + count
                 }
-            } else {
-                add(stone * 2024L)
+
+                else -> {
+                    val y = stone * 2024
+                    put(y, getOrDefault(y, 0L) + count)
+                }
             }
         }
     }
 
-    var stones = input.split(" ").map { it.toLong() }
-    repeat(25) {
-        stones = blink(stones)
-    }
-    return stones.size
+    var stones = input.split(" ").map { it.toLong() }.associate { it to 1L }
+    val arrangements = generateSequence(stones) { blink(it) }
+    return arrangements.take(26).last().values.sum() to arrangements.take(76).last().values.sum()
 }
