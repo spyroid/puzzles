@@ -14,7 +14,7 @@ private fun plutonianPebbles(input: String): Any {
             when {
                 stone == 0L -> merge(1, count) { a, b -> a + b }
                 str.length % 2 != 0 -> merge(stone * 2024, count) { a, b -> a + b }
-                else -> str.chunked(str.length / 2) { it.toString().toLong() }.forEach { merge(it, count) { a, b -> a + b } }
+                else -> str.chunked(str.length / 2).forEach { merge(it.toLong(), count) { a, b -> a + b } }
             }
         }
     }
