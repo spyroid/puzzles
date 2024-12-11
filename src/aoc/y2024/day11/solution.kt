@@ -10,20 +10,15 @@ private fun plutonianPebbles(input: String): Any {
 
     fun blink(stones: Map<Long, Long>) = buildMap {
         for ((stone, count) in stones) {
-            val (str, len) = stone.toString().let { it to it.length }
+            val (str, mid) = stone.toString().let { it to it.length / 2 }
             when {
-                stone == 0L -> this[1] = getOrDefault(1, 0L) + count
-                len % 2 == 0 -> {
-                    val a = str.substring(0, len / 2).toLong()
-                    val b = str.substring(len / 2).toLong()
-                    this[a] = (this[a] ?: 0) + count
-                    this[b] = (this[b] ?: 0) + count
+                stone == 0L -> merge(1, count) { a, b -> a + b }
+                mid * 2 == str.length -> {
+                    merge(str.substring(0, mid).toLong(), count) { a, b -> a + b }
+                    merge(str.substring(mid).toLong(), count) { a, b -> a + b }
                 }
 
-                else -> {
-                    val y = stone * 2024
-                    put(y, getOrDefault(y, 0L) + count)
-                }
+                else -> merge(stone * 2024, count) { a, b -> a + b }
             }
         }
     }
