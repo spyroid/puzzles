@@ -19,7 +19,7 @@ private fun stepCounter(input: List<String>): Any {
             val (p, d) = q.removeFirst()
             if (p in this || d > maxDistance) continue
             this[p] = d
-            garden.gvAround(p).filter { it.v != '#' && it.p !in this }.map { it.p to d + 1 }.let { q.addAll(it) }
+            garden.around4(p).filter { it.v != '#' && it.p !in this }.map { it.p to d + 1 }.let { q.addAll(it) }
         }
     }
 

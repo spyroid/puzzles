@@ -31,7 +31,7 @@ private fun hill(map: Grid<Char>, start: Point, goal: Point, directionUp: Boolea
         current = queue.removeFirst()
         if (rule(current)) break
 
-        map.pointsAround(current)
+        map.pointsAround4(current)
             .filter { it !in seen }
             .filter { (if (directionUp) map.at(it)!! - map.at(current)!! else map.at(current)!! - map.at(it)!!) <= 1 }
             .forEach {

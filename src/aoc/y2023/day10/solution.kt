@@ -17,7 +17,7 @@ private fun pipeMaze(input: List<String>): Any {
     var predict = setOf('|', '-', 'J', 'L', '7', 'F')
     while (q.isNotEmpty()) {
         now = q.removeFirst()
-        val around = grid.gvAround(now.p)
+        val around = grid.around4(now.p)
             .filter { it.v != '.' && it.p !in seen }
             .filter { gv ->
                 (now.v in "S|JL" && gv.p == now.p - Direction.UP && gv.v in "|7F") ||

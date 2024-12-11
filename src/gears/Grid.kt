@@ -57,9 +57,9 @@ class Grid<T> private constructor(private var grid: MutableList<MutableList<T>>)
         ).mapNotNull { it }
     }
 
-    fun pointsAround(p: Point) = pointsAround(p.x, p.y)
+    fun pointsAround4(p: Point) = pointsAround4(p.x, p.y)
 
-    fun pointsAround(x: Int, y: Int): List<Point> {
+    fun pointsAround4(x: Int, y: Int): List<Point> {
         return listOf(
             pointAt(x - 1, y),
             pointAt(x + 1, y),
@@ -115,12 +115,12 @@ class Grid<T> private constructor(private var grid: MutableList<MutableList<T>>)
     override fun toString() = buildString { for (line in data()) appendLine(line.joinToString("")) }
 
     fun allPoints() = sequence { for (y in 0..maxY()) for (x in 0..maxX()) yield(Point(x, y)) }
-    fun all() = sequence { for (y in 0..maxY()) for (x in 0..maxX()) yield(GValue(Point(x, y), at(x, y)!!)) }
+    fun all() = sequence { for (y in 0..maxY()) for (x in 0..maxX()) yield(Entry(Point(x, y), at(x, y)!!)) }
 
-    fun gvAround(p: Point) = pointsAround(p.x, p.y).map { GValue(it, at(it)!!) }
-    fun gvAround8(p: Point) = pointsAround8(p.x, p.y).map { GValue(it, at(it)!!) }
+    fun around4(p: Point) = pointsAround4(p.x, p.y).map { Entry(it, at(it)!!) }
+    fun around8(p: Point) = pointsAround8(p.x, p.y).map { Entry(it, at(it)!!) }
 
-    data class GValue<T>(val p: Point, val v: T)
+    data class Entry<T>(val p: Point, val v: T)
 
     fun maxX() = data().first().lastIndex
     fun maxY() = data().lastIndex

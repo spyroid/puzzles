@@ -20,7 +20,7 @@ private fun longWalk(input: List<String>): Any {
         '<' -> listOf(p + Direction.LEFT)
         '^' -> listOf(p + Direction.DOWN)
         'v' -> listOf(p + Direction.UP)
-        else -> grid.gvAround(p).filter { it.v != '#' }.map { it.p }
+        else -> grid.around4(p).filter { it.v != '#' }.map { it.p }
     }
 
     val paths = mutableSetOf<Int>()
@@ -42,7 +42,7 @@ private fun longWalk2(input: List<String>): Any {
     val start = Point(1, 0)
     val end = Point(grid.maxX() - 1, grid.maxY())
 
-    fun around(p: Point) = grid.gvAround(p).filter { it.v != '#' }.map { it.p }
+    fun around(p: Point) = grid.around4(p).filter { it.v != '#' }.map { it.p }
 
     val conjunctions = buildSet {
         add(start)

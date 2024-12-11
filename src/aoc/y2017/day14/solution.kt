@@ -22,7 +22,7 @@ private fun defragmentator(input: String): Any {
     fun markGroup(point: Point) {
         if (disk[point] == 1) {
             disk[point] = 0
-            disk.pointsAround(point).forEach { markGroup(it) }
+            disk.pointsAround4(point).forEach { markGroup(it) }
         }
     }
 
