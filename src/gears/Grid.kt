@@ -45,6 +45,7 @@ class Grid<T> private constructor(private var grid: MutableList<MutableList<T>>)
 
     fun at(x: Int, y: Int): T? = if (y in this.grid.indices && x in this.grid.first().indices) this.grid[y][x] else null
     fun at(p: Point): T? = at(p.x, p.y)
+    fun entryAt(p: Point): Entry<T>? = at(p.x, p.y)?.let { Entry(p, it) }
     private fun pointAt(x: Int, y: Int): Point? =
         if (y in this.grid.indices && x in this.grid.first().indices) Point(x, y) else null
 

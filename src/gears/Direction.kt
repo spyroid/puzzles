@@ -1,13 +1,13 @@
 package gears
 
 enum class Direction(var x: Int, var y: Int) {
-    RIGHT(1, 0),
-    DOWN(0, -1),
-    LEFT(-1, 0),
     UP(0, 1),
-    DOWN_RIGHT(1, -1),
-    DOWN_LEFT(-1, -1),
     UP_RIGHT(1, 1),
+    RIGHT(1, 0),
+    DOWN_RIGHT(1, -1),
+    DOWN(0, -1),
+    DOWN_LEFT(-1, -1),
+    LEFT(-1, 0),
     UP_LEFT(-1, 1),
     NOTHING(0, 0);
 
@@ -55,5 +55,8 @@ enum class Direction(var x: Int, var y: Int) {
             DOWN.y = 1
             UP.y = -1
         }
+
+        fun all4() = listOf(UP, RIGHT, DOWN, LEFT)
+        fun all8() = listOf(UP, UP_RIGHT, RIGHT, DOWN_RIGHT, DOWN, DOWN_LEFT, LEFT, UP_LEFT)
     }
 }
