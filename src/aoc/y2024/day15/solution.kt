@@ -50,29 +50,51 @@ private fun warehouseWoes(input: String): Any {
         return grid.all().filter { it.v == 'O' }.sumOf { (100 * it.p.y) + it.p.x }
     }
 
-
     fun moveBlock2(g: Grid<Char>, cur: Point, dir: Direction): Boolean {
-        return false
+        val blocks = mutableSetOf<Point>()
+        val toCheck = ArrayDeque<Point>().apply { add(cur + dir) }
+
+        fun addBlock(e: Grid.Entry<Char>) {
+            val p = if (e.v == '[') e.p + RIGHT else e.p + LEFT
+            blocks.add(p)
+            blocks.add(e.p)
+            toCheck.add(p + dir)
+            toCheck.add(e.p + dir)
+        }
+
+        fun check(): Boolean {
+            return blocks.all { g.entryAt(it + dir)?.v != '#' }
+        }
+
+        while (toCheck.isNotEmpty()) {
+            val next = g.entryAt(toCheck.removeFirst())!!
+            if (next.v in "[]") addBlock(next)
+        }
+
+        val canMove = check()
+        if (canMove) {
+            val all = blocks.mapNotNull { g.entryAt(it) }.onEach { g[it.p] = '.' }
+            all.forEach { g[it.p + dir] = it.v }
+        }
+        return canMove
     }
 
     fun part2(): Int {
         var robo = grid2.all().first { it.v == '@' }.p
         for (dir in dirs) {
-            val next = grid.at(robo + dir) ?: '?'
+            val next = grid2.at(robo + dir) ?: '?'
             when (next) {
-                '.' -> robo = moveRobo(grid, robo, dir)
+                '.' -> robo = moveRobo(grid2, robo, dir)
                 '[', ']' -> {
-                    val canMove = if (dir == RIGHT || dir == LEFT) moveBlock(grid2, robo, dir) else moveBlock2(grid, robo, dir)
+                    val canMove = if (dir == RIGHT || dir == LEFT) moveBlock(grid2, robo, dir) else moveBlock2(grid2, robo, dir)
                     if (canMove) robo = moveRobo(grid2, robo, dir)
                 }
             }
         }
 
-        println(grid2)
-        return 0
+        return grid2.all().filter { it.v == '[' }.sumOf { (100 * it.p.y) + it.p.x }
     }
 
-
-    return part2()
+    return part1() to part2()
 }
 
