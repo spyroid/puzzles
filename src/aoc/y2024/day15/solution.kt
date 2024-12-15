@@ -58,10 +58,8 @@ private fun warehouseWoes(input: String): Any {
             g.entryAt(toCheck.removeFirst())?.let { next ->
                 if (next.v in "[]") {
                     val p = if (next.v == '[') next.p + RIGHT else next.p + LEFT
-                    blocks.add(p)
-                    blocks.add(next.p)
-                    toCheck.add(p + dir)
-                    toCheck.add(next.p + dir)
+                    blocks.add(p); blocks.add(next.p)
+                    toCheck.add(p + dir); toCheck.add(next.p + dir)
                 }
             }
         }
