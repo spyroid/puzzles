@@ -33,30 +33,15 @@ private fun warehouseWoes(input: String): Any {
     }
 
     fun moveBlock(g: Grid<Char>, cur: Point, dir: Direction): Boolean {
-        val end = generateSequence(g.entryAt(cur + dir)) { g.entryAt(it.p + dir) }.first { it.v == '#' || it.v == '.' }
-        if (end.v == '#') return false
-        generateSequence(end) { e -> g.entryAt(e.p - dir)?.also { g[e.p] = g[it.p] } }.first { it.p == cur }
-        return true
-    }
-
-    fun part1(): Int {
-        var robo = grid.all().first { it.v == '@' }.p
-        for (dir in dirs) {
-            when (grid.at(robo + dir)) {
-                '.' -> robo = moveRobo(grid, robo, dir)
-                'O' -> if (moveBlock(grid, robo, dir)) robo = moveRobo(grid, robo, dir)
-            }
-        }
-        return grid.all().filter { it.v == 'O' }.sumOf { (100 * it.p.y) + it.p.x }
-    }
-
-    fun moveBlock2(g: Grid<Char>, cur: Point, dir: Direction): Boolean {
         val blocks = mutableSetOf<Point>()
         val toCheck = ArrayDeque<Point>().apply { add(cur + dir) }
 
         while (toCheck.isNotEmpty()) {
             g.entryAt(toCheck.removeFirst())?.let { next ->
-                if (next.v in "[]") {
+                if (next.v == 'O' || (next.v in "[]" && (dir == RIGHT || dir == LEFT))) {
+                    blocks.add(next.p)
+                    toCheck.add(next.p + dir)
+                } else if (next.v in "[]") {
                     val p = if (next.v == '[') next.p + RIGHT else next.p + LEFT
                     blocks.add(p); blocks.add(next.p)
                     toCheck.add(p + dir); toCheck.add(next.p + dir)
@@ -69,19 +54,16 @@ private fun warehouseWoes(input: String): Any {
         }
     }
 
-    fun part2(): Int {
-        var robo = grid2.all().first { it.v == '@' }.p
+    fun solve(grid: Grid<Char>, flags: List<Char>): Int {
+        var robo = grid.all().first { it.v == '@' }.p
         for (dir in dirs) {
-            when (grid2.at(robo + dir)) {
-                '.' -> robo = moveRobo(grid2, robo, dir)
-                '[', ']' -> {
-                    val canMove = if (dir == RIGHT || dir == LEFT) moveBlock(grid2, robo, dir) else moveBlock2(grid2, robo, dir)
-                    if (canMove) robo = moveRobo(grid2, robo, dir)
-                }
+            when (grid.at(robo + dir)) {
+                '.' -> robo = moveRobo(grid, robo, dir)
+                flags.first(), flags.last() -> if (moveBlock(grid, robo, dir)) robo = moveRobo(grid, robo, dir)
             }
         }
-        return grid2.all().filter { it.v == '[' }.sumOf { (100 * it.p.y) + it.p.x }
+        return grid.all().filter { it.v == flags.first() }.sumOf { (100 * it.p.y) + it.p.x }
     }
 
-    return part1() to part2()
+    return solve(grid, listOf('O')) to solve(grid2, listOf('[', ']'))
 }
