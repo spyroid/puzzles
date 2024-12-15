@@ -72,7 +72,7 @@ private fun warehouseWoes(input: String): Any {
     fun part2(): Int {
         var robo = grid2.all().first { it.v == '@' }.p
         for (dir in dirs) {
-            when (grid2.at(robo + dir) ?: '?') {
+            when (grid2.at(robo + dir)) {
                 '.' -> robo = moveRobo(grid2, robo, dir)
                 '[', ']' -> {
                     val canMove = if (dir == RIGHT || dir == LEFT) moveBlock(grid2, robo, dir) else moveBlock2(grid2, robo, dir)
