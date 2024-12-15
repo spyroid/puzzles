@@ -65,7 +65,7 @@ private fun warehouseWoes(input: String): Any {
         }
 
         return blocks.all { g.entryAt(it + dir)?.v != '#' }.also {
-            if (it ) blocks.mapNotNull { g.entryAt(it) }.onEach { g[it.p] = '.' }.forEach { g[it.p + dir] = it.v }
+            if (it) blocks.mapNotNull { g.entryAt(it) }.onEach { g[it.p] = '.' }.forEach { g[it.p + dir] = it.v }
         }
     }
 
@@ -85,4 +85,3 @@ private fun warehouseWoes(input: String): Any {
 
     return part1() to part2()
 }
-
