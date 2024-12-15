@@ -54,36 +54,27 @@ private fun warehouseWoes(input: String): Any {
         val blocks = mutableSetOf<Point>()
         val toCheck = ArrayDeque<Point>().apply { add(cur + dir) }
 
-        fun addBlock(e: Grid.Entry<Char>) {
-            val p = if (e.v == '[') e.p + RIGHT else e.p + LEFT
-            blocks.add(p)
-            blocks.add(e.p)
-            toCheck.add(p + dir)
-            toCheck.add(e.p + dir)
-        }
-
-        fun check(): Boolean {
-            return blocks.all { g.entryAt(it + dir)?.v != '#' }
-        }
-
         while (toCheck.isNotEmpty()) {
-            val next = g.entryAt(toCheck.removeFirst())!!
-            if (next.v in "[]") addBlock(next)
+            g.entryAt(toCheck.removeFirst())?.let { next ->
+                if (next.v in "[]") {
+                    val p = if (next.v == '[') next.p + RIGHT else next.p + LEFT
+                    blocks.add(p)
+                    blocks.add(next.p)
+                    toCheck.add(p + dir)
+                    toCheck.add(next.p + dir)
+                }
+            }
         }
 
-        val canMove = check()
-        if (canMove) {
-            val all = blocks.mapNotNull { g.entryAt(it) }.onEach { g[it.p] = '.' }
-            all.forEach { g[it.p + dir] = it.v }
+        return blocks.all { g.entryAt(it + dir)?.v != '#' }.also {
+            if (it ) blocks.mapNotNull { g.entryAt(it) }.onEach { g[it.p] = '.' }.forEach { g[it.p + dir] = it.v }
         }
-        return canMove
     }
 
     fun part2(): Int {
         var robo = grid2.all().first { it.v == '@' }.p
         for (dir in dirs) {
-            val next = grid2.at(robo + dir) ?: '?'
-            when (next) {
+            when (grid2.at(robo + dir) ?: '?') {
                 '.' -> robo = moveRobo(grid2, robo, dir)
                 '[', ']' -> {
                     val canMove = if (dir == RIGHT || dir == LEFT) moveBlock(grid2, robo, dir) else moveBlock2(grid2, robo, dir)
@@ -91,7 +82,6 @@ private fun warehouseWoes(input: String): Any {
                 }
             }
         }
-
         return grid2.all().filter { it.v == '[' }.sumOf { (100 * it.p.y) + it.p.x }
     }
 
