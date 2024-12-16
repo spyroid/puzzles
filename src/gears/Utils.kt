@@ -88,3 +88,6 @@ fun <T> List<T>.splitBy(idx: Set<Int>) = foldIndexed(mutableListOf<MutableList<T
 fun Iterable<Long>.lcm() = this.reduce { total, next -> lcm(total, next) }
 fun lcm(a: Long, b: Long) = a / gcd(a, b) * b
 tailrec fun gcd(a: Long, b: Long): Long = if (b == 0L) a else gcd(b, a % b)
+
+fun <K> MutableMap<K, Int>.inc(key: K, amount: Int = 1): Int? = merge(key, amount, Int::plus)
+fun <K> MutableMap<K, Long>.inc(key: K, amount: Long = 1L): Long? = merge(key, amount, Long::plus)

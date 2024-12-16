@@ -49,15 +49,6 @@ class Grid<T> private constructor(private var grid: MutableList<MutableList<T>>)
     private fun pointAt(x: Int, y: Int): Point? =
         if (y in this.grid.indices && x in this.grid.first().indices) Point(x, y) else null
 
-    fun around(x: Int, y: Int): List<T> {
-        return listOf(
-            at(x - 1, y),
-            at(x + 1, y),
-            at(x, y + 1),
-            at(x, y - 1)
-        ).mapNotNull { it }
-    }
-
     fun pointsAround4(p: Point) = pointsAround4(p.x, p.y)
 
     fun pointsAround4(x: Int, y: Int): List<Point> {
@@ -157,6 +148,14 @@ class Grid<T> private constructor(private var grid: MutableList<MutableList<T>>)
             this[maxX(), row] = v
         }
     }
+}
+
+fun Grid<Int>.inc(p: Point, amount: Int = 1) {
+    this[p.x, p.y] = this[p.x, p.y] + amount
+}
+
+fun Grid<Long>.inc(p: Point, amount: Long = 1L) {
+    this[p.x, p.y] = this[p.x, p.y] + amount
 }
 
 const val fullBlock = '█'
