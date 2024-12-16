@@ -15,7 +15,7 @@ private fun reindeerMaze(input: List<String>): Any {
     val start = grid.all().first { it.v == 'S' }.also { grid[it.p] = '.' }
     val end = grid.all().first { it.v == 'E' }.also { grid[it.p] = '.' }
 
-    fun findPaths(start: Point, end: Point): Pair<MutableList<MutableList<Point>>, Int> {
+    fun findPaths(start: Point, end: Point): Pair<Int, MutableList<MutableList<Point>>> {
         val stack = ArrayDeque<Item>().apply { add(Item(start, RIGHT)) }
         val seen = mutableMapOf<Pair<Point, Direction>, Int>()
         val paths = mutableListOf<MutableList<Point>>()
@@ -37,10 +37,10 @@ private fun reindeerMaze(input: List<String>): Any {
                 stack.add(Item(e.p, d, cur.path.toMutableList(), cur.cost + (if (cur.dir == d) 1 else 1_001)))
             }
         }
-        return paths to minCost
+        return minCost to paths
     }
 
-    val (minPaths, minCost) = findPaths(start.p, end.p)
+    val (minCost, minPaths) = findPaths(start.p, end.p)
     return minCost to minPaths.flatten().toSet().count()
 }
 
