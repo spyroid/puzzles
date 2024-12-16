@@ -43,35 +43,15 @@ class Grid<T> private constructor(private var grid: MutableList<MutableList<T>>)
         return Grid(grid)
     }
 
-    fun at(x: Int, y: Int): T? = if (y in this.grid.indices && x in this.grid.first().indices) this.grid[y][x] else null
+    fun at(x: Int, y: Int): T? = if (isValid(x, y)) this.grid[y][x] else null
     fun at(p: Point): T? = at(p.x, p.y)
-    fun entryAt(p: Point): Entry<T>? = at(p.x, p.y)?.let { Entry(p, it) }
-    private fun pointAt(x: Int, y: Int): Point? =
-        if (y in this.grid.indices && x in this.grid.first().indices) Point(x, y) else null
+    fun entryAt(p: Point): Entry<T>? = at(p)?.let { Entry(p, it) }
+    fun entryAt(x: Int, y: Int): Entry<T>? = entryAt(Point(x, y))
+    private fun pointAt(x: Int, y: Int): Point? = if (isValid(x, y)) Point(x, y) else null
+    fun isValid(p: Point) = isValid(p.x, p.y)
+    fun isValid(x: Int, y: Int) = (y in this.grid.indices && x in this.grid.first().indices)
 
-    fun pointsAround4(p: Point) = pointsAround4(p.x, p.y)
-
-    fun pointsAround4(x: Int, y: Int): List<Point> {
-        return listOf(
-            pointAt(x - 1, y),
-            pointAt(x + 1, y),
-            pointAt(x, y + 1),
-            pointAt(x, y - 1)
-        ).mapNotNull { it }
-    }
-
-    fun pointsAround8(x: Int, y: Int): List<Point> {
-        return listOf(
-            pointAt(x - 1, y),
-            pointAt(x + 1, y),
-            pointAt(x, y + 1),
-            pointAt(x - 1, y + 1),
-            pointAt(x + 1, y + 1),
-            pointAt(x, y - 1),
-            pointAt(x - 1, y - 1),
-            pointAt(x + 1, y - 1),
-        ).mapNotNull { it }
-    }
+    fun pointsAround4(p: Point) = p.around4().filter { isValid(it) }
 
     fun pointsOf(body: (x: Int, y: Int, v: T) -> Boolean): List<Point> {
         val res = mutableListOf<Point>()
@@ -83,18 +63,6 @@ class Grid<T> private constructor(private var grid: MutableList<MutableList<T>>)
         return res
     }
 
-    fun around8(x: Int, y: Int): List<T> {
-        return listOf(
-            at(x - 1, y),
-            at(x + 1, y),
-            at(x, y + 1),
-            at(x - 1, y + 1),
-            at(x + 1, y + 1),
-            at(x, y - 1),
-            at(x - 1, y - 1),
-            at(x + 1, y - 1),
-        ).mapNotNull { it }
-    }
 
     fun clone(transformer: Grid<T>.(x: Int, y: Int, e: T) -> T): Grid<T> {
         val cloned = Grid(MutableList(data().size) { data()[it].toMutableList() })
@@ -107,15 +75,18 @@ class Grid<T> private constructor(private var grid: MutableList<MutableList<T>>)
     override fun toString() = buildString { for (line in data()) appendLine(line.joinToString("")) }
 
     fun allPoints() = sequence { for (y in 0..maxY()) for (x in 0..maxX()) yield(Point(x, y)) }
-    fun all() = sequence { for (y in 0..maxY()) for (x in 0..maxX()) yield(Entry(Point(x, y), at(x, y)!!)) }
+    fun all() = sequence<Entry<T>> { for (y in 0..maxY()) for (x in 0..maxX()) yield(Entry(Point(x, y), at(x, y)!!)) }
 
-    fun around4(p: Point) = pointsAround4(p.x, p.y).map { Entry(it, at(it)!!) }
-    fun around8(p: Point) = pointsAround8(p.x, p.y).map { Entry(it, at(it)!!) }
+    fun around4(p: Point): List<Entry<T>> = p.around4().mapNotNull { p -> at(p)?.let { Entry(p, it) } }
+    fun around8(p: Point): List<Entry<T>> = p.around8().mapNotNull { p -> at(p)?.let { Entry(p, it) } }
+    fun around8(x: Int, y: Int) = around8(Point(x, y))
 
     data class Entry<T>(val p: Point, val v: T)
 
     fun maxX() = data().first().lastIndex
     fun maxY() = data().lastIndex
+    fun width() = data().first().size
+    fun height() = data().size
 
     fun rotateColDown(col: Int, n: Int) {
         repeat(n) {

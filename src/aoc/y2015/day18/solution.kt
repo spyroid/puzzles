@@ -19,7 +19,7 @@ private fun gif(lines: List<String>, isStuck: Boolean = false): Int {
 
     repeat(100) {
         grid = grid.clone { x, y, e ->
-            val around = around8(x, y).count { it == '#' }
+            val around = around8(x, y).count { it.v == '#' }
             val isCorner = isStuck && (x == 0 && y == 0 || x == 0 && y == maxY() || x == maxX() && y == maxY() || x == 0 && y == maxY())
             when (e) {
                 '#' -> if (around == 2 || around == 3 || isCorner) '#' else '.'

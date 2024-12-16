@@ -68,12 +68,12 @@ private fun part1(grid: Grid<Char>): Int {
         g = g.clone { x, y, e ->
             val around = g.around8(x, y)
             when (e) {
-                'L' -> if (around.count { it == '#' } == 0) {
+                'L' -> if (around.count { it.v == '#' } == 0) {
                     changed = true
                     '#'
                 } else 'L'
 
-                '#' -> if (around.count { it == '#' } >= 4) {
+                '#' -> if (around.count { it.v == '#' } >= 4) {
                     changed = true
                     'L'
                 } else '#'

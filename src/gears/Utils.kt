@@ -19,12 +19,6 @@ infix fun IntRange.isFullyOverlaps(other: IntRange) = first <= other.first && la
 infix fun IntRange.isOverlaps(other: IntRange) = first <= other.last && other.first <= last
 infix fun LongRange.isOverlaps(other: LongRange) = first <= other.last && other.first <= last
 
-fun <E, F> cartesian(list1: List<E>, list2: List<F>): Sequence<Pair<E, F>> =
-    cartesian(listOf(list1, list2)).map { it[0] as E to it[1] as F }
-
-fun <E, F, G> cartesian(list1: List<E>, list2: List<F>, list3: List<G>): Sequence<Triple<E, F, G>> =
-    cartesian(listOf(list1, list2, list3)).map { Triple(it[0] as E, it[1] as F, it[2] as G) }
-
 fun <E> cartesian(lists: List<List<E>>): Sequence<List<E>> {
     return sequence {
         val counters = Array(lists.size) { 0 }
