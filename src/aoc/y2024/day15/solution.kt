@@ -26,11 +26,6 @@ private fun warehouseWoes(input: String): Any {
         }
     }
 
-    fun moveRobo(g: Grid<Char>, cur: Point, dir: Direction): Point {
-        g[cur] = g[cur + dir].also { g[cur + dir] = g[cur] }
-        return cur + dir
-    }
-
     fun moveBlocks(g: Grid<Char>, cur: Point, dir: Direction): Boolean {
         val blocks = mutableSetOf<Point>()
         val toCheck = ArrayDeque<Point>().apply { add(cur + dir) }
@@ -57,8 +52,8 @@ private fun warehouseWoes(input: String): Any {
         var robo = grid.all().first { it.v == '@' }.p
         for (dir in dirs) {
             when (grid.at(robo + dir)) {
-                '.' -> robo = moveRobo(grid, robo, dir)
-                flags.first(), flags.last() -> if (moveBlocks(grid, robo, dir)) robo = moveRobo(grid, robo, dir)
+                '.' -> robo = grid.move(robo, dir)
+                flags.first(), flags.last() -> if (moveBlocks(grid, robo, dir)) robo = grid.move(robo, dir)
             }
         }
         return grid.all().filter { it.v == flags.first() }.sumOf { (100 * it.p.y) + it.p.x }

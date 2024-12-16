@@ -148,6 +148,12 @@ class Grid<T> private constructor(private var grid: MutableList<MutableList<T>>)
             this[maxX(), row] = v
         }
     }
+
+    fun move(p: Point, dir: Direction): Point {
+        this[p] = this[p + dir].also { this[p + dir] = this[p] }
+        return p + dir
+    }
+
 }
 
 fun Grid<Int>.inc(p: Point, amount: Int = 1) {
