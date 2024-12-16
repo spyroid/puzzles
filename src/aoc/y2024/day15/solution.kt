@@ -27,8 +27,7 @@ private fun warehouseWoes(input: String): Any {
     }
 
     fun moveRobo(g: Grid<Char>, cur: Point, dir: Direction): Point {
-        g[cur] = '.'
-        g[cur + dir] = '@'
+        g[cur] = g[cur + dir].also { g[cur + dir] = g[cur] }
         return cur + dir
     }
 
