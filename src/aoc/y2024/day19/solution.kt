@@ -8,9 +8,8 @@ fun main() {
 
 private fun linenLayout(input: List<String>): Any {
     val (towels, designs) = input.first().split(", ") to input.drop(2)
-    val cache = mutableMapOf<String, Long>()
+    val cache = mutableMapOf("" to 1L)
     fun count(design: String): Long {
-        if (design.isEmpty()) return 1
         cache[design]?.let { return it }
         return towels.sumOf { if (design.startsWith(it)) count(design.removePrefix(it)) else 0 }
             .also { cache[design] = it }
