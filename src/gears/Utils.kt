@@ -85,3 +85,6 @@ tailrec fun gcd(a: Long, b: Long): Long = if (b == 0L) a else gcd(b, a % b)
 
 fun <K> MutableMap<K, Int>.inc(key: K, amount: Int = 1): Int? = merge(key, amount, Int::plus)
 fun <K> MutableMap<K, Long>.inc(key: K, amount: Long = 1L): Long? = merge(key, amount, Long::plus)
+
+fun range(a: Int, b: Int) = if (a <= b) IntRange(a, b) else IntRange(b, a)
+fun range(a: Long, b: Long) = if (a <= b) LongRange(a, b) else LongRange(b, a)
