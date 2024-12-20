@@ -44,10 +44,10 @@ private fun pipeMaze(input: List<String>): Any {
     }
     val others = mutableSetOf<Point>()
 
-    for (y in 0..grid.maxY()) {
+    for (y in 0..grid.maxY) {
         var inside = false
         var up = false
-        for (x in 0..grid.maxX()) {
+        for (x in 0..grid.maxX) {
             when (val ch = grid.at(x, y)!!) {
                 '|' -> inside = !inside
                 in "LF" -> up = ch == 'L'
@@ -61,5 +61,5 @@ private fun pipeMaze(input: List<String>): Any {
         }
     }
     others.addAll(seen)
-    return seen.size / 2 to (grid.maxX() + 1) * (grid.maxY() + 1) - others.size
+    return seen.size / 2 to (grid.maxX + 1) * (grid.maxY + 1) - others.size
 }

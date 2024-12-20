@@ -42,7 +42,7 @@ private fun clumsyCrucible(input: List<String>): Any {
             step(cursor, a..b)
             step(cursor, -a downTo -b)
         }
-        return grid[grid.maxX(), grid.maxY()].dropLast(1).min()
+        return grid[grid.maxX, grid.maxY].dropLast(1).min()
     }
 
     return walk(1, 3, 1) to walk(1, 10, 4)

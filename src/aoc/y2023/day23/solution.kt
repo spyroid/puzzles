@@ -13,7 +13,7 @@ private fun main() {
 private fun longWalk(input: List<String>): Any {
     val grid = Grid.of(input) { it }
     val start = Point(1, 0)
-    val end = Point(grid.maxX() - 1, grid.maxY())
+    val end = Point(grid.maxX - 1, grid.maxY)
 
     fun around(p: Point) = when (grid[p]) {
         '>' -> listOf(p + Direction.RIGHT)
@@ -40,7 +40,7 @@ private fun longWalk(input: List<String>): Any {
 private fun longWalk2(input: List<String>): Any {
     val grid = Grid.of(input) { it }
     val start = Point(1, 0)
-    val end = Point(grid.maxX() - 1, grid.maxY())
+    val end = Point(grid.maxX - 1, grid.maxY)
 
     fun around(p: Point) = grid.around4(p).filter { it.v != '#' }.map { it.p }
 

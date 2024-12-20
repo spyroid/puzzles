@@ -13,7 +13,7 @@ fun main() {
 
 private fun warehouseWoes(input: String): Any {
     var (grid, dirs) = input.split("\n\n").let { (a, b) -> Grid.of(a.lines()) { it } to b.map { Direction.of(it, true) } }
-    val grid2 = Grid.of(grid.maxX() * 2 + 2, grid.maxY() + 1, '.').apply {
+    val grid2 = Grid.of(grid.maxX * 2 + 2, grid.maxY + 1, '.').apply {
         grid.all().forEach { (p, c) ->
             val (a, b) = when (c) {
                 '#' -> '#' to '#'

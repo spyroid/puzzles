@@ -30,6 +30,28 @@ data class Point(var x: Int, var y: Int) {
     fun withinBounds(bounds: Point) = withinBounds(0, bounds.x, 0, bounds.y)
     fun withinBounds(minX: Int, maxX: Int, minY: Int, maxY: Int) = x in minX..maxX && y in minY..maxY
 
+    fun allInBounds(b: Point) = allInBounds(b.x, b.y)
+    fun allInBounds(x2: Int, y2: Int) = allInBounds(x, y, x2, y2)
+
+        private fun allInBounds(x1: Int, y1: Int, x2: Int, y2: Int) = sequence { for (xx in range(x1, x2)) for (yy in range(y1, y2)) yield(Point(xx, yy)) }
+//    private fun allInBounds(x1: Int, y1: Int, x2: Int, y2: Int): MutableList<Point> {
+//        var x = min(x1, x2)
+//        var y = min(y1, y2)
+//        val h = abs(y1 - y2) + 1
+//        val w = abs(x1 - x2) + 1
+//        val list = MutableList<Point>(w * h) { i ->
+//            Point(x + i / w, y + i % w) //                .also { println(it) }
+//        }
+//        return list
+//    }
+
+    fun allChebyshev(radius: Int) = allInBounds(x - radius, y - radius, x + radius, y + radius).filter { it != this }
+    fun borderChebyshev(radius: Int) = allInBounds(x - radius, y - radius, x + radius, y + radius).filter { it != this && chebyshev(it) == radius }
+
+    fun allManhattan(radius: Int) = allInBounds(x - radius, y - radius, x + radius, y + radius)
+        .filter { it != this && manhattan(it) <= radius }
+    fun borderManhattan(radius: Int) = allInBounds(x - radius, y - radius, x + radius, y + radius).filter { it != this && manhattan(it) == radius }
+
     fun around8() = Direction.all8().map { this + it }
     fun around4() = Direction.all4().map { this + it }
 
