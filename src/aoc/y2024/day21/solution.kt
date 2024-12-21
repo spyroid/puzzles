@@ -12,27 +12,15 @@ fun main() {
 private fun keypadConundrum(input: List<String>): Any {
 
     val keypad = mapOf(
-        '7' to Point(0, 0),
-        '8' to Point(1, 0),
-        '9' to Point(2, 0),
-        '4' to Point(0, 1),
-        '5' to Point(1, 1),
-        '6' to Point(2, 1),
-        '1' to Point(0, 2),
-        '2' to Point(1, 2),
-        '3' to Point(2, 2),
-        'X' to Point(0, 3),
-        '0' to Point(1, 3),
-        'A' to Point(2, 3)
+        '7' to Point(0, 0), '8' to Point(1, 0), '9' to Point(2, 0),
+        '4' to Point(0, 1), '5' to Point(1, 1), '6' to Point(2, 1),
+        '1' to Point(0, 2), '2' to Point(1, 2), '3' to Point(2, 2),
+        'X' to Point(0, 3), '0' to Point(1, 3), 'A' to Point(2, 3)
     )
 
     val directions = mapOf(
-        'X' to Point(0, 0),
-        '^' to Point(1, 0),
-        'A' to Point(2, 0),
-        '<' to Point(0, 1),
-        'v' to Point(1, 1),
-        '>' to Point(2, 1),
+        'X' to Point(0, 0), '^' to Point(1, 0), 'A' to Point(2, 0),
+        '<' to Point(0, 1), 'v' to Point(1, 1), '>' to Point(2, 1),
     )
 
     fun commands(data: Map<Char, Point>, start: Char, end: Char): List<String> {
@@ -49,8 +37,7 @@ private fun keypadConundrum(input: List<String>): Any {
                 val position = current.p + direction
                 if (position == data['X']) return@forEach
 
-                val button = data.values.find { it == position }
-                if (button != null) {
+                data.values.find { it == position }?.let { button ->
                     val newPath = current.v + ch
                     val dist = distances[position]
                     if (dist == null || dist >= newPath.length) {
@@ -60,8 +47,7 @@ private fun keypadConundrum(input: List<String>): Any {
                 }
             }
         }
-
-        return all.sortedBy { it.length }
+        return all
     }
 
     fun pressButtons(data: Map<Char, Point>, code: String, robo: Int, cache: MutableMap<Pair<String, Int>, Long>): Long {
