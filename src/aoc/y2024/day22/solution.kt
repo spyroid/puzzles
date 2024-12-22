@@ -1,23 +1,23 @@
 package aoc.y2024.day22
 
-import gears.Point
 import gears.puzzle
 
 fun main() {
-    puzzle { xxx(inputLines()) }
+    puzzle { monkeyMarket(inputLines()) }
 }
 
-private fun xxx(input: List<String>): Any {
+private fun monkeyMarket(input: List<String>): Any {
 
+    fun mix(a: Long, b: Long) = (a xor b) % 16777216L
+    fun next(input: Long): Long {
+        var secret = mix(input * 64, input)
+        secret = mix(secret / 32, secret)
+        secret = mix(secret * 2048, secret)
+        return secret
+    }
 
-    val p = Point(5, 5)
+    val part1 = input.sumOf { generateSequence(next(it.toLong())) { next(it) }.take(2000).last() }
 
-//    val grid = Grid.of(10, 10, '.').apply {
-//        p.allManhattan(2).forEach { set(it, fullBlock) }
-//    }
-
-    val ww = p.allInBounds(6, 6)
-
-    return input.lastIndex
+    return part1
 }
 
