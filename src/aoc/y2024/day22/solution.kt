@@ -15,15 +15,14 @@ private fun monkeyMarket(input: List<String>): Any {
 
     val total = mutableMapOf<List<Int>, Long>()
     for (secret in input) {
-        val set = mutableSetOf<List<Int>>()
         generateSequence(secret.toLong()) { next(it) }
             .map { (it % 10).toInt() }
             .zipWithNext { a, b -> b - a to b }
             .take(2000)
             .windowed(4)
             .map { it.unzip().let { (diffs, prices) -> diffs to prices.last() } }
-            .filter { !set.contains(it.first) }
-            .forEach { (diffs, price) -> set.add(diffs).also { total[diffs] = total.getOrDefault(diffs, 0) + price } }
+            .distinctBy { it.first }
+            .forEach { (diffs, price) -> total[diffs] = total.getOrDefault(diffs, 0) + price }
     }
     val part2 = total.maxBy { it.value }
 
