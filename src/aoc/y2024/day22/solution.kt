@@ -18,18 +18,17 @@ private fun monkeyMarket(input: List<String>): Any {
 
     val part1 = input.sumOf { generateSequence(next(it.toLong())) { next(it) }.take(2000).last() }
 
-    val total = mutableMapOf<List<Long>, Long>()
+    val total = mutableMapOf<List<Int>, Long>()
     for (secret in input) {
-        val stats = mutableMapOf<List<Long>, Long>()
+        val set = mutableSetOf<List<Int>>()
         generateSequence(secret.toLong()) { next(it) }
-            .map { it % 10 }
+            .map { (it % 10).toInt() }
             .zipWithNext { a, b -> b - a to b }
             .take(2000)
             .windowed(4)
             .map { it.unzip().let { (diffs, prices) -> diffs to prices.last() } }
-            .forEach { (diffs, price) -> if (!stats.contains(diffs)) stats[diffs] = price }
-
-        stats.forEach { (diffs, price) -> total[diffs] = total.getOrDefault(diffs, 0) + price }
+            .filter { !set.contains(it.first) }
+            .forEach { (diffs, price) -> set.add(diffs).also { total[diffs] = total.getOrDefault(diffs, 0) + price } }
     }
     val part2 = total.maxBy { it.value }
 
