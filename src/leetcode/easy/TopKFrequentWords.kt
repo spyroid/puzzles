@@ -11,7 +11,7 @@ fun main() {
     }
 }
 
-fun topKFrequent(words: Array<String>, k: Int): List<String> {
+private fun topKFrequent(words: Array<String>, k: Int): List<String> {
     return words.asSequence().groupingBy { it }.eachCount().toList()
         .sortedWith(compareByDescending<Pair<String, Int>> { it.second }.thenBy { it.first })
         .take(k).map { it.first }
