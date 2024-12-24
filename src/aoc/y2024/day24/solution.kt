@@ -38,7 +38,7 @@ private fun crossedWires(input: String): Any {
     val wrong = mutableSetOf<String>()
 
     commands.forEach { (x, op, y, _, z) ->
-        if (z.first() == 'z' && op != "XOR" && z != lastZ) wrong.add(z)
+        if (z.startsWith('z') && op != "XOR" && z != lastZ) wrong.add(z)
         if (op == "XOR" && listOf(x, y, z).all { it.first() !in "zyx" }) wrong.add(z)
 
         if (op == "AND" && x != "x00" && y != "x00") {
