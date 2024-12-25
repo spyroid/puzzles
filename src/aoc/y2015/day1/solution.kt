@@ -2,11 +2,11 @@ package aoc.y2015.day1
 
 import gears.puzzle
 
-private fun main() {
+fun main() {
     puzzle { part1("))(((((") }
-    puzzle { part1(inputLines("input.txt").joinToString("")) }
+    puzzle { part1(input()) }
     puzzle { part2("()())") }
-    puzzle { part2(inputLines("input.txt").joinToString("")) }
+    puzzle { part2(input()) }
 }
 
 private fun part1(all: String) = all.map { if (it == '(') 1 else -1 }.sum()
