@@ -4,7 +4,7 @@ import gears.Grid
 import gears.Point
 import gears.puzzle
 
-private fun main() {
+fun main() {
     puzzle { gear(inputLines()) }
 }
 
