@@ -3,13 +3,24 @@ package aoc.y2019.day5
 import gears.findInts
 import gears.puzzle
 
-private fun main() {
+fun main() {
     puzzle("1") { sunnyChanceAsteroids(input().findInts(), 1) }
     puzzle("2") { sunnyChanceAsteroids(input().findInts(), 5) }
 }
 
 private fun sunnyChanceAsteroids(data: List<Int>, input: Int): Any {
-    var (program, ip, output) = Triple(data.toTypedArray(), 0, 0)
+    val computer = IntComputer(data.toMutableList(), input)
+    while (computer.isNotTerminated()) computer.run()
+    return computer.output
+}
+
+data class IntComputer(val program: MutableList<Int>, val input: Int, var output: Int = 0, var ip: Int = 0, var terminated: Boolean = false) {
+
+    data class Instruction(val op: Int, val flags: List<Boolean>) {
+        companion object {
+            fun of(s: Int) = Instruction(s % 100, listOf(((s / 100) % 10) != 0, (s / 1000) != 0))
+        }
+    }
 
     fun readAt(offset: Int = 0, flags: List<Boolean> = emptyList()): Int {
         return program[(ip + offset) % program.size].let { p ->
@@ -17,7 +28,8 @@ private fun sunnyChanceAsteroids(data: List<Int>, input: Int): Any {
         }
     }
 
-    while (true) {
+    fun run(): Boolean {
+        if (terminated) return terminated
         val inst = Instruction.of(readAt())
         val (a, b, addr) = Triple(readAt(1, inst.flags), readAt(2, inst.flags), readAt(3))
         when (inst.op) {
@@ -29,15 +41,10 @@ private fun sunnyChanceAsteroids(data: List<Int>, input: Int): Any {
             6 -> if (a == 0) ip = b else ip += 3
             7 -> program.set(addr, (a < b).compareTo(false)).also { ip += 4 }
             8 -> program.set(addr, (a == b).compareTo(false)).also { ip += 4 }
-            else -> return output
+            else -> terminated = true
         }
+        return terminated
     }
-}
 
-private data class Instruction(val op: Int, val flags: List<Boolean>) {
-    companion object {
-        fun of(s: Int) = s.toString().padStart(5, '0').let { ss ->
-            Instruction(ss.drop(3).toInt(), listOf(ss[2], ss[1]).map { it == '1' })
-        }
-    }
+    fun isNotTerminated() = !terminated
 }
