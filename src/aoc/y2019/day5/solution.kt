@@ -9,12 +9,16 @@ fun main() {
 }
 
 private fun sunnyChanceAsteroids(data: List<Int>, input: Int): Any {
-    val computer = IntComputer(data.toMutableList(), input)
+    val computer = IntComputer.of(data, listOf(input))
     while (computer.isNotTerminated()) computer.run()
     return computer.output
 }
 
-data class IntComputer(val program: MutableList<Int>, val input: Int, var output: Int = 0, var ip: Int = 0, var terminated: Boolean = false) {
+data class IntComputer(val program: MutableList<Int>, var input: ArrayDeque<Int>, var output: Int = 0, var ip: Int = 0, var terminated: Boolean = false) {
+
+    companion object {
+        fun of(p: List<Int>, i: List<Int>) = IntComputer(p.toMutableList(), ArrayDeque(i))
+    }
 
     data class Instruction(val op: Int, val flags: List<Boolean>) {
         companion object {
@@ -35,7 +39,7 @@ data class IntComputer(val program: MutableList<Int>, val input: Int, var output
         when (inst.op) {
             1 -> program.set(addr, a + b).also { ip += 4 }
             2 -> program.set(addr, a * b).also { ip += 4 }
-            3 -> program.set(readAt(1), input).also { ip += 2 }
+            3 -> program.set(readAt(1), input.removeFirst()).also { ip += 2 }
             4 -> output = a.also { ip += 2 }
             5 -> if (a != 0) ip = b else ip += 3
             6 -> if (a == 0) ip = b else ip += 3
