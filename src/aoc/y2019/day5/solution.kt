@@ -37,8 +37,7 @@ data class IntComputer(var input: ArrayDeque<Int>, var output: Int = 0, var ip: 
         if (state == TERMINATED) return output
         state = RUNNING
         this.input.addAll(input)
-        generateSequence(RUNNING) { execute() }.first { it != RUNNING }
-        return output
+        return generateSequence(RUNNING) { execute() }.first { it != RUNNING }.let { output }
     }
 
     fun execute(): State {
