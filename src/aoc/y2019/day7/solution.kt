@@ -12,7 +12,6 @@ fun main() {
 }
 
 private fun `Amplification Circuit`(program: List<Int>): Any {
-
     fun testRun(phases: List<Int>): Int {
         return generateSequence(Triple(0, 0, List(5) { IntComputer.of(program) })) { (ampNo, io, amps) ->
             val inputs = if (ampNo in amps.indices) listOf(phases[ampNo], io) else listOf(io)
@@ -22,6 +21,5 @@ private fun `Amplification Circuit`(program: List<Int>): Any {
 
     val part1 = permutations(listOf(0, 1, 2, 3, 4)).maxOf { testRun(it) }
     val part2 = permutations(listOf(5, 6, 7, 8, 9)).maxOf { testRun(it) }
-
     return part1 to part2
 }
