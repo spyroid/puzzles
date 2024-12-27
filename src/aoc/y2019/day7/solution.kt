@@ -2,19 +2,19 @@ package aoc.y2019.day7
 
 import aoc.y2019.day5.IntComputer
 import aoc.y2019.day5.IntComputer.State.TERMINATED
-import gears.findInts
+import gears.findLongs
 import gears.permutations
 import gears.puzzle
 import gears.safeGet
 
 fun main() {
-    puzzle { `Amplification Circuit`(input().findInts()) }
+    puzzle { `Amplification Circuit`(input().findLongs()) }
 }
 
-private fun `Amplification Circuit`(program: List<Int>): Any {
-    fun testRun(phases: List<Int>): Int {
-        return generateSequence(Triple(0, 0, List(5) { IntComputer.of(program) })) { (ampNo, io, amps) ->
-            val inputs = if (ampNo in amps.indices) listOf(phases[ampNo], io) else listOf(io)
+private fun `Amplification Circuit`(program: List<Long>): Any {
+    fun testRun(phases: List<Int>): Long {
+        return generateSequence(Triple(0, 0L, List(5) { IntComputer.of(program) })) { (ampNo, io, amps) ->
+            val inputs = if (ampNo in amps.indices) listOf(phases[ampNo].toLong(), io) else listOf(io)
             Triple(ampNo + 1, amps.safeGet(ampNo).run(inputs), amps)
         }.first { (_, _, amps) -> amps.last().state == TERMINATED }.second
     }
