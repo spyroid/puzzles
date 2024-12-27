@@ -1,5 +1,6 @@
 package aoc.y2019.day5
 
+import aoc.y2019.day5.IntComputer.State.*
 import gears.findInts
 import gears.puzzle
 
@@ -8,12 +9,16 @@ fun main() {
     puzzle("2") { sunnyChanceAsteroids(input().findInts(), 5) }
 }
 
-private fun sunnyChanceAsteroids(data: List<Int>, input: Int) = IntComputer.of(data, listOf(input)).run()
+private fun sunnyChanceAsteroids(data: List<Int>, input: Int) = IntComputer.of(data).run(listOf(input))
 
-data class IntComputer(val program: MutableList<Int>, var input: ArrayDeque<Int>, var output: Int = 0, var ip: Int = 0, var terminated: Boolean = false) {
+// state: 0 - running, 1 - suspended, 2 - terminated
+data class IntComputer(var input: ArrayDeque<Int>, var output: Int = 0, var ip: Int = 0, var state: State = RUNNING) {
+    var program: MutableList<Int> = mutableListOf()
+
+    enum class State { RUNNING, SUSPENDED, TERMINATED }
 
     companion object {
-        fun of(p: List<Int>, i: List<Int>) = IntComputer(p.toMutableList(), ArrayDeque(i))
+        fun of(p: List<Int>) = IntComputer(ArrayDeque()).apply { program = p.toMutableList() }
     }
 
     data class Instruction(val op: Int, val flags: List<Boolean>) {
@@ -28,23 +33,29 @@ data class IntComputer(val program: MutableList<Int>, var input: ArrayDeque<Int>
         }
     }
 
-    fun run() = generateSequence(false) { execute() }.first { it }.let { output }
+    fun run(input: List<Int>): Int {
+        if (state == TERMINATED) return output
+        state = RUNNING
+        this.input.addAll(input)
+        generateSequence(RUNNING) { execute() }.first { it != RUNNING }
+        return output
+    }
 
-    fun execute(): Boolean {
-        if (terminated) return terminated
+    fun execute(): State {
+        if (state == TERMINATED) return state
         val inst = Instruction.of(readAt())
         val (a, b, addr) = Triple(readAt(1, inst.flags), readAt(2, inst.flags), readAt(3))
         when (inst.op) {
             1 -> program.set(addr, a + b).also { ip += 4 }
             2 -> program.set(addr, a * b).also { ip += 4 }
-            3 -> program.set(readAt(1), input.removeFirst()).also { ip += 2 }
+            3 -> if (input.isNotEmpty()) program.set(readAt(1), input.removeFirst()).also { ip += 2 } else state = SUSPENDED
             4 -> output = a.also { ip += 2 }
             5 -> if (a != 0) ip = b else ip += 3
             6 -> if (a == 0) ip = b else ip += 3
             7 -> program.set(addr, (a < b).compareTo(false)).also { ip += 4 }
             8 -> program.set(addr, (a == b).compareTo(false)).also { ip += 4 }
-            else -> terminated = true
+            else -> state = TERMINATED
         }
-        return terminated
+        return state
     }
 }
