@@ -14,7 +14,6 @@ private fun sunnyChanceAsteroids(data: List<Long>, input: Long) = IntComputer.of
 
 // state: 0 - running, 1 - suspended, 2 - terminated
 data class IntComputer(var input: ArrayDeque<Long>, var output: Long = 0, var ip: Long = 0, var state: State = RUNNING) {
-    var program: MutableList<Long> = mutableListOf()
     val memory = mutableMapOf<Long, Long>()
     var base = 0L
 
@@ -22,7 +21,6 @@ data class IntComputer(var input: ArrayDeque<Long>, var output: Long = 0, var ip
 
     companion object {
         fun of(p: List<Long>) = IntComputer(ArrayDeque()).apply {
-            program = p.toMutableList()
             p.forEachIndexed { i, v -> memory[i.toLong()] = v }
         }
     }
