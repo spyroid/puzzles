@@ -88,3 +88,12 @@ fun <K> MutableMap<K, Long>.inc(key: K, amount: Long = 1L): Long? = merge(key, a
 
 fun range(a: Int, b: Int) = if (a <= b) IntRange(a, b) else IntRange(b, a)
 fun range(a: Long, b: Long) = if (a <= b) LongRange(a, b) else LongRange(b, a)
+
+fun Int.toDigits(base: Int = 10) = sequence {
+    var n = this@toDigits
+    require(n >= 0)
+    while (n != 0) {
+        yield(n % base)
+        n /= base
+    }
+}

@@ -8,11 +8,7 @@ fun main() {
     puzzle("2") { sunnyChanceAsteroids(input().findInts(), 5) }
 }
 
-private fun sunnyChanceAsteroids(data: List<Int>, input: Int): Any {
-    val computer = IntComputer.of(data, listOf(input))
-    while (computer.isNotTerminated()) computer.run()
-    return computer.output
-}
+private fun sunnyChanceAsteroids(data: List<Int>, input: Int) = IntComputer.of(data, listOf(input)).run()
 
 data class IntComputer(val program: MutableList<Int>, var input: ArrayDeque<Int>, var output: Int = 0, var ip: Int = 0, var terminated: Boolean = false) {
 
@@ -32,7 +28,9 @@ data class IntComputer(val program: MutableList<Int>, var input: ArrayDeque<Int>
         }
     }
 
-    fun run(): Boolean {
+    fun run() = generateSequence(false) { execute() }.first { it }.let { output }
+
+    fun execute(): Boolean {
         if (terminated) return terminated
         val inst = Instruction.of(readAt())
         val (a, b, addr) = Triple(readAt(1, inst.flags), readAt(2, inst.flags), readAt(3))
@@ -49,6 +47,4 @@ data class IntComputer(val program: MutableList<Int>, var input: ArrayDeque<Int>
         }
         return terminated
     }
-
-    fun isNotTerminated() = !terminated
 }

@@ -2,6 +2,7 @@ package aoc.y2019.day7
 
 import aoc.y2019.day5.IntComputer
 import gears.findInts
+import gears.permutations
 import gears.puzzle
 
 fun main() {
@@ -10,14 +11,9 @@ fun main() {
 
 private fun `Amplification Circuit`(input: List<Int>): Any {
 
-    val phases = listOf(4, 3, 2, 1, 0)
-    var io = 0
-
-    phases.forEach { phase ->
-        val computer = IntComputer.of(input, listOf(phase, io))
-        while (computer.isNotTerminated()) computer.run()
-        io = computer.output
+    val part1 = permutations(listOf(0, 1, 2, 3, 4)).maxOf {
+        it.fold(0) { io, phase -> IntComputer.of(input, listOf(phase, io)).run() }
     }
 
-    return io
+    return part1
 }
