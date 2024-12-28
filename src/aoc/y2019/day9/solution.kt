@@ -5,12 +5,9 @@ import gears.findLongs
 import gears.puzzle
 
 fun main() {
-    puzzle{ `Sensor Boost`(input().findLongs()) }
+    puzzle { `Sensor Boost`(input().findLongs()) }
 }
 
-private fun `Sensor Boost`(input: List<Long>): Any {
-
-    val part1 = IntComputer.of(input)
-    part1.run(input)
-    return part1.output
+private fun `Sensor Boost`(program: List<Long>): Any {
+    return IntComputer.of(program).run(listOf(1)) to IntComputer.of(program).run(listOf(2))
 }
