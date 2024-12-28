@@ -32,10 +32,10 @@ data class IntComputer(var input: ArrayDeque<Long>, var output: Long = 0, var ip
 
     fun writeAt(addr: Long, value: Long) = memory.set(addr, value)
 
-    fun run(input: List<Long> = emptyList()): Long {
+    fun run(vararg inParams: Long): Long {
         if (state == State.TERMINATED) return output
         state = RUNNING
-        this.input.addAll(input)
+        this.input.addAll(inParams.asList())
         return generateSequence(RUNNING) { execute() }.first { it != RUNNING }.let { output }
     }
 

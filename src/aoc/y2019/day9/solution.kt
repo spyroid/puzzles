@@ -9,5 +9,5 @@ fun main() {
 }
 
 private fun `Sensor Boost`(program: List<Long>): Any {
-    return IntComputer.of(program).run(listOf(1)) to IntComputer.of(program).run(listOf(2))
+    return IntComputer.of(program).run(1) to IntComputer.of(program).run(2)
 }

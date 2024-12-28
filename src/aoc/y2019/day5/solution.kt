@@ -8,5 +8,5 @@ fun main() {
 }
 
 private fun sunnyChanceAsteroids(data: List<Long>): Any {
-    return IntComputer.of(data).run(listOf(1)) to IntComputer.of(data).run(listOf(5))
+    return IntComputer.of(data).run(1) to IntComputer.of(data).run(5)
 }

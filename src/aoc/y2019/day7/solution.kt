@@ -14,8 +14,8 @@ fun main() {
 private fun `Amplification Circuit`(program: List<Long>): Any {
     fun testRun(phases: List<Int>): Long {
         return generateSequence(Triple(0, 0L, List(5) { IntComputer.of(program) })) { (ampNo, io, amps) ->
-            val inputs = if (ampNo in amps.indices) listOf(phases[ampNo].toLong(), io) else listOf(io)
-            Triple(ampNo + 1, amps.safeGet(ampNo).run(inputs), amps)
+            val inputs = if (ampNo in amps.indices) arrayOf(phases[ampNo].toLong(), io) else arrayOf(io)
+            Triple(ampNo + 1, amps.safeGet(ampNo).run(*inputs.toLongArray()), amps)
         }.first { (_, _, amps) -> amps.last().state == TERMINATED }.second
     }
 
