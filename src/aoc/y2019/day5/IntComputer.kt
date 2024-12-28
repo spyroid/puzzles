@@ -4,9 +4,10 @@ import aoc.y2019.day5.IntComputer.State.RUNNING
 import gears.toDigits
 
 // state: 0 - running, 1 - suspended, 2 - terminated
-data class IntComputer(var input: ArrayDeque<Long>, var output: Long = 0, var ip: Long = 0, var state: State = RUNNING) {
+data class IntComputer(var input: ArrayDeque<Long>, var ip: Long = 0, var state: State = RUNNING) {
     val memory = mutableMapOf<Long, Long>()
     var base = 0L
+    val output = mutableListOf(0L)
 
     enum class State { RUNNING, SUSPENDED, TERMINATED }
 
@@ -33,10 +34,10 @@ data class IntComputer(var input: ArrayDeque<Long>, var output: Long = 0, var ip
     fun writeAt(addr: Long, value: Long) = memory.set(addr, value)
 
     fun run(vararg inParams: Long): Long {
-        if (state == State.TERMINATED) return output
+        if (state == State.TERMINATED) return output.last()
         state = RUNNING
         this.input.addAll(inParams.asList())
-        return generateSequence(RUNNING) { execute() }.first { it != RUNNING }.let { output }
+        return generateSequence(RUNNING) { execute() }.first { it != RUNNING }.let { output.last() }
     }
 
     fun execute(): State {
@@ -47,7 +48,7 @@ data class IntComputer(var input: ArrayDeque<Long>, var output: Long = 0, var ip
             1 -> writeAt(addr(3, m3), op1(m1) + op2(m2)).also { ip += 4 }
             2 -> writeAt(addr(3, m3), op1(m1) * op2(m2)).also { ip += 4 }
             3 -> if (input.isNotEmpty()) writeAt(addr(1, m1), input.removeFirst()).also { ip += 2 } else state = State.SUSPENDED
-            4 -> output = op1(m1).also { ip += 2 }
+            4 -> output.add(op1(m1)).also { ip += 2 }
             5 -> if (op1(m1) != 0L) ip = op2(m2) else ip += 3
             6 -> if (op1(m1) == 0L) ip = op2(m2) else ip += 3
             7 -> writeAt(addr(3, m3), (op1(m1) < op2(m2)).compareTo(false).toLong()).also { ip += 4 }
