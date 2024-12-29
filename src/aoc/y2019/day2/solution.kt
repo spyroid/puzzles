@@ -1,31 +1,24 @@
 package aoc.y2019.day2
 
+import aoc.y2019.day5.IntComputer
+import gears.findLongs
 import gears.puzzle
-import gears.toInts
 
-private fun main() {
-    puzzle { alarm(input().split(",").toInts()) }
-    puzzle { alarm2(input().split(",").toInts()) }
+fun main() {
+    puzzle { `1202 Program Alarm`(input().findLongs()) }
 }
 
-private fun alarm2(input: List<Int>): Int {
-    for (a in 0..99) for (b in 0..99) {
-        if (alarm(input, a, b) == 19690720) return a * 100 + b
-    }
-    return 0
-}
+private fun `1202 Program Alarm`(program: List<Long>): Any? {
+    fun testRun(a: Long, b: Long) = IntComputer.of(program).apply { memory.set(1, a); memory.set(2, b) }.let { it.run(); it.memory.getValue(0) }
 
-private fun alarm(input: List<Int>, a: Int = 12, b: Int = 2): Any {
-    val program = input.toMutableList().also { it[1] = a; it[2] = b }
-    var ip = 0
-    while (ip in program.indices) {
-        val (cmd, src1, src2, dest) = program.subList(ip, ip + 4)
-        when (cmd) {
-            1 -> program[dest] = program[src1] + program[src2]
-            2 -> program[dest] = program[src1] * program[src2]
-            99 -> break
+    val part1 = testRun(12, 2)
+
+    var part2 = 0L
+    for (a in 0L..99) for (b in 0L..99) {
+        if (testRun(a, b) == 19690720L) {
+            part2 = a * 100 + b; break
         }
-        ip += 4
     }
-    return program[0]
+
+    return part1 to part2
 }
