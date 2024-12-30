@@ -8,12 +8,12 @@ fun main() {
     puzzle { part2(inputLines("input.txt")) }
 }
 
-fun part1(input: List<String>): Int {
+private fun part1(input: List<String>): Int {
     val data = input.map { line -> line.map { it.toString().toInt() } }
     return solve(data)
 }
 
-fun part2(input: List<String>): Int {
+private fun part2(input: List<String>): Int {
     val data = input.map { line -> line.map { it.toString().toInt() } }
     return solve(expandInput(data))
 }
