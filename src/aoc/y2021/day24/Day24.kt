@@ -9,7 +9,7 @@ fun main() {
 
 private fun `Arithmetic Logic Unit`(input: List<String>): Any {
 
-    val instructions = input.chunked(18).map { list -> list[5].substringAfterLast(" ").toInt() to list[15].substringAfterLast(" ").toInt() }
+    val instructions = input.chunked(18).map { it[5].substringAfterLast(" ").toInt() to it[15].substringAfterLast(" ").toInt() }
 
     fun validate(model: List<Int>): List<Int>? {
         val result = mutableListOf<Int>()
