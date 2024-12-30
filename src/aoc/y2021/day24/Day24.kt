@@ -1,7 +1,6 @@
 package aoc.y2021.day24
 
 import gears.puzzle
-import gears.toDigits
 import kotlin.math.floor
 
 fun main() {
