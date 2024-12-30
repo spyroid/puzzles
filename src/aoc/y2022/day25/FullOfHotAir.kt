@@ -3,8 +3,12 @@ package aoc.y2022.day25
 import gears.puzzle
 import kotlin.math.pow
 
+fun main() {
+    puzzle { FullOfHotAir().part1(inputLines("input.txt")) }
+}
+
 private class FullOfHotAir {
-    fun part1(lines: List<String>): String = encode(lines.map(::decode).sum())
+    fun part1(lines: List<String>): String = encode(lines.sumOf(::decode))
 
     private fun encode(value: Long): String {
         if (value == 0L) return ""
@@ -22,7 +26,3 @@ private class FullOfHotAir {
         exp.reversed().mapIndexed { i, c -> 5.0.pow(i) * (snafu[c] ?: 0) }.sum().toLong()
 }
 
-fun main() {
-    puzzle("t1") { FullOfHotAir().part1(inputLines("test.txt")) }
-    puzzle("1") { FullOfHotAir().part1(inputLines("input.txt")) }
-}
