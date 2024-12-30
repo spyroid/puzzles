@@ -1,257 +1,96 @@
 package aoc.y2022.day22
 
+import gears.Point
 import gears.puzzle
 
 fun main() {
-    puzzle("t1") { part1(inputLines("test.txt")) }
-    puzzle("1") { part1(inputLines("input.txt")) }
-    puzzle("t2") { part2(inputLines("test.txt")) }
-    puzzle("2") { part2(inputLines("input.txt")) }
+    puzzle { part1(inputLines()) }
 }
 
-private fun part1(lines: List<String>): Int {
-    return workTheGame(lines, false)
+private fun part1(input: List<String>): Any {
+
+    val grid = input.dropLast(2)
+        .flatMapIndexed { y, line -> line.mapIndexedNotNull { x, c -> if (c == ' ') null else Point(x, y) to c } }
+        .associate { it }
+    val instructions = Instruction.allFrom(input.last())
+
+    return followInstructions(grid, instructions, ::wrapFlat) to followInstructions(grid, instructions, ::wrapCube)
 }
 
-private fun part2(lines: List<String>): Int {
-    return workTheGame(lines, true)
-}
+private fun followInstructions(grid: Map<Point, Char>, instructions: List<Instruction>, wrap: (Map<Point, Char>, Point, Dir) -> Pair<Point, Dir>): Int {
+    var position = Point(grid.keys.filter { it.y == 0 }.minOf { it.x }, 0)
+    var dir = Dir.EAST
 
-private fun splitStringToCommands(mess: String): List<Pair<Command, Int>> {
-    val result = mutableListOf<Pair<Command, Int>>()
-    var currentCounter = 0
-    mess.forEach {
-        if (it.isDigit()) {
-            currentCounter = currentCounter * 10 + it.digitToInt()
-        } else {
-            if (currentCounter != 0) {
-                result.add(Command.FORWARD to currentCounter)
-            }
-            currentCounter = 0
-            result.add((if (it == 'R') Command.RIGHT else Command.LEFT) to 1)
-        }
-    }
-    if (currentCounter != 0) {
-        result.add(Command.FORWARD to currentCounter)
-    }
-    return result
-}
+    instructions.forEach { instruction ->
+        when (instruction) {
+            is Instruction.Left -> dir = dir.left()
+            is Instruction.Right -> dir = dir.right()
+            is Instruction.Move -> generateSequence(position to dir) { (p, d) ->
+                val next = p + d.offset
+                when {
+                    next in grid && grid[next] == '#' -> p to d
+                    next !in grid -> {
+                        val (wrapped, wrappedDir) = wrap(grid, p, d)
+                        if (grid[wrapped] == '.') wrapped to wrappedDir else p to d
+                    }
 
-private fun workTheGame(input: List<String>, onCube: Boolean): Int {
-    val directions = input.takeLast(1)[0]
-    val mapWithMover =
-        if (!onCube) MapWithMoverPlain(input.takeWhile { it.isNotBlank() }) else CubicMap(input.takeWhile { it.isNotBlank() })
-    val commands = splitStringToCommands(directions)
-    for ((command, amount) in commands) {
-        repeat(amount) {
-            when (command) {
-                Command.FORWARD -> mapWithMover.move()
-                else -> mapWithMover.rotateSelf(command == Command.RIGHT)
-            }
-        }
-    }
-    return mapWithMover.getPassword()
-}
-
-
-private enum class CubeSides { TOP, DOWN, RIGHT, LEFT, FRONT, BACK }
-private enum class Moves(val coords: Pair<Int, Int>, val ind: Int) {
-    RIGHT(0 to 1, 0), DOWN(1 to 0, 1), LEFT(0 to -1, 2), UP(-1 to 0, 3)
-}
-//    L.---.
-//    E.TOP.
-//    F.---.
-//    T FRONT
-
-private abstract class MapWithMover(val map: List<String>) {
-    var dir: Moves = Moves.RIGHT
-    val n: Int = map.size
-    val ms: List<Int> = map.map { it.length }
-    val begins = map.map { it.indexOfFirst { it2 -> it2 != ' ' } }
-    var x: Int = 0
-    var y: Int = begins[0]
-
-    abstract fun move()
-    fun getPassword(): Int {
-        return (x + 1) * 1000 + (y + 1) * 4 + dir.ind
-    }
-
-    fun rotateSelf(clockwise: Boolean) {
-        dir = rotate(dir, clockwise)
-    }
-
-    fun isOutside(nx: Int, ny: Int) = (nx < 0) || (nx >= n) || (ny < 0) || (ny >= ms[nx]) || (map[nx][ny] == ' ')
-
-    companion object {
-        val rotations = listOf(Moves.RIGHT, Moves.DOWN, Moves.LEFT, Moves.UP)
-        fun rotate(toDir: Moves, clockwise: Boolean): Moves {
-            return if (clockwise) rotations[(toDir.ind + 1) % 4] else rotations[(toDir.ind + 3) % 4]
-        }
-    }
-}
-
-private class CubicMap(map: List<String>) : MapWithMover(map) {
-    val cubeEdge: Int = ms.zip(begins).minOf { it.first - it.second }
-    val sides: MutableMap<CubeSides, Pair<IntRange, IntRange>> = mutableMapOf()
-    val distances: MutableMap<CubeSides, Int> = mutableMapOf()
-    val relativeDistances: MutableMap<Pair<CubeSides, CubeSides>, Int> = mutableMapOf()
-
-    init {
-        fun dfs(currentSide: CubeSides, currentPos: Pair<Int, Int>, dist: Int) {
-            sides[currentSide] = ((currentPos.first until (currentPos.first + cubeEdge)) to
-                    (currentPos.second until (currentPos.second + cubeEdge)))
-            distances[currentSide] = dist
-            for (dir in rotations) {
-                val nPos = currentPos + dir.coords * cubeEdge
-                val fixedDir = fixedDir(currentSide, dir, cubeEdge)
-                val nextSide = whichSideNext[currentSide to fixedDir]!! // This 'function' is total
-                if (!isOutside(nPos.first, nPos.second) && nextSide !in sides) {
-                    dfs(nextSide, nPos, dist + 1)
+                    else -> next to d
                 }
-            }
-        }
-
-        fun distOnlyDfs(currentSide: CubeSides, currentPos: Pair<Int, Int>, dist: Int, distTo: CubeSides, used: MutableSet<CubeSides>) {
-            used.add(currentSide)
-            relativeDistances[distTo to currentSide] = dist
-            for (dir in rotations) {
-                val nPos = currentPos + dir.coords * cubeEdge
-                val fixedDir = fixedDir(currentSide, dir, cubeEdge)
-                val nextSide = whichSideNext[currentSide to fixedDir]!! // This 'function' is total
-                if (!isOutside(nPos.first, nPos.second) && nextSide !in used) {
-                    distOnlyDfs(nextSide, nPos, dist + 1, distTo, used)
-                }
-            }
-        }
-
-        dfs(CubeSides.TOP, 0 to begins[0], 0)
-        assert(sides.size == 6)
-        for (side1 in sides.keys) {
-            distOnlyDfs(side1, sides[side1]!!.first.first to sides[side1]!!.second.first, 0, side1, mutableSetOf())
+            }.take(instruction.steps + 1).last().let { (p, d) -> position = p; dir = d }
         }
     }
 
-    override fun move() {
-        val (nx, ny) = (x to y) + dir.coords
-        if (!isOutside(nx, ny)) {
-            if (map[nx][ny] == '.') {
-                x = nx
-                y = ny
-            }
-            return
-        }
-        val ourSide = sides.filter { x in it.value.first && y in it.value.second }.keys.first()
-        val (relX, relY) = (x to y) - (sides[ourSide]!!.first.first to sides[ourSide]!!.second.first)
-        val ourFixedDir = fixedDir(ourSide, dir, cubeEdge)
-        val nextSide = whichSideNext[ourSide to ourFixedDir]!!
-        var nextDir = dir
-        var (fixX, fixY) = relX to relY
-        repeat(relativeDistances[ourSide to nextSide]!! - 1) {
-            nextDir = rotate(nextDir, cubeEdge == 4) // I HATE IT
-            val temp = fixX
-            fixX = fixY
-            fixY = cubeEdge - 1 - temp
-        }
-        when (nextDir) {
-            Moves.UP -> {
-                fixX = 3
-            }
+    return 1000 * (position.y + 1) + 4 * (position.x + 1) + dir.score
+}
 
-            Moves.RIGHT -> {
-                fixY = 0
-            }
+private fun wrapFlat(grid: Map<Point, Char>, position: Point, dir: Dir): Pair<Point, Dir> {
+    val rotatedDir = dir.right().right()
+    return generateSequence(position) { it + rotatedDir.offset }.takeWhile { it in grid }.last() to dir
+}
 
-            Moves.DOWN -> {
-                fixX = 0
-            }
-
-            Moves.LEFT -> {
-                fixY = 3
-            }
-        }
-        val fx = sides[nextSide]!!.first.first + fixX
-        val fy = sides[nextSide]!!.second.first + fixY
-        if (map[fx][fy] == '#') return
-        x = fx
-        y = fy
-        dir = nextDir
+private fun wrapCube(grid: Map<Point, Char>, position: Point, dir: Dir): Pair<Point, Dir> {
+    return when (Triple(dir, position.x / 50, position.y / 50)) {
+        Triple(Dir.NORTH, 1, 0) -> Point(0, 100 + position.x) to Dir.EAST // 1 -> N
+        Triple(Dir.WEST, 1, 0) -> Point(0, 149 - position.y) to Dir.EAST // 1 -> W
+        Triple(Dir.NORTH, 2, 0) -> Point(position.x - 100, 199) to Dir.NORTH // 2 -> N
+        Triple(Dir.EAST, 2, 0) -> Point(99, 149 - position.y) to Dir.WEST // 2 -> E
+        Triple(Dir.SOUTH, 2, 0) -> Point(99, -50 + position.x) to Dir.WEST // 2 -> S
+        Triple(Dir.EAST, 1, 1) -> Point(50 + position.y, 49) to Dir.NORTH // 3 -> E
+        Triple(Dir.WEST, 1, 1) -> Point(position.y - 50, 100) to Dir.SOUTH // 3 -> W
+        Triple(Dir.NORTH, 0, 2) -> Point(50, position.x + 50) to Dir.EAST // 4 -> N
+        Triple(Dir.WEST, 0, 2) -> Point(50, 149 - position.y) to Dir.EAST // 4 -> W
+        Triple(Dir.EAST, 1, 2) -> Point(149, 149 - position.y) to Dir.WEST // 5 -> E
+        Triple(Dir.SOUTH, 1, 2) -> Point(49, 100 + position.x) to Dir.WEST // 5 -> S
+        Triple(Dir.EAST, 0, 3) -> Point(position.y - 100, 149) to Dir.NORTH // 6 -> E
+        Triple(Dir.SOUTH, 0, 3) -> Point(position.x + 100, 0) to Dir.SOUTH // 6 -> S
+        Triple(Dir.WEST, 0, 3) -> Point(position.y - 100, 0) to Dir.SOUTH // 6 -> W
+        else -> error("Invalid state")
     }
+}
 
+private sealed class Instruction {
     companion object {
-        val orderPerimeter = listOf(CubeSides.FRONT, CubeSides.RIGHT, CubeSides.BACK, CubeSides.LEFT, CubeSides.FRONT)
-        val whichSideNext = buildMap(12 * 2) {
-            for (i in 0..3) {
-                put(orderPerimeter[i] to Moves.RIGHT, orderPerimeter[i + 1])
-                put(orderPerimeter[i + 1] to Moves.LEFT, orderPerimeter[i])
-                put(CubeSides.TOP to rotations[(3 - i + 2) % 4], orderPerimeter[i])
-                put(orderPerimeter[i] to Moves.UP, CubeSides.TOP)
-                put(orderPerimeter[i] to Moves.DOWN, CubeSides.DOWN)
-                put(
-                    CubeSides.DOWN to if (rotations[(3 - i + 2) % 4] == Moves.UP || rotations[(3 - i + 2) % 4] == Moves.DOWN) rotate(
-                        rotate(rotations[(3 - i + 2) % 4], false),
-                        false
-                    ) else rotations[(3 - i + 2) % 4], orderPerimeter[i]
-                )
-            }
-        }
-        val fixes = mapOf((4 to CubeSides.RIGHT) to 3, (50 to CubeSides.RIGHT) to 1, (50 to CubeSides.LEFT) to 1, (50 to CubeSides.BACK) to 1)
-        fun fixedDir(plane: CubeSides, dir: Moves, cubeEdge: Int): Moves {
-            if ((cubeEdge to plane) !in fixes) return dir
-            var fixedDir = dir
-            repeat(fixes[cubeEdge to plane]!!) {
-                fixedDir = rotate(fixedDir, true)
-            }
-            return fixedDir
+        val pattern = """\d+|[LR]""".toRegex()
+
+        fun allFrom(line: String): List<Instruction> {
+            return pattern.findAll(line).map {
+                when (it.value) {
+                    "L" -> Left
+                    "R" -> Right
+                    else -> Move(it.value.toInt())
+                }
+            }.toList()
         }
     }
+
+    object Left : Instruction()
+    object Right : Instruction()
+    data class Move(val steps: Int) : Instruction()
 }
 
-private class MapWithMoverPlain(map: List<String>) : MapWithMover(map) {
-    override fun move() {
-//        if (areWeOnCube) {
-//            moveOnCube()
-//        }
-        var (nx, ny) = (x to y) + dir.coords
-        if (dir.coords.first == -1) {
-            if (nx < 0) {
-                nx = n - 1
-            }
-        }
-        if (dir.coords.first == 1) {
-            if (nx >= n) {
-                nx = 0
-            }
-        }
-        if (dir.coords.second == -1) {
-            if (ny < begins[nx]) {
-                ny = ms[nx]
-            }
-        }
-        if (dir.coords.second == 1) {
-            if (ny >= ms[nx]) {
-                ny = begins[nx]
-            }
-        }
-        while (ny >= ms[nx] || ny < begins[nx] || map[nx][ny] == ' ') {
-            nx = (nx + dir.coords.first + n) % n
-            ny += dir.coords.second
-        }
-        if (map[nx][ny] == '#') return
-        x = nx
-        y = ny
-    }
-}
-
-private enum class Command { FORWARD, RIGHT, LEFT }
-
-private operator fun Pair<Int, Int>.minus(other: Pair<Int, Int>): Pair<Int, Int> {
-    return (this.first - other.first) to (this.second - other.second)
-}
-
-private operator fun Pair<Int, Int>.plus(other: Pair<Int, Int>): Pair<Int, Int> {
-    return (this.first + other.first) to (this.second + other.second)
-}
-
-private operator fun Pair<Int, Int>.times(other: Int): Pair<Int, Int> {
-    return (this.first * other) to (this.second * other)
+private enum class Dir(val left: () -> Dir, val right: () -> Dir, val offset: Point, val score: Int) {
+    NORTH({ WEST }, { EAST }, Point(0, -1), 3),
+    EAST({ NORTH }, { SOUTH }, Point(1, 0), 0),
+    SOUTH({ EAST }, { WEST }, Point(0, 1), 1),
+    WEST({ SOUTH }, { NORTH }, Point(-1, 0), 2)
 }
