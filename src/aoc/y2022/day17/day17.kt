@@ -9,21 +9,21 @@ fun main() {
     puzzle("2") { part2(inputLines("input.txt")) }
 }
 
-fun part1(input: List<String>): Long {
+private fun part1(input: List<String>): Long {
     return Tetris(input.first(), 2022L).simulate()
 }
 
-fun part2(input: List<String>): Long {
+private fun part2(input: List<String>): Long {
     return Tetris(input.first(), 1000000000000L).simulate()
 }
 
-typealias Rocks = List<Int>
+private typealias Rocks = List<Int>
 
-val rows = 20_000
-val cols = 7
-val bottom = rows * cols
+private val rows = 20_000
+private val cols = 7
+private val bottom = rows * cols
 
-val rockVecs = listOf(
+private val rockVecs = listOf(
     listOf(0, 1, 2, 3),
     listOf(1, 1 - cols, 1 - 2 * cols, 2 - cols, -cols),
     listOf(0, 1, 2, 2 - cols, 2 - 2 * cols),
