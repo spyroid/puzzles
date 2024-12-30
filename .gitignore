@@ -1,5 +1,5 @@
 .gradle
 .idea
 build
-src/aoc/**/input*.txt
+src/aoc/**/*.txt
 /.kotlin/

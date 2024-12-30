@@ -3,7 +3,7 @@ package aoc.y2021.day25
 import gears.puzzle
 
 fun main() {
-    puzzle { part1(inputLines("input.txt")) }
+    puzzle { part1(inputLines()) }
 }
 
 private data class Area(val input: List<String>) {
