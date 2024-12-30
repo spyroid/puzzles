@@ -4,10 +4,10 @@ import gears.Point
 import gears.puzzle
 
 fun main() {
-    puzzle { part1(inputLines()) }
+    puzzle { `Monkey Map`(inputLines()) }
 }
 
-private fun part1(input: List<String>): Any {
+private fun `Monkey Map`(input: List<String>): Any {
 
     val grid = input.dropLast(2)
         .flatMapIndexed { y, line -> line.mapIndexedNotNull { x, c -> if (c == ' ') null else Point(x, y) to c } }
