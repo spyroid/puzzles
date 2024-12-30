@@ -30,7 +30,10 @@ private fun `Arithmetic Logic Unit`(input: List<String>): Any {
         return if (z == 0) result else null
     }
 
-    fun validateRange(range: IntProgression) = range.map { it.toDigits() }.filter { 0 !in it }.firstNotNullOf { validate(it.toList()) }.joinToString("")
+    fun validateRange(range: IntProgression) = range.map { it.toString() }
+        .filter { '0' !in it }
+        .firstNotNullOf { validate(it.toList().map { it.digitToInt() }) }
+        .joinToString("")
 
     return validateRange(9999999 downTo 1111111) to validateRange(1111111..9999999)
 }
