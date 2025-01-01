@@ -1,6 +1,6 @@
 package aoc.y2016.day8
 
-import gears.Grid
+import gears.Grid2
 import gears.fullBlock
 import gears.puzzle
 
@@ -9,7 +9,7 @@ private fun main() {
 }
 
 private fun factor(lines: List<String>): Int {
-    val grid = Grid.of(50, 6, '.')
+    val grid = Grid2.of(50, 6, '.')
     for (line in lines) {
         val (op, a, b, _, d) = line.split(" ").plus(listOf(".", ".", ".", "."))
         when (op) {

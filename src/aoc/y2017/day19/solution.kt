@@ -1,7 +1,7 @@
 package aoc.y2017.day19
 
 import gears.Direction
-import gears.Grid
+import gears.Grid2
 import gears.Point
 import gears.puzzle
 
@@ -11,7 +11,7 @@ private fun main() {
 
 private fun tubes(lines: List<String>): Any {
     val max = lines.maxOf { it.length }
-    val grid = Grid.of(lines.map { it.padEnd(max) }) { it }
+    val grid = Grid2.of(lines.map { it.padEnd(max) }) { it }
     var p = Point(lines.first().indexOf('|'), 0)
     var dir = Direction.UP
     fun walk() = buildString {

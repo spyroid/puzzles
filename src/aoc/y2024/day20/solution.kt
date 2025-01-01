@@ -1,6 +1,6 @@
 package aoc.y2024.day20
 
-import gears.Grid
+import gears.Grid2
 import gears.Point
 import gears.puzzle
 
@@ -11,12 +11,12 @@ fun main() {
 
 private fun raceCondition(input: List<String>): Any {
 
-    val grid = Grid.of(input) { it }
+    val grid = Grid2.of(input) { it }
     var start = grid.all().first { it.v == 'S' }.p
     var end = grid.all().first { it.v == 'E' }.p
 
     fun find(s: Point, e: Point): Pair<MutableMap<Point, Int>, Int> {
-        val pq = ArrayDeque<Grid.Entry<Int>>().apply { add(Grid.Entry(s, 0)) }
+        val pq = ArrayDeque<Grid2.Entry<Int>>().apply { add(Grid2.Entry(s, 0)) }
         val d = mutableMapOf<Point, Int>()
         var best = -1
 
@@ -28,7 +28,7 @@ private fun raceCondition(input: List<String>): Any {
             grid
                 .around4(point)
                 .filter { it.v != '#' }
-                .forEach { pq.addFirst(Grid.Entry(it.p, score + 1)) }
+                .forEach { pq.addFirst(Grid2.Entry(it.p, score + 1)) }
         }
         return d to best
     }

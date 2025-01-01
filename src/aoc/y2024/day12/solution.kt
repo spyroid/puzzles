@@ -1,7 +1,7 @@
 package aoc.y2024.day12
 
 import gears.Direction
-import gears.Grid
+import gears.Grid2
 import gears.Point
 import gears.puzzle
 
@@ -10,7 +10,7 @@ fun main() {
 }
 
 private fun gardenGroups(input: List<String>): Any {
-    val grid = Grid.of(input) { it }
+    val grid = Grid2.of(input) { it }
     val seen = mutableSetOf<Point>()
 
     val res = grid.all().map { (p, c) ->
@@ -33,7 +33,7 @@ private fun gardenGroups(input: List<String>): Any {
     return res.unzip().let { (a, b) -> a.sum() to b.sum() }
 }
 
-private fun Grid<Char>.neighbours(p: Point): List<Char?> {
+private fun Grid2<Char>.neighbours(p: Point): List<Char?> {
     return listOf(
         at(p.x - 1, p.y),
         at(p.x + 1, p.y),
@@ -42,7 +42,7 @@ private fun Grid<Char>.neighbours(p: Point): List<Char?> {
     )
 }
 
-private fun Grid<Char>.corners(p: Point) = (Direction.entries.take(4) + Direction.entries.first()).zipWithNext()
+private fun Grid2<Char>.corners(p: Point) = (Direction.entries.take(4) + Direction.entries.first()).zipWithNext()
     .filter { (d1, d2) ->
         val a = at(p + d1)
         val b = at(p + d2)

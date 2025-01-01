@@ -1,7 +1,7 @@
 package aoc.y2017.day14
 
 import aoc.y2017.day10.knot2
-import gears.Grid
+import gears.Grid2
 import gears.Point
 import gears.puzzle
 import java.math.BigInteger
@@ -11,7 +11,7 @@ private fun main() {
 }
 
 private fun defragmentator(input: String): Any {
-    val disk = Grid.of(128, 128, 0)
+    val disk = Grid2.of(128, 128, 0)
     val part1 = (0..127).sumOf { y ->
         BigInteger(knot2("$input-$y"), 16)
             .toString(2)

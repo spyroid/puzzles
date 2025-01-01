@@ -1,6 +1,6 @@
 package aoc.y2023.day17
 
-import gears.Grid
+import gears.Grid2
 import gears.Point
 import gears.puzzle
 import kotlin.math.absoluteValue
@@ -11,7 +11,7 @@ private fun main() {
 
 private fun clumsyCrucible(input: List<String>): Any {
     fun walk(a: Int, b: Int, firstTurn: Int): Int {
-        val grid = Grid.of(input) { mutableListOf(0, 0, it.digitToInt()) }
+        val grid = Grid2.of(input) { mutableListOf(0, 0, it.digitToInt()) }
         val cursors = ArrayDeque<Pair<Point, Int>>().apply {
             add(Point.zero to 0)
             add(Point.zero to 1)

@@ -1,6 +1,6 @@
 package aoc.y2023.day3
 
-import gears.Grid
+import gears.Grid2
 import gears.Point
 import gears.puzzle
 
@@ -9,7 +9,7 @@ fun main() {
 }
 
 private fun gear(input: List<String>): Any {
-    val grid = Grid.of(input) { it }
+    val grid = Grid2.of(input) { it }
     var number = ""
     val around = mutableSetOf<Char>()
     val gears = mutableSetOf<Point>()

@@ -1,6 +1,6 @@
 package aoc.y2024.day14
 
-import gears.Grid
+import gears.Grid2
 import gears.findInts
 import gears.puzzle
 
@@ -14,7 +14,7 @@ private fun restroomRedoubt(input: List<String>): Any {
     var (p1, p2) = 0 to 0
     var (w, h) = 101 to 103
 
-    fun safetyFactor(grid: Grid<Int>): Int {
+    fun safetyFactor(grid: Grid2<Int>): Int {
         val (mx, my) = w / 2 to h / 2
         val quadrants = mutableListOf(0, 0, 0, 0)
 
@@ -27,7 +27,7 @@ private fun restroomRedoubt(input: List<String>): Any {
         return quadrants.fold(1) { a, b -> a * b }
     }
 
-    fun xmasTree(grid: Grid<Int>): Boolean {
+    fun xmasTree(grid: Grid2<Int>): Boolean {
         grid.data().forEach {
             var c = 0
             for (v in it) {
@@ -39,7 +39,7 @@ private fun restroomRedoubt(input: List<String>): Any {
     }
 
     while (p1 == 0 || p2 == 0) {
-        val grid = Grid.of(w, h, 0)
+        val grid = Grid2.of(w, h, 0)
         robots.forEach { (px, py, vx, vy) ->
             var nx = (px + vx * seconds) % w
             var ny = (py + vy * seconds) % h

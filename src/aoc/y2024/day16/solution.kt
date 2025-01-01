@@ -2,7 +2,7 @@ package aoc.y2024.day16
 
 import gears.Direction
 import gears.Direction.RIGHT
-import gears.Grid
+import gears.Grid2
 import gears.Point
 import gears.puzzle
 
@@ -11,7 +11,7 @@ fun main() {
 }
 
 private fun reindeerMaze(input: List<String>): Any {
-    val grid = Grid.of(input) { it }
+    val grid = Grid2.of(input) { it }
     val start = grid.all().first { it.v == 'S' }.also { grid[it.p] = '.' }
     val end = grid.all().first { it.v == 'E' }.also { grid[it.p] = '.' }
 

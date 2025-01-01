@@ -1,6 +1,6 @@
 package aoc.y2015.day18
 
-import gears.Grid
+import gears.Grid2
 import gears.puzzle
 
 private fun main() {
@@ -9,7 +9,7 @@ private fun main() {
 }
 
 private fun gif(lines: List<String>, isStuck: Boolean = false): Int {
-    var grid = Grid.of(lines) { it }
+    var grid = Grid2.of(lines) { it }
     if (isStuck) {
         grid[0, 0] = '#'
         grid[grid.maxX, 0] = '#'

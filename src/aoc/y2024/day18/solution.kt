@@ -1,6 +1,6 @@
 package aoc.y2024.day18
 
-import gears.Grid
+import gears.Grid2
 import gears.Point
 import gears.puzzle
 
@@ -13,7 +13,7 @@ private fun RAMRun(input: List<String>): Any {
     val allWalls = input.map { it.split(",").let { (a, b) -> Point(a.toInt(), b.toInt()) } }
 
     fun bfs(walls: Set<Point>, start: Point, end: Point): Int {
-        val queue = ArrayDeque<Grid.Entry<Int>>().apply { add(Grid.Entry(start, 0)) }
+        val queue = ArrayDeque<Grid2.Entry<Int>>().apply { add(Grid2.Entry(start, 0)) }
         val visited = mutableSetOf<Point>()
         while (queue.isNotEmpty()) {
             val current = queue.removeFirst()
@@ -21,7 +21,7 @@ private fun RAMRun(input: List<String>): Any {
             current.p.around4()
                 .filter { it.withinBounds(end) && !visited.contains(it) && !walls.contains(it) }
                 .forEach {
-                    queue.add(Grid.Entry(it, current.v + 1))
+                    queue.add(Grid2.Entry(it, current.v + 1))
                     visited.add(it)
                 }
         }

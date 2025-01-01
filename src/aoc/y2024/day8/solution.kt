@@ -1,6 +1,6 @@
 package aoc.y2024.day8
 
-import gears.Grid
+import gears.Grid2
 import gears.Point
 import gears.puzzle
 
@@ -9,7 +9,7 @@ fun main() {
 }
 
 private fun resonantCollinearity(input: List<String>): Any {
-    val grid = Grid.of(input) { it }
+    val grid = Grid2.of(input) { it }
     fun Point.nextInLine(other: Point, limit: Int) = generateSequence(other to Point(other.x - x, other.y - y)) { (a, b) -> a + b to b }
         .withIndex()
         .takeWhile { (i, v) -> i <= limit && grid.at(v.first) != null }

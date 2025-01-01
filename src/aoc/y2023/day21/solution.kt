@@ -1,6 +1,6 @@
 package aoc.y2023.day21
 
-import gears.Grid
+import gears.Grid2
 import gears.Point
 import gears.puzzle
 
@@ -9,7 +9,7 @@ private fun main() {
 }
 
 private fun stepCounter(input: List<String>): Any {
-    val garden = Grid.of(input) { it }
+    val garden = Grid2.of(input) { it }
     val size = garden.data().size
     val start = garden.all().first { it.v == 'S' }.p
 

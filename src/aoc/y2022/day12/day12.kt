@@ -1,6 +1,6 @@
 package aoc.y2022.day12
 
-import gears.Grid
+import gears.Grid2
 import gears.Point
 import gears.puzzle
 
@@ -12,7 +12,7 @@ fun main() {
 }
 
 private fun part1(input: List<String>, directionUp: Boolean): Int {
-    val map = Grid.of(input) { c -> c }
+    val map = Grid2.of(input) { c -> c }
     val start = map.pointsOf { _, _, v -> v == 'S' }.onEach { map[it] = 'a' }.first()
     var goal = map.pointsOf { _, _, v -> v == 'E' }.onEach { map[it] = 'z' }.first()
     return if (directionUp)
@@ -21,7 +21,7 @@ private fun part1(input: List<String>, directionUp: Boolean): Int {
         hill(map, goal, start, false) { p -> map.at(p)!! == 'a' }.count() - 1
 }
 
-private fun hill(map: Grid<Char>, start: Point, goal: Point, directionUp: Boolean, rule: (Point) -> Boolean): Sequence<Point> {
+private fun hill(map: Grid2<Char>, start: Point, goal: Point, directionUp: Boolean, rule: (Point) -> Boolean): Sequence<Point> {
     val points = mutableMapOf<Point, Point>()
     var seen = mutableSetOf(start)
     val queue = mutableListOf(start)

@@ -1,6 +1,6 @@
 package aoc.y2020.day20
 
-import gears.Grid
+import gears.Grid2
 import gears.puzzle
 
 private fun main() {
@@ -48,7 +48,7 @@ private fun List<String>.asTiles(): List<Tile> {
     val tiles = mutableListOf<Tile>()
     for (line in this) {
         if (line.isEmpty()) {
-            tiles.add(Tile(id, Grid.of(lines) { if (it == '.') 0 else 1 }))
+            tiles.add(Tile(id, Grid2.of(lines) { if (it == '.') 0 else 1 }))
             lines.clear()
             a = 1
             continue
@@ -56,11 +56,11 @@ private fun List<String>.asTiles(): List<Tile> {
         if (a == 1) id = line.drop(5).dropLast(1).toInt() else lines.add(line)
         a += 1
     }
-    tiles.add(Tile(id, Grid.of(lines) { if (it == '.') 0 else 1 }))
+    tiles.add(Tile(id, Grid2.of(lines) { if (it == '.') 0 else 1 }))
     return tiles
 }
 
-private data class Tile(val id: Int, var grid: Grid<Int>) {
+private data class Tile(val id: Int, var grid: Grid2<Int>) {
     val allEdges = listOf(
         grid.topEdge(), grid.topEdge().reversed(),
         grid.bottomEdge(), grid.bottomEdge().reversed(),

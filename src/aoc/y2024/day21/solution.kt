@@ -1,7 +1,7 @@
 package aoc.y2024.day21
 
 import gears.Direction
-import gears.Grid
+import gears.Grid2
 import gears.Point
 import gears.puzzle
 
@@ -26,7 +26,7 @@ private fun keypadConundrum(input: List<String>): Any {
     fun commands(data: Map<Char, Point>, start: Char, end: Char): List<String> {
         if (start == end) return listOf("A")
         val all = mutableListOf<String>()
-        val queue = ArrayDeque<Grid.Entry<String>>().apply { add(Grid.Entry(data.getValue(start), "")) }
+        val queue = ArrayDeque<Grid2.Entry<String>>().apply { add(Grid2.Entry(data.getValue(start), "")) }
         val distances = mutableMapOf<Point, Int>()
 
         while (queue.isNotEmpty()) {
@@ -41,7 +41,7 @@ private fun keypadConundrum(input: List<String>): Any {
                     val newPath = current.v + ch
                     val dist = distances[position]
                     if (dist == null || dist >= newPath.length) {
-                        queue.add(Grid.Entry(position, newPath))
+                        queue.add(Grid2.Entry(position, newPath))
                         distances[position] = newPath.length
                     }
                 }

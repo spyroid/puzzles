@@ -1,7 +1,7 @@
 package aoc.y2024.day4
 
 import gears.Direction
-import gears.Grid
+import gears.Grid2
 import gears.puzzle
 
 fun main() {
@@ -9,16 +9,16 @@ fun main() {
 }
 
 private fun ceresSearch(input: List<String>): Any {
-    val grid = Grid.of(input) { it }
+    val grid = Grid2.of(input) { it }
 
-    fun check(gv: Grid.Entry<Char>) = Direction.entries.count { dir ->
+    fun check(gv: Grid2.Entry<Char>) = Direction.entries.count { dir ->
         generateSequence(gv.p) { it + dir }
             .take(4)
             .map { grid.at(it) }
             .joinToString("") == "XMAS"
     }
 
-    fun check2(gv: Grid.Entry<Char>) = listOf(Direction.DOWN_RIGHT, Direction.DOWN_LEFT)
+    fun check2(gv: Grid2.Entry<Char>) = listOf(Direction.DOWN_RIGHT, Direction.DOWN_LEFT)
         .all { dir ->
             generateSequence(gv.p - dir) { it + dir }
                 .take(3)

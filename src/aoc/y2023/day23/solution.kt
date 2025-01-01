@@ -1,7 +1,7 @@
 package aoc.y2023.day23
 
 import gears.Direction
-import gears.Grid
+import gears.Grid2
 import gears.Point
 import gears.puzzle
 
@@ -11,7 +11,7 @@ private fun main() {
 }
 
 private fun longWalk(input: List<String>): Any {
-    val grid = Grid.of(input) { it }
+    val grid = Grid2.of(input) { it }
     val start = Point(1, 0)
     val end = Point(grid.maxX - 1, grid.maxY)
 
@@ -38,7 +38,7 @@ private fun longWalk(input: List<String>): Any {
 }
 
 private fun longWalk2(input: List<String>): Any {
-    val grid = Grid.of(input) { it }
+    val grid = Grid2.of(input) { it }
     val start = Point(1, 0)
     val end = Point(grid.maxX - 1, grid.maxY)
 

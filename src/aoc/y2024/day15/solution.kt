@@ -3,7 +3,7 @@ package aoc.y2024.day15
 import gears.Direction
 import gears.Direction.LEFT
 import gears.Direction.RIGHT
-import gears.Grid
+import gears.Grid2
 import gears.Point
 import gears.puzzle
 
@@ -12,8 +12,8 @@ fun main() {
 }
 
 private fun warehouseWoes(input: String): Any {
-    var (grid, dirs) = input.split("\n\n").let { (a, b) -> Grid.of(a.lines()) { it } to b.map { Direction.of(it, true) } }
-    val grid2 = Grid.of(grid.maxX * 2 + 2, grid.maxY + 1, '.').apply {
+    var (grid, dirs) = input.split("\n\n").let { (a, b) -> Grid2.of(a.lines()) { it } to b.map { Direction.of(it, true) } }
+    val grid2 = Grid2.of(grid.maxX * 2 + 2, grid.maxY + 1, '.').apply {
         grid.all().forEach { (p, c) ->
             val (a, b) = when (c) {
                 '#' -> '#' to '#'
@@ -26,7 +26,7 @@ private fun warehouseWoes(input: String): Any {
         }
     }
 
-    fun moveBlocks(g: Grid<Char>, cur: Point, dir: Direction): Boolean {
+    fun moveBlocks(g: Grid2<Char>, cur: Point, dir: Direction): Boolean {
         val blocks = mutableSetOf<Point>()
         val toCheck = ArrayDeque<Point>().apply { add(cur + dir) }
 
@@ -48,7 +48,7 @@ private fun warehouseWoes(input: String): Any {
         }
     }
 
-    fun solve(grid: Grid<Char>, flags: List<Char>): Int {
+    fun solve(grid: Grid2<Char>, flags: List<Char>): Int {
         var robo = grid.all().first { it.v == '@' }.p
         for (dir in dirs) {
             when (grid.at(robo + dir)) {

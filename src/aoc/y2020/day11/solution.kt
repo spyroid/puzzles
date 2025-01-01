@@ -1,16 +1,16 @@
 package aoc.y2020.day11
 
-import gears.Grid
+import gears.Grid2
 import gears.puzzle
 
 private fun main() {
-    puzzle { part1(Grid.of(inputLines("test.txt")) { it }) }
-    puzzle { part1(Grid.of(inputLines("input.txt")) { it }) }
-    puzzle { part2(Grid.of(inputLines("test.txt")) { it }) }
-    puzzle { part2(Grid.of(inputLines("input.txt")) { it }) }
+    puzzle { part1(Grid2.of(inputLines("test.txt")) { it }) }
+    puzzle { part1(Grid2.of(inputLines("input.txt")) { it }) }
+    puzzle { part2(Grid2.of(inputLines("test.txt")) { it }) }
+    puzzle { part2(Grid2.of(inputLines("input.txt")) { it }) }
 }
 
-private fun <T> findAll(grid: Grid<T>, x: Int, y: Int): List<List<T>> {
+private fun <T> findAll(grid: Grid2<T>, x: Int, y: Int): List<List<T>> {
     fun getAll(xx: Int, yy: Int): Sequence<T> = sequence {
         var a = x + xx
         var b = y + yy
@@ -33,7 +33,7 @@ private fun <T> findAll(grid: Grid<T>, x: Int, y: Int): List<List<T>> {
     }
 }
 
-private fun part2(grid: Grid<Char>): Int {
+private fun part2(grid: Grid2<Char>): Int {
     var g = grid
     var count = 0
     while (true) {
@@ -60,7 +60,7 @@ private fun part2(grid: Grid<Char>): Int {
     return g.all().count { it.v == '#' }
 }
 
-private fun part1(grid: Grid<Char>): Int {
+private fun part1(grid: Grid2<Char>): Int {
     var g = grid
     var count = 0
     while (true) {

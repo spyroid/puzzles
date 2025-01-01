@@ -1,6 +1,6 @@
 package gears
 
-class Grid<T> private constructor(private var grid: MutableList<MutableList<T>>) {
+class Grid2<T> private constructor(private var grid: MutableList<MutableList<T>>) {
     operator fun set(p: Point, value: T): Boolean {
         return set(p.x, p.y, value)
     }
@@ -20,13 +20,13 @@ class Grid<T> private constructor(private var grid: MutableList<MutableList<T>>)
     fun deepHashCode() = data().toTypedArray().contentDeepHashCode()
 
     companion object {
-        fun <T> of(input: List<String>, mapper: (Char) -> T) = Grid(input.map { row -> row.map(mapper).toMutableList() }.toMutableList())
-        fun <T> of(cols: Int, rows: Int, v: T) = Grid(Array(rows) { mutableListOf<T>().apply { repeat(cols) { add(v) } } }.toMutableList())
+        fun <T> of(input: List<String>, mapper: (Char) -> T) = Grid2(input.map { row -> row.map(mapper).toMutableList() }.toMutableList())
+        fun <T> of(cols: Int, rows: Int, v: T) = Grid2(Array(rows) { mutableListOf<T>().apply { repeat(cols) { add(v) } } }.toMutableList())
     }
 
-    fun rotate2D(): Grid<T> {
+    fun rotate2D(): Grid2<T> {
         val grid = MutableList(this.grid[0].size) { i -> MutableList(this.grid.size) { j -> this.grid[j][i] } }
-        return Grid(grid)
+        return Grid2(grid)
     }
 
     fun edgeAsNumber(edge: List<T>, mapper: (T) -> Char) = edge.map(mapper).joinToString("").toLong(2)
@@ -35,14 +35,14 @@ class Grid<T> private constructor(private var grid: MutableList<MutableList<T>>)
     fun leftEdge() = MutableList(data().size) { y -> data()[y].first() }
     fun rightEdge() = MutableList(data().size) { y -> data()[y].last() }
 
-    fun flipY(): Grid<T> {
+    fun flipY(): Grid2<T> {
         val grid = MutableList(this.grid.size) { i -> this.grid[i].reversed().toMutableList() }
-        return Grid(grid)
+        return Grid2(grid)
     }
 
-    fun flipX(): Grid<T> {
+    fun flipX(): Grid2<T> {
         val grid = this.grid.reversed().toMutableList()
-        return Grid(grid)
+        return Grid2(grid)
     }
 
     fun at(x: Int, y: Int): T? = if (isValid(x, y)) this.grid[y][x] else null
@@ -65,8 +65,8 @@ class Grid<T> private constructor(private var grid: MutableList<MutableList<T>>)
     }
 
 
-    fun clone(transformer: Grid<T>.(x: Int, y: Int, e: T) -> T): Grid<T> {
-        val cloned = Grid(MutableList(data().size) { data()[it].toMutableList() })
+    fun clone(transformer: Grid2<T>.(x: Int, y: Int, e: T) -> T): Grid2<T> {
+        val cloned = Grid2(MutableList(data().size) { data()[it].toMutableList() })
         for (y in data().indices) {
             for (x in data()[y].indices) cloned[x, y] = transformer(x, y, this[x, y])
         }
@@ -128,11 +128,11 @@ class Grid<T> private constructor(private var grid: MutableList<MutableList<T>>)
 
 }
 
-fun Grid<Int>.inc(p: Point, amount: Int = 1) {
+fun Grid2<Int>.inc(p: Point, amount: Int = 1) {
     this[p.x, p.y] = this[p.x, p.y] + amount
 }
 
-fun Grid<Long>.inc(p: Point, amount: Long = 1L) {
+fun Grid2<Long>.inc(p: Point, amount: Long = 1L) {
     this[p.x, p.y] = this[p.x, p.y] + amount
 }
 

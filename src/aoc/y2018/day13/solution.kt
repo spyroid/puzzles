@@ -2,7 +2,7 @@ package aoc.y2018.day13
 
 import gears.Direction
 import gears.Direction.*
-import gears.Grid
+import gears.Grid2
 import gears.Point
 import gears.puzzle
 
@@ -13,7 +13,7 @@ private fun main() {
 
 private fun madness(input: List<String>): Any {
     val mx = input.maxOf { it.length }
-    val grid = Grid.of(input.map { it.padEnd(mx, ' ') }) { it }
+    val grid = Grid2.of(input.map { it.padEnd(mx, ' ') }) { it }
     val carts = grid.allPoints().mapNotNull { p ->
         when (val dir = Direction.of(grid.at(p) ?: return@mapNotNull null)) {
             UP, DOWN, LEFT, RIGHT -> {
@@ -31,7 +31,7 @@ private fun madness(input: List<String>): Any {
 }
 
 private data class Cart(var p: Point, var dir: Direction) {
-    lateinit var grid: Grid<Char>
+    lateinit var grid: Grid2<Char>
     var cross = 0
     var crossDir = 1
 

@@ -1,7 +1,7 @@
 package aoc.y2023.day10
 
 import gears.Direction
-import gears.Grid
+import gears.Grid2
 import gears.Point
 import gears.puzzle
 
@@ -10,7 +10,7 @@ private fun main() {
 }
 
 private fun pipeMaze(input: List<String>): Any {
-    var grid = Grid.of(input) { it }
+    var grid = Grid2.of(input) { it }
     var now = grid.all().first { it.v == 'S' }
     val seen = mutableSetOf(now.p)
     val q = ArrayDeque(listOf(now))

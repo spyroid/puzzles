@@ -1,6 +1,6 @@
 package aoc.y2022.day8
 
-import gears.Grid
+import gears.Grid2
 import gears.puzzle
 
 fun main() {
@@ -47,7 +47,7 @@ private fun part2(input: List<String>): Int {
 
 data class Tree(val height: Int, var box: Int)
 
-private fun makeForest(input: List<String>, boxInit: Int): Grid<Tree> {
-    return Grid.of(input) { c -> Tree(c.digitToInt(), boxInit) }
+private fun makeForest(input: List<String>, boxInit: Int): Grid2<Tree> {
+    return Grid2.of(input) { c -> Tree(c.digitToInt(), boxInit) }
 }
 
