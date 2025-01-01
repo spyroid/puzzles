@@ -135,5 +135,3 @@ fun Grid2<Int>.inc(p: Point, amount: Int = 1) {
 fun Grid2<Long>.inc(p: Point, amount: Long = 1L) {
     this[p.x, p.y] = this[p.x, p.y] + amount
 }
-
-const val fullBlock = '█'

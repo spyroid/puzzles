@@ -97,3 +97,5 @@ fun Int.toDigits(base: Int = 10) = sequence {
         n /= base
     }
 }
+
+const val fullBlock = '█'
