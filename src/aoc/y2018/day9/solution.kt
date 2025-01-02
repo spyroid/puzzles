@@ -2,7 +2,7 @@ package aoc.y2018.day9
 
 import gears.findInts
 import gears.puzzle
-import java.util.LinkedList
+import java.util.*
 
 fun main() {
     puzzle { `Marble Mania`(input()) }
@@ -10,41 +10,31 @@ fun main() {
 
 private fun `Marble Mania`(input: String): Any {
     val (players, points) = input.findInts()
-    return solve(players, points) to solve(players, points * 100)
+    return game(players, points) to game(players, points * 100)
 }
 
-private fun solve(players: Int, points: Int): Long {
-    var currMarble = 0L
-    val playersScores = LongArray(players)
-    val marbles: LinkedList<Long> = LinkedList(listOf(0L))
-    var currPlayer = 0
-    var iterator = marbles.listIterator(1)
-    while (currMarble++ < points) {
-        if (marbles.size == 1) {
-            iterator.add(currMarble)
-        } else if (currMarble % 23 == 0L) {
-            (0..7).forEach { _ ->
-                if (iterator.hasPrevious()) {
-                    iterator.previous()
-                } else {
-                    iterator = marbles.listIterator(marbles.size - 1)
-                }
-            }
-            val toRemove = iterator.next()
-            iterator.remove()
-            playersScores[currPlayer] += (currMarble + toRemove)
-            iterator.next()
-        } else if (!iterator.hasNext()) {
-            iterator = marbles.listIterator(1)
-            iterator.add(currMarble)
+private fun game(players: Int, points: Int): Long {
+    val board = Board().apply { addFirst(0) }
+    val scores = LongArray(players)
+
+    for (marble in 1..points) {
+        if (marble % 23 == 0) {
+            board.rotate(-7)
+            scores[marble % players] += board.pop().toLong() + marble
         } else {
-            iterator.next()
-            iterator.add(currMarble)
-        }
-        if (++currPlayer % players == 0) {
-            currPlayer = 0
+            board.rotate(2)
+            board.addLast(marble)
         }
     }
-    return playersScores.max()
+    return scores.max()
 }
 
+private class Board : ArrayDeque<Int>() {
+    fun rotate(amount: Int) {
+        if (amount >= 0) {
+            for (i in 0 until amount) addFirst(removeLast())
+        } else {
+            for (i in 0 until -amount - 1) addLast(remove())
+        }
+    }
+}
