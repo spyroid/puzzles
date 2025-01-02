@@ -32,9 +32,9 @@ private fun game(players: Int, points: Int): Long {
 private class Board : ArrayDeque<Int>() {
     fun rotate(amount: Int) {
         if (amount >= 0) {
-            for (i in 0 until amount) addFirst(removeLast())
+            repeat(amount) { addFirst(removeLast()) }
         } else {
-            for (i in 0 until -amount - 1) addLast(remove())
+            repeat(-amount - 1) { addLast(remove()) }
         }
     }
 }
