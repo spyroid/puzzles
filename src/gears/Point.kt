@@ -56,18 +56,17 @@ data class Point(var x: Int, var y: Int) {
     }
 }
 
-fun Iterable<Point>.bounds() = this.fold(listOf(Int.MAX_VALUE, Int.MIN_VALUE, Int.MAX_VALUE, Int.MIN_VALUE)) { acc, p ->
-    listOf(min(acc[0], p.x), max(acc[1], p.x), min(acc[2], p.y), max(acc[3], p.y))
-}
+fun Iterable<Point>.bounds() = this.fold(listOf(Int.MAX_VALUE, Int.MIN_VALUE, Int.MAX_VALUE, Int.MIN_VALUE).toTypedArray()) { acc, p ->
+    acc[0] = min(acc[0], p.x); acc[1] = max(acc[1], p.x); acc[2] = min(acc[2], p.y);acc[3] = max(acc[3], p.y)
+    acc
+}.let { (x1, x2, y1, y2) -> Point(x1, y1) to Point(x2, y2) }
 
 fun Iterable<Point>.toStringGrid(char: Char = fullBlock): String {
-    val (minX, maxX, minY, maxY) = this.bounds()
-    return this.toStringGrid(minX..maxX, minY..maxY, char)
+    val (p1, p2) = this.bounds()
+    return this.toStringGrid(p1.x..p2.x, p1.y..p2.y, char)
 }
 
 fun Iterable<Point>.toStringGrid(xRange: IntRange, yRange: IntRange, char: Char = fullBlock): String {
     val all = this.toSet()
-    return yRange.joinToString("\n") { y ->
-        xRange.joinToString("") { x -> if (Point(x, y) in all) char.toString() else " " }
-    }
+    return yRange.joinToString("\n") { y -> xRange.joinToString("") { x -> if (Point(x, y) in all) char.toString() else " " } }
 }

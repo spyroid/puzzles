@@ -7,9 +7,7 @@ private fun main() {
 }
 
 private fun stars(input: List<Particle>): Any {
-    return generateSequence(Long.MAX_VALUE) {
-        input.update().let { list -> list.bounds().map { it.toLong() } }.let { (it[1] - it[0]) * (it[3] - it[2]) }
-    }
+    return generateSequence(Long.MAX_VALUE) { input.update().bounds().let { (p1, p2) -> (p2.x - p1.x) * (p2.y - p1.y).toLong() } }
         .zipWithNext()
         .takeWhile { it.first > it.second }
         .count()
