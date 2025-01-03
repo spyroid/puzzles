@@ -1,11 +1,10 @@
 package aoc.y2016.day5
 
-import gears.hasLeadingZeros
-import gears.md5
 import gears.puzzle
 import gears.toHex
+import java.security.MessageDigest
 
-private fun main() {
+fun main() {
     puzzle { chess("ugkcyxxp") }
     puzzle { chess2("ugkcyxxp") }
 }
@@ -34,4 +33,8 @@ private fun chess(id: String): String {
         }
     }
 }
-
+private fun ByteArray.hasLeadingZeros(n: Int): Boolean {
+    repeat(n / 2) { if (this[it] != 0.toByte()) return false }
+    return !(n % 2 != 0 && this[n / 2].toUByte() > 15.toUByte())
+}
+private fun md5(s: String) = MessageDigest.getInstance("MD5").digest(s.toByteArray())

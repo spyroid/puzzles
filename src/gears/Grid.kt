@@ -29,6 +29,7 @@ class Grid<T>(private val data: Array<Array<Entry<T>>>, val width: Int, val heig
     fun <R> clone(transformer: Grid<T>.(e: Entry<T>) -> R) = Array(height) { y -> Array(width) { x -> Entry(Point(x, y), transformer(data[y][x])) } }
         .let { Grid(it, width, height) }
 
+    @Suppress("UNCHECKED_CAST")
     fun inc(p: Point, amount: Int = 1) {
         val v = get(p)?.v ?: return
         when (v) {

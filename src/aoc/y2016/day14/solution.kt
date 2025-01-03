@@ -1,16 +1,17 @@
 package aoc.y2016.day14
 
-import gears.md5
 import gears.puzzle
 import gears.toHex
+import java.security.MessageDigest
 
-private fun main() {
+fun main() {
     puzzle { pad("jlmsuwbz", 1) }
     puzzle { pad("jlmsuwbz", 2017) }
 }
 
 private fun pad(input: String, times: Int): Int {
     val cache = mutableMapOf<Int, String>()
+    fun md5(s: String) = MessageDigest.getInstance("MD5").digest(s.toByteArray())
     fun md5x(i: Int) = cache.computeIfAbsent(i) { _ -> (1..times).fold("$input$i") { acc, _ -> md5(acc).toHex() } }
     val keys = mutableListOf<String>()
     for (i in 0..Int.MAX_VALUE) {

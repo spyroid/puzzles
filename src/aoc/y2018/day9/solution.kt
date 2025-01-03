@@ -2,7 +2,7 @@ package aoc.y2018.day9
 
 import gears.findInts
 import gears.puzzle
-import java.util.*
+import gears.rotate
 
 fun main() {
     puzzle { `Marble Mania`(input()) }
@@ -14,27 +14,17 @@ private fun `Marble Mania`(input: String): Any {
 }
 
 private fun game(players: Int, points: Int): Long {
-    val board = Board().apply { addFirst(0) }
+    val board = ArrayDeque<Int>(players).apply { addFirst(0) }
     val scores = LongArray(players)
 
     for (marble in 1..points) {
         if (marble % 23 == 0) {
             board.rotate(-7)
-            scores[marble % players] += board.pop().toLong() + marble
+            scores[marble % players] += board.removeFirst().toLong() + marble
         } else {
             board.rotate(2)
             board.addLast(marble)
         }
     }
     return scores.max()
-}
-
-private class Board : ArrayDeque<Int>() {
-    fun rotate(amount: Int) {
-        if (amount >= 0) {
-            repeat(amount) { addFirst(removeLast()) }
-        } else {
-            repeat(-amount - 1) { addLast(remove()) }
-        }
-    }
 }
