@@ -1,5 +1,6 @@
 package gears
 
+@Deprecated("Grid based on MutableList", ReplaceWith("Grid"))
 class Grid2<T> private constructor(private var grid: MutableList<MutableList<T>>) {
     operator fun set(p: Point, value: T): Boolean {
         return set(p.x, p.y, value)

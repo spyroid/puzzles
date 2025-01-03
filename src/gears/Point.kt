@@ -9,7 +9,6 @@ data class Point(var x: Int, var y: Int) {
     var value = 0
     operator fun plus(other: Point) = Point(x + other.x, y + other.y)
     operator fun plus(dir: Direction) = Point(x + dir.x, y + dir.y)
-
     operator fun minus(other: Point) = Point(x - other.x, y - other.y)
     operator fun minus(dir: Direction) = Point(x - dir.x, y - dir.y)
     operator fun unaryMinus() = Point(-x, -y)
@@ -29,7 +28,6 @@ data class Point(var x: Int, var y: Int) {
     // Note, it is inclusive, so for indexing reduce with 1
     fun withinBounds(bounds: Point) = withinBounds(0, bounds.x, 0, bounds.y)
     fun withinBounds(minX: Int, maxX: Int, minY: Int, maxY: Int) = x in minX..maxX && y in minY..maxY
-
     fun allInBounds(b: Point) = allInBounds(b.x, b.y)
     fun allInBounds(x2: Int, y2: Int) = allInBounds(x, y, x2, y2)
 
@@ -54,7 +52,7 @@ data class Point(var x: Int, var y: Int) {
 
     companion object {
         val zero = Point(0, 0)
-        fun fromStr(str: String, delim: String = ",") = Point(str.substringBefore(delim).toInt(), str.substringAfter(delim).toInt())
+        fun of(str: String, delim: String = ",") = Point(str.substringBefore(delim).toInt(), str.substringAfter(delim).toInt())
     }
 }
 

@@ -4,8 +4,8 @@ import gears.Direction
 import gears.Point
 import gears.puzzle
 
-private fun main() {
-    puzzle("1 & 2") { crossedWires(inputLines()) }
+fun main() {
+    puzzle { crossedWires(inputLines()) }
 }
 
 private fun crossedWires(input: List<String>): Any {
