@@ -1,6 +1,6 @@
 package gears
 
-class Grid<T>(private val data: Array<Array<Entry<T>>>, val width: Int, val height: Int) {
+class Grid<T>(val data: Array<Array<Entry<T>>>, val width: Int, val height: Int) {
     data class Entry<T>(val p: Point, var v: T)
 
     val maxX = width - 1
