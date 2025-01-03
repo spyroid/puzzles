@@ -30,7 +30,6 @@ class Grid2<T> private constructor(private var grid: MutableList<MutableList<T>>
         return Grid2(grid)
     }
 
-    fun edgeAsNumber(edge: List<T>, mapper: (T) -> Char) = edge.map(mapper).joinToString("").toLong(2)
     fun topEdge() = data().first()
     fun bottomEdge() = data().last()
     fun leftEdge() = MutableList(data().size) { y -> data()[y].first() }

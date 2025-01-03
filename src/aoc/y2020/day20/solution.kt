@@ -1,63 +1,30 @@
 package aoc.y2020.day20
 
 import gears.Grid2
+import gears.findInts
 import gears.puzzle
 
-private fun main() {
-    puzzle("test") {
-        part1(inputLines("test.txt").asTiles())
-    }
-    puzzle {
-        part1(inputLines("input.txt").asTiles())
-    }
-//    puzzle("test") {
-//        part2(linesFrom("test.txt").asTiles())
-//    }
+fun main() {
+    puzzle { `Jurassic Jigsaw`(input("test.txt")) }
+//    puzzle { `Jurassic Jigsaw`(input()) }
 }
 
-//private fun part2(tiles: List<Tile>) {
-//    val cc = tiles.asSequence()
-//        .map { Pair(it, findAround(it, tiles)) }
-//        .filter { it.second.size == 2 }
-//        .onEach { println("${it.first.id} has ${it.second.map { i -> i.id }}") }
-//        .toList().first()
-//
-//    val cn = cc.second
-//    val t = cc.first
-//
-//    val rightHash = t.grid.rightEdge().map { a -> a.digitToChar() }.joinToString("").toInt(2)
-//    val bottomHash = t.grid.bottomEdge().map { a -> a.digitToChar() }.joinToString("").toInt(2)
-//
-//    val i = 1
-//
-//}
-
-private fun part1(tiles: List<Tile>) = tiles.asSequence()
-    .map { Pair(it.id, findAround(it, tiles)) }
-    .filter { it.second.size == 2 }
-    .map { it.first }
-    .fold(1L) { v, acc -> acc * v }
-
-private fun findAround(tile: Tile, tiles: List<Tile>) = tiles.filter { it.id != tile.id }
-    .mapNotNull { if (it.allEdges.intersect(tile.allEdges).isNotEmpty()) it else null }
-
-private fun List<String>.asTiles(): List<Tile> {
-    var a = 1
-    var id = 0
-    val lines = mutableListOf<String>()
-    val tiles = mutableListOf<Tile>()
-    for (line in this) {
-        if (line.isEmpty()) {
-            tiles.add(Tile(id, Grid2.of(lines) { if (it == '.') 0 else 1 }))
-            lines.clear()
-            a = 1
-            continue
+private fun `Jurassic Jigsaw`(input: String): Any {
+    val tiles = input.split("\n\n").map { block ->
+        block.lines().let { lines ->
+            Tile(lines.first().findInts().first(), Grid2.of(lines.drop(1)) { if (it == '.') 0 else 1 })
         }
-        if (a == 1) id = line.drop(5).dropLast(1).toInt() else lines.add(line)
-        a += 1
     }
-    tiles.add(Tile(id, Grid2.of(lines) { if (it == '.') 0 else 1 }))
-    return tiles
+
+    fun findAround(tile: Tile) = tiles.filter { it.id != tile.id }
+        .mapNotNull { if (it.allEdges.intersect(tile.allEdges).isNotEmpty()) it else null }
+
+    val found = tiles.map { Pair(it.id, findAround(it)) }
+        .onEach { println("${it.first} -> ${it.second.map { it.id }}") }
+
+    val part1 = found.filter { it.second.size == 2 }.map { it.first }.fold(1L) { v, acc -> acc * v }
+
+    return part1
 }
 
 private data class Tile(val id: Int, var grid: Grid2<Int>) {
