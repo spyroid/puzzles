@@ -101,23 +101,13 @@ private data class Tile(val id: Long, var grid: Grid<Char>) {
         val mySideValue = sideFacing(mySide)
         return tiles.filterNot { it.id == id }.first { it.hasSide(mySideValue) }.also { it.orientToSide(mySideValue, theirSide) }
     }
+
     private fun orientToSide(side: String, direction: Orientation) = orientations().first { it.sideFacing(direction) == side }
-    fun maskIfFound(mask: List<Point>): Boolean {
-        var found = false
-        val maxWidth = mask.maxByOrNull { it.y }!!.y
-        val maxHeight = mask.maxByOrNull { it.x }!!.x
-        (0..(grid.height - maxHeight)).forEach { x ->
-            (0..(grid.width - maxWidth)).forEach { y ->
-                val lookingAt = Point(x, y)
-                val actualSpots = mask.map { it + lookingAt }
-                if (actualSpots.all { grid[it]!!.v == '#' }) {
-                    found = true
-                    actualSpots.forEach { grid[it] = '0' }
-                }
-            }
+    fun maskIfFound(mask: List<Point>) = grid.all().map { (p, _) ->
+        (mask.count { grid[p + it]?.v == '#' } == mask.size).also {
+            if (it) mask.forEach { grid[p + it] = '0' }
         }
-        return found
-    }
+    }.count { it } > 0
 }
 
 private enum class Orientation {
