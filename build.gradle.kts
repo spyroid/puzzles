@@ -1,8 +1,8 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    kotlin("jvm") version "2.1.0"
-    id("com.github.ben-manes.versions") version "0.51.0"
+    kotlin("jvm") version "2.1.20-Beta1"
+    id("com.github.ben-manes.versions") version "0.52.0"
 }
 
 repositories {
