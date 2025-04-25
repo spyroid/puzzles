@@ -9,7 +9,7 @@ fun main() {
 }
 
 private fun solve(clawPos: Int, boxes: IntArray, boxInClaw: Boolean): Any {
-    var layout = (boxes.sum() + boxInClaw.compareTo(false)).let { all ->
+    val layout = (boxes.sum() + boxInClaw.compareTo(false)).let { all ->
         boxes.mapIndexed { i, _ -> all / boxes.size + ((all % boxes.size) > i).compareTo(false) }
     }
     return layout.withIndex().find { (i, v) -> (v < boxes[i]) xor boxInClaw }?.index.let { target ->
