@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    kotlin("jvm") version "2.1.20"
+    kotlin("jvm") version "2.2.0-RC"
     id("com.github.ben-manes.versions") version "0.52.0"
 }
 
@@ -38,13 +38,13 @@ tasks {
         enabled = false
     }
     compileJava {
-        options.release = 22
+//        options.release = 22
     }
 }
 
 kotlin {
     compilerOptions {
         freeCompilerArgs.addAll("-Xexport-kdoc", "-opt-in=kotlin.RequiresOptIn")
-        jvmTarget.set(JvmTarget.JVM_22)
+//        jvmTarget.set(JvmTarget.JVM_22)
     }
 }
