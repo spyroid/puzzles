@@ -3,3 +3,4 @@
 build
 src/aoc/**/*.txt
 /.kotlin/
+/.oca/
