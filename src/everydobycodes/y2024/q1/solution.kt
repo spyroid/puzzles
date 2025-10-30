@@ -3,25 +3,13 @@ package everydobycodes.y2024.q1
 import gears.puzzle
 
 fun main() {
-    puzzle {
-        TheBattleForTheFarmlands(input())
-    }
-    puzzle {
-        TheBattleForTheFarmlands2(input("input2.txt"))
-    }
+    puzzle { TheBattleForTheFarmlands(input(), 1) }
+    puzzle { TheBattleForTheFarmlands(input("input2.txt"), 2) }
+    puzzle { TheBattleForTheFarmlands(input("input3.txt"), 3) }
 }
 
-private fun TheBattleForTheFarmlands(input: String) = calculate(input)
-
-private fun TheBattleForTheFarmlands2(input: String) = input
-    .windowed(2, 2)
-    .sumOf { calculate(it) + (if (it.contains('x')) 0 else 2) }
-
-private fun calculate(s: String) = s.map {
-    when (it) {
-        'B' -> 1
-        'C' -> 3
-        'D' -> 5
-        else -> 0
-    }
-}.sum()
+private val map = mapOf('A' to 0, 'B' to 1, 'C' to 3, 'D' to 5)
+private fun TheBattleForTheFarmlands(input: String, size: Int) = input
+    .windowed(size, size)
+    .map { s -> s.filter { it in map.keys } }
+    .sumOf { s -> s.sumOf { (map[it] ?: 0) + s.length - 1 } }
