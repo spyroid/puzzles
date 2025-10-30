@@ -11,5 +11,8 @@ fun main() {
 private val map = mapOf('A' to 0, 'B' to 1, 'C' to 3, 'D' to 5)
 private fun TheBattleForTheFarmlands(input: String, size: Int) = input
     .windowed(size, size)
-    .map { s -> s.filter { it in map.keys } }
-    .sumOf { s -> s.sumOf { (map[it] ?: 0) + s.length - 1 } }
+    .sumOf { s ->
+        s.filter { it in map.keys }.let { str ->
+            str.sumOf { (map[it] ?: 0) + str.length - 1 }
+        }
+    }
