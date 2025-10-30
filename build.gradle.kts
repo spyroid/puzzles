@@ -44,7 +44,7 @@ tasks {
 
 kotlin {
     compilerOptions {
-        freeCompilerArgs.addAll("-Xexport-kdoc", "-opt-in=kotlin.RequiresOptIn")
+        freeCompilerArgs.addAll("-opt-in=kotlin.RequiresOptIn")
 //        jvmTarget.set(JvmTarget.JVM_22)
     }
 }

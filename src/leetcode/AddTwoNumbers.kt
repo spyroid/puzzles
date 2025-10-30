@@ -8,7 +8,7 @@ fun main() {
 
     n = ListNode(5)
     val r2 = n
-    n?.next = ListNode(6).also { n = it }
+    n.next = ListNode(6).also { n = it }
     n?.next = ListNode(4).also { n = it }
     n?.next = ListNode(9).also { n = it }
 
@@ -30,8 +30,8 @@ fun addTwoNumbers(l1: ListNode?, l2: ListNode?): ListNode? {
     var root: ListNode? = null
     var n: ListNode? = null
     while (aa != null || bb != null || extra > 0) {
-        val a = aa?.`val`?.also { aa = aa?.next } ?: 0
-        val b = bb?.`val`?.also { bb = bb?.next } ?: 0
+        val a = aa?.`val`?.also { aa = aa.next } ?: 0
+        val b = bb?.`val`?.also { bb = bb.next } ?: 0
         var s = a + b + extra
         extra = s / 10
         s %= 10
