@@ -4,10 +4,10 @@ import gears.puzzle
 
 fun main() {
     puzzle {
-        historianHysteria(inputLines())
+        secretEntrance(inputLines())
     }
 }
 
-private fun historianHysteria(input: List<String>): Any {
+private fun secretEntrance(input: List<String>): Any {
     return 0
 }
