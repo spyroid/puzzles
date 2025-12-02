@@ -30,6 +30,11 @@ fun Int.toDigits(base: Int = 10) = sequence {
     while (n != 0) yield(n % base).also { n /= base }
 }
 
+fun Long.toDigits(base: Int = 10) = sequence {
+    var n = this@toDigits
+    while (n != 0L) yield(n % base).also { n /= base }
+}
+
 const val fullBlock = '█'
 
 // Arrays
@@ -39,10 +44,12 @@ fun <T> ArrayDeque<T>.rotate(amount: Int) {
         amount < 0 -> repeat(-amount - 1) { addLast(removeFirst()) }
     }
 }
+
 fun <T> List<T>.splitBy(idx: Set<Int>) = foldIndexed(mutableListOf<MutableList<T>>()) { i, list, v ->
     if (idx.contains(i) || list.isEmpty()) list.add(mutableListOf(v)) else list.last().add(v)
     list
 }
+
 fun <T> MutableList<T>.safeSet(i: Int, v: T) = this.set(i % size, v)
 fun <T> List<T>.safeGet(i: Int) = this[i % size]
 fun <T> List<T>.safeGet(i: Long) = this[(i % size).toInt()]
@@ -53,6 +60,7 @@ fun <T> MutableList<T>.reverseSubList(start: Int, end: Int) {
         safeSet(end - j, x)
     }
 }
+
 fun List<String>.toInts() = this.map { it.toInt() }
 
 // Ranges
