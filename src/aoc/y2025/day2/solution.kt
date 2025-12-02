@@ -23,9 +23,4 @@ private fun isBad(value: Long, justHalf: Boolean = false): Boolean {
     return segments.any { isEquals(numbers.windowed(it, it)) }
 }
 
-private fun isEquals(data: List<List<Long>>): Boolean {
-    for (i in data.first().indices) {
-        if (!data.drop(1).all { it[i] == data.first()[i] }) return false
-    }
-    return true
-}
+private fun isEquals(data: List<List<Long>>) = data.drop(1).any { it != data.first() }
