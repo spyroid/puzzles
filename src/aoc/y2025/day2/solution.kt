@@ -2,7 +2,6 @@ package aoc.y2025.day2
 
 import gears.puzzle
 import gears.toDigits
-import kotlin.math.absoluteValue
 
 fun main() {
     puzzle {
@@ -17,14 +16,11 @@ private fun giftShop(input: String): Any {
     return part1 to part2
 }
 
-private val numbers = LongArray(256) { 0L }.toMutableList()
-
 private fun isBad(value: Long, justHalf: Boolean = false): Boolean {
-    numbers.clear().also { numbers.addAll(value.toDigits()) }
+    val numbers = value.toDigits().toList()
     if (justHalf) if (numbers.size % 2 != 0) return false
     val segments = if (justHalf) listOf(numbers.size / 2) else (1..numbers.size).filter { numbers.size % it == 0 && it < numbers.size / 2 + 1 }
-    val res = segments.any { isEquals(numbers.windowed(it, it)) }
-    return res
+    return segments.any { isEquals(numbers.windowed(it, it)) }
 }
 
 private fun isEquals(data: List<List<Long>>): Boolean {
