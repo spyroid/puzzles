@@ -11,9 +11,7 @@ fun main() {
 
 private fun secretEntrance(input: List<String>): Any {
     val numbers = input.map { it.replace("L", "-").replace("R", "").toInt() }
-    val part1 = numbers.runningFold(50) { acc, delta ->
-        (acc + delta).mod(100)
-    }.count { it == 0 }
+    val part1 = numbers.runningFold(50) { acc, delta -> (acc + delta).mod(100) }.count { it == 0 }
 
     val part2 = numbers.runningFold(Pair(50, 0)) { acc, delta ->
         val corrected = if (delta > 0) acc.first else (100 - acc.first) % 100
