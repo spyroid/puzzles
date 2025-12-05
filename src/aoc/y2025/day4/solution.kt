@@ -11,9 +11,13 @@ fun main() {
 
 private fun printingDepartment(input: List<String>): Any {
     val grid = Grid.of(input) { it }
-    val part1 = grid.all().filter { it.v == '@' }.count {
-        grid.around8(it.p).filter { e -> e.v == '@' }.size < 4
-    }
+    fun rolls() = grid.all()
+        .filter { e -> e.v == '@' && grid.around8(e.p).filter { it.v == '@' }.size < 4 }
 
-    return part1
+    val part1 = rolls().count()
+    val part2 = generateSequence { rolls().onEach { grid[it.p] = '.' }.count() }
+        .takeWhile { it > 0 }
+        .sum()
+
+    return part1 to part2
 }
