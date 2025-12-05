@@ -20,9 +20,9 @@ private fun cafeteria(input: String): Any {
 
     val part2 = sequence {
         var current = ranges.first()
-        ranges.drop(1).forEach { range ->
-            current.mergeWith(range).let { merged ->
-                if (merged != null) current = merged else yield(current).also { current = range }
+        ranges.drop(1).forEach { next ->
+            current.mergeWith(next).let { merged ->
+                if (merged != null) current = merged else yield(current).also { current = next }
             }
         }
         yield(current)
