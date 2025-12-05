@@ -12,7 +12,7 @@ fun main() {
 private fun cafeteria(input: String): Any {
     val (ranges, ids) = input.split("\n\n").let { (a, b) ->
         a.split("\n")
-            .map { LongRange(it.substringBefore("-").toLong(), it.substringAfter("-").toLong()) }
+            .map { line -> line.split("-").let { LongRange(it.first().toLong(), it.last().toLong()) } }
             .sortedBy { longs -> longs.first } to b.split("\n").map { it.toLong() }
     }
 
