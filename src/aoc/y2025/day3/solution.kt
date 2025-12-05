@@ -10,15 +10,16 @@ fun main() {
 
 private fun lobby(input: List<String>): Any {
     fun maximizer(batteries: String, size: Int): Long {
-        val numbers = mutableListOf<Char>()
+        var numbers = ""
         var remaining = batteries
-        repeat(size) {
-            val s = remaining.dropLast(size - numbers.size - 1)
-            val idx = s.indices.maxBy { s[it] }
-            numbers.add(s[idx])
-            remaining = remaining.drop(idx + 1)
+        repeat(size) { i ->
+            remaining.dropLast(size - i - 1).let { frame ->
+                val idx = frame.indices.maxBy { frame[it] }
+                numbers += frame[idx]
+                remaining = remaining.drop(idx + 1)
+            }
         }
-        return numbers.joinToString("").toLong()
+        return numbers.toLong()
     }
 
     val part1 = input.sumOf { maximizer(it, 2) }
