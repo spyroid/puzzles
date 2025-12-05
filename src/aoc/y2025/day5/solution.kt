@@ -22,7 +22,7 @@ private fun cafeteria(input: String): Any {
         var current = ranges.first()
         ranges.drop(1).forEach { range ->
             current.mergeWith(range).let { merged ->
-                if (merged == null) yield(current).also { current = range } else current = merged
+                if (merged != null) current = merged else yield(current).also { current = range }
             }
         }
         yield(current)
