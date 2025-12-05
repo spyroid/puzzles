@@ -1,7 +1,6 @@
 package aoc.y2025.day3
 
 import gears.puzzle
-import gears.toDigits
 
 fun main() {
     puzzle {
@@ -10,12 +9,20 @@ fun main() {
 }
 
 private fun lobby(input: List<String>): Any {
-    fun maxFrom(str: String) = str.dropLast(1).indices.maxBy { str[it] }
-        .let { a ->
-            str.drop(a + 1).maxOf { it }.let { b -> "${str[a]}$b".toInt() }
+    fun maximizer(batteries: String, size: Int): Long {
+        val numbers = mutableListOf<Char>()
+        var remaining = batteries
+        repeat(size) {
+            val s = remaining.dropLast(size - numbers.size - 1)
+            val idx = s.indices.maxBy { s[it] }
+            numbers.add(s[idx])
+            remaining = remaining.drop(idx + 1)
         }
+        return numbers.joinToString("").toLong()
+    }
 
-    val part1 = input.sumOf { maxFrom(it) }
+    val part1 = input.sumOf { maximizer(it, 2) }
+    val part2 = input.sumOf { maximizer(it, 12) }
 
-    return part1
+    return part1 to part2
 }
