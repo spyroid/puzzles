@@ -69,6 +69,9 @@ fun range(a: Long, b: Long) = if (a <= b) LongRange(a, b) else LongRange(b, a)
 infix fun IntRange.fullyOverlaps(other: IntRange) = first <= other.first && last >= other.last
 infix fun IntRange.overlaps(other: IntRange) = first <= other.last && other.first <= last
 infix fun LongRange.overlaps(other: LongRange) = first <= other.last && other.first <= last
+fun LongRange.mergeWith(other: LongRange) = if (this.last < other.first || other.last < this.first) null else {
+    minOf(this.first, other.first)..maxOf(this.last, other.last)
+}
 
 // Maps
 fun <K> MutableMap<K, Int>.inc(key: K, amount: Int = 1): Int? = merge(key, amount, Int::plus)
