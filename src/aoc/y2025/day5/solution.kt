@@ -19,19 +19,13 @@ private fun cafeteria(input: String): Any {
     val part1 = ids.count { ranges.any { range -> it in range } }
 
     val part2 = sequence {
-        var r = LongRange.EMPTY
-        ranges.forEach { range ->
-            if (r == LongRange.EMPTY) r = range else {
-                val merged = r.mergeWith(range)
-                if (merged == null) {
-                    yield(r)
-                    r = range
-                } else {
-                    r = merged
-                }
+        var current = ranges.first()
+        ranges.drop(1).forEach { range ->
+            current.mergeWith(range).let { merged ->
+                if (merged == null) yield(current).also { current = range } else current = merged
             }
         }
-        yield(r)
+        yield(current)
     }.sumOf { it.last - it.first + 1 }
     return part1 to part2
 }
