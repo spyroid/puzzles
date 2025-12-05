@@ -1,5 +1,6 @@
 package aoc.y2025.day5
 
+import gears.length
 import gears.mergeWith
 import gears.puzzle
 
@@ -13,7 +14,8 @@ private fun cafeteria(input: String): Any {
     val (ranges, ids) = input.split("\n\n").let { (a, b) ->
         a.split("\n")
             .map { it.split("-").let { (a, b) -> LongRange(a.toLong(), b.toLong()) } }
-            .sortedBy { longs -> longs.first } to b.split("\n").map { it.toLong() }
+            .sortedBy { longs -> longs.first } to
+                b.split("\n").map { it.toLong() }
     }
 
     val part1 = ids.count { ranges.any { range -> it in range } }
@@ -26,7 +28,7 @@ private fun cafeteria(input: String): Any {
             }
         }
         yield(current)
-    }.sumOf { it.last - it.first + 1 }
+    }.sumOf { range -> range.length() }
 
     return part1 to part2
 }

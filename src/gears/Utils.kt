@@ -72,6 +72,7 @@ infix fun LongRange.overlaps(other: LongRange) = first <= other.last && other.fi
 fun LongRange.mergeWith(other: LongRange) = if (this.last < other.first || other.last < this.first) null else {
     minOf(this.first, other.first)..maxOf(this.last, other.last)
 }
+fun LongRange.length() = last - first + 1
 
 // Maps
 fun <K> MutableMap<K, Int>.inc(key: K, amount: Int = 1): Int? = merge(key, amount, Int::plus)
