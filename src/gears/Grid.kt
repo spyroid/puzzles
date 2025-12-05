@@ -23,7 +23,7 @@ class Grid<T>(val data: Array<Array<Entry<T>>>) {
     operator fun get(p: Point) = get(p.x, p.y)
     operator fun get(x: Int, y: Int) = if (isValid(x, y)) this.data[y][x] else null
     fun isValid(p: Point) = isValid(p.x, p.y)
-    fun isValid(x: Int, y: Int) = x >= 0 && x < width && y >= 0 && y < height
+    fun isValid(x: Int, y: Int) = x in 0..<width && y in 0..<height
 
     fun all() = sequence<Entry<T>> { for (y in 0..maxY) for (x in 0..maxX) yield(data[y][x]) }
     fun around4(p: Point) = p.around4().mapNotNull { get(it) }
