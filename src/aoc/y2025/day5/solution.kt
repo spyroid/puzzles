@@ -27,5 +27,6 @@ private fun cafeteria(input: String): Any {
         }
         yield(current)
     }.sumOf { it.last - it.first + 1 }
+
     return part1 to part2
 }
