@@ -16,7 +16,7 @@ class Grid<T>(val data: Array<Array<Entry<T>>>) {
         fun <T> of(width: Int, height: Int, v: T) = Grid(Array(height) { y -> Array(width) { x -> Entry(Point(x, y), v) } })
     }
 
-    override fun toString() = data.joinToString("\n") { it.map { it.v }.joinToString("") }
+    override fun toString() = data.joinToString("\n") { it.map { a -> a.v }.joinToString("") }
 
     operator fun set(p: Point, value: T) = set(p.x, p.y, value)
     operator fun set(x: Int, y: Int, value: T) = isValid(x, y).also { if (it) data[y][x].v = value }
