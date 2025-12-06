@@ -50,6 +50,20 @@ fun <T> List<T>.splitBy(idx: Set<Int>) = foldIndexed(mutableListOf<MutableList<T
     list
 }
 
+fun <T> List<T>.splitByElement(splitCondition: (T) -> Boolean): List<List<T>> {
+    if (isEmpty()) return emptyList()
+    var (buffer, result) = mutableListOf<T>() to mutableListOf<List<T>>()
+    this.forEach { s ->
+        if (!splitCondition(s)) buffer.add(s) else {
+            if (buffer.isNotEmpty()) {
+                result.add(buffer).also { buffer = mutableListOf() }
+            }
+        }
+    }
+    if (buffer.isNotEmpty()) result.add(buffer)
+    return result
+}
+
 fun <T> MutableList<T>.safeSet(i: Int, v: T) = this.set(i % size, v)
 fun <T> List<T>.safeGet(i: Int) = this[i % size]
 fun <T> List<T>.safeGet(i: Long) = this[(i % size).toInt()]
@@ -72,6 +86,7 @@ infix fun LongRange.overlaps(other: LongRange) = first <= other.last && other.fi
 fun LongRange.mergeWith(other: LongRange) = if (this.last < other.first || other.last < this.first) null else {
     minOf(this.first, other.first)..maxOf(this.last, other.last)
 }
+
 fun LongRange.length() = last - first + 1
 
 // Maps

@@ -2,6 +2,7 @@ package aoc.y2025.day6
 
 import gears.Grid
 import gears.puzzle
+import gears.splitByElement
 
 fun main() {
     puzzle {
@@ -10,20 +11,22 @@ fun main() {
 }
 
 private fun trashCompactor(input: List<String>): Any {
-    val grid = input.map { line -> line.trim().split("\\s+".toRegex()) }
-        .let { lists ->
-            lists.first().indices.map { col ->
-                val (numbers, operations) = mutableListOf<Long>() to mutableListOf<String>()
-                lists.indices.forEach { row ->
-                    val v = lists[row][col]
-                    if (v.first().isDigit()) numbers.add(v.toLong()) else operations.add(v)
-                }
-                numbers to operations
-            }
-        }
+    val grids = input.dropLast(1).let { strings ->
+        strings.first().indices.map { col ->
+            strings.indices.map { row -> strings[row][col] }.joinToString("")
+        }.splitByElement { it.isBlank() }.map { lines -> Grid.of(lines) { it } }
+    }
+    val ops = input.last().trim().split("\\s+".toRegex())
 
+    val part1 = grids.withIndex().sumOf { (i, grid) ->
+        grid.rotateClockwise().flipY().rows().map { row -> row.map { it.v }.joinToString("").trim().toLong() }
+            .reduce { a, b -> if (ops[i] == "+") a + b else a * b }
+    }
 
-    val part1 = grid.sumOf { (n, o) -> if (o.first() == "+") n.reduce { acc, lng -> acc + lng } else n.reduce { acc, lng -> acc * lng } }
+    val part2 = grids.withIndex().sumOf { (i, grid) ->
+        grid.rows().map { row -> row.map { it.v }.joinToString("").trim().toLong() }
+            .reduce { a, b -> if (ops[i] == "+") a + b else a * b }
+    }
 
-    return part1
+    return part1 to part2
 }

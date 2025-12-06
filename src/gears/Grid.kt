@@ -31,6 +31,7 @@ class Grid<T>(val data: Array<Array<Entry<T>>>) {
 
     fun rotateClockwise() = Array(width) { i -> Array(height) { j -> Entry(Point(j, i), this.data[maxY - j][i].v) } }.let { Grid(it) }
     fun flipX() = Array(height) { y -> Array(width) { x -> Entry(Point(x, y), this.data[maxY - y][x].v) } }.let { Grid(it) }
+    fun flipY() = Array(height) { y -> Array(width) { x -> Entry(Point(x, y), this.data[y][maxX - x].v) } }.let { Grid(it) }
     fun <R> clone(transformer: Grid<T>.(e: Entry<T>) -> R) = Array(height) { y -> Array(width) { x -> Entry(Point(x, y), transformer(data[y][x])) } }
         .let { Grid(it) }
 
@@ -44,4 +45,6 @@ class Grid<T>(val data: Array<Array<Entry<T>>>) {
         }
     }
 
+    fun row(i: Int) = data[i].toList()
+    fun rows() = data.map { it.toList() }
 }
