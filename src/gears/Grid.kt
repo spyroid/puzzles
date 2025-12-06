@@ -12,6 +12,14 @@ class Grid<T>(val data: Array<Array<Entry<T>>>) {
         fun <T> of(input: List<String>, mapper: (Char) -> T) = (input.first().length to input.size).let { (w, h) ->
             Grid(Array(h) { y -> Array(w) { x -> Entry(Point(x, y), mapper(input[y][x])) } })
         }
+        inline fun <INPUT, reified T> from(input: List<List<INPUT>>, mapper: (INPUT) -> T): Grid<T> {
+            val a = input.mapIndexed { y, line ->
+                line.mapIndexed { x, v ->
+                    Entry(Point(x, y), mapper(v))
+                }.toTypedArray()
+            }.toTypedArray()
+            return Grid(a)
+        }
         fun <T> of(width: Int, height: Int, v: T) = Grid(Array(height) { y -> Array(width) { x -> Entry(Point(x, y), v) } })
     }
 
