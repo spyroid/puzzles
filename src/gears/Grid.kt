@@ -12,7 +12,6 @@ class Grid<T>(val data: Array<Array<Entry<T>>>) {
         fun <T> of(input: List<String>, mapper: (Char) -> T) = (input.first().length to input.size).let { (w, h) ->
             Grid(Array(h) { y -> Array(w) { x -> Entry(Point(x, y), mapper(input[y][x])) } })
         }
-
         fun <T> of(width: Int, height: Int, v: T) = Grid(Array(height) { y -> Array(width) { x -> Entry(Point(x, y), v) } })
     }
 
@@ -22,18 +21,21 @@ class Grid<T>(val data: Array<Array<Entry<T>>>) {
     operator fun set(x: Int, y: Int, value: T) = isValid(x, y).also { if (it) data[y][x].v = value }
     operator fun get(p: Point) = get(p.x, p.y)
     operator fun get(x: Int, y: Int) = if (isValid(x, y)) this.data[y][x] else null
+
     fun isValid(p: Point) = isValid(p.x, p.y)
     fun isValid(x: Int, y: Int) = x in 0..<width && y in 0..<height
 
-    fun all() = sequence<Entry<T>> { for (y in 0..maxY) for (x in 0..maxX) yield(data[y][x]) }
+    fun all() = sequence { for (y in 0..maxY) for (x in 0..maxX) yield(data[y][x]) }
     fun around4(p: Point) = p.around4().mapNotNull { get(it) }
     fun around8(p: Point) = p.around8().mapNotNull { get(it) }
 
-    fun rotateClockwise() = Array(width) { i -> Array(height) { j -> Entry(Point(j, i), this.data[maxY - j][i].v) } }.let { Grid(it) }
-    fun flipX() = Array(height) { y -> Array(width) { x -> Entry(Point(x, y), this.data[maxY - y][x].v) } }.let { Grid(it) }
-    fun flipY() = Array(height) { y -> Array(width) { x -> Entry(Point(x, y), this.data[y][maxX - x].v) } }.let { Grid(it) }
-    fun <R> clone(transformer: Grid<T>.(e: Entry<T>) -> R) = Array(height) { y -> Array(width) { x -> Entry(Point(x, y), transformer(data[y][x])) } }
-        .let { Grid(it) }
+    fun rotateCw() = Grid(Array(width) { i -> Array(height) { j -> Entry(Point(j, i), this.data[maxY - j][i].v) } })
+    fun rotateCCw() = Grid(Array(width) { i -> Array(height) { j -> Entry(Point(j, i), this.data[j][maxX - i].v) } })
+
+    fun flipX() = Grid(Array(height) { y -> Array(width) { x -> Entry(Point(x, y), this.data[maxY - y][x].v) } })
+    fun flipY() = Grid(Array(height) { y -> Array(width) { x -> Entry(Point(x, y), this.data[y][maxX - x].v) } })
+
+    fun <R> clone(transformer: Grid<T>.(e: Entry<T>) -> R) = Grid(Array(height) { y -> Array(width) { x -> Entry(Point(x, y), transformer(data[y][x])) } })
 
     @Suppress("UNCHECKED_CAST")
     fun inc(p: Point, amount: Int = 1) {

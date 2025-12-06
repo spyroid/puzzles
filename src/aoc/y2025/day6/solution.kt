@@ -21,5 +21,5 @@ private fun trashCompactor(input: List<String>): Any {
         mapper(grid).rowsValues().map { it.joinToString("").trim().toLong() }.reduce { a, b -> calculate(a, b, ops[i]) }
     }
 
-    return partX { it.rotateClockwise().flipY() } to partX { it }
+    return partX { it.rotateCCw() } to partX { it }
 }

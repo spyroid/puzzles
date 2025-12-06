@@ -92,7 +92,7 @@ private data class Tile(val id: Long, var grid: Grid<Char>) {
         }
     }
 
-    fun rotate() = grid.rotateClockwise().let { grid = it; this }
+    fun rotate() = grid.rotateCw().let { grid = it; this }
     fun flip() = grid.flipX().let { grid = it; this }
     private fun hasSide(side: String) = side in sides || side in sidesReversed
     fun sharedSideCount(tiles: List<Tile>) = sides.sumOf { side -> tiles.filterNot { it.id == id }.count { tile -> tile.hasSide(side) } }
