@@ -47,4 +47,5 @@ class Grid<T>(val data: Array<Array<Entry<T>>>) {
 
     fun row(i: Int) = data[i].toList()
     fun rows() = data.map { it.toList() }
+    fun rowsValues() = data.map { row -> row.map { it.v }.toList() }
 }
