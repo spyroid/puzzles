@@ -13,22 +13,22 @@ fun main() {
 private fun laboratories(input: List<String>): Any {
     val grid = Grid.of(input) { it }
 
-    val part1 = grid.rows().dropLast(1).sumOf { entries ->
-        entries.map { entry ->
+    val splitters = grid.rows().dropLast(1).map { entries ->
+        entries.mapNotNull { entry ->
             when (entry.v) {
-                'S' -> grid.set(entry.p + Direction.UP, '|')
-                '|' -> grid.get(entry.p + Direction.UP)?.let { x ->
+                'S' -> grid[entry.p + Direction.UP] = '|'
+                '|' -> grid[entry.p + Direction.UP]?.let { x ->
                     when (x.v) {
-                        '.' -> grid.set(entry.p + Direction.UP, '|')
+                        '.' -> grid[entry.p + Direction.UP] = '|'
                         '^' -> grid.set(entry.p + Direction.UP_LEFT, '|')
-                            .also { grid.set(entry.p + Direction.UP_RIGHT, '|') }
-                            .also { return@map 1 }
+                            .also { grid[entry.p + Direction.UP_RIGHT] = '|' }
+                            .also { return@mapNotNull x }
                     }
                 }
             }
-            0
-        }.sum()
-    }
+            null
+        }
+    }.flatten()
 
-    return part1
+    return splitters.count()
 }
