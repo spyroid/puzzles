@@ -30,5 +30,19 @@ private fun laboratories(input: List<String>): Any {
         }
     }.flatten()
 
-    return splitters.count()
+    val counters = LongArray(input.first().length) { 0 }.apply {
+        this[input.first().indexOf('S')] = 1
+    }
+
+    input.filterIndexed { idx, _ -> idx % 2 == 0 }.forEach { line ->
+        (1..<line.length).forEach { i ->
+            if (line[i] == '^') {
+                counters[i + 1] += counters[i]
+                counters[i - 1] += counters[i]
+                counters[i] = 0
+            }
+        }
+    }
+
+    return splitters.count() to counters.sum()
 }
