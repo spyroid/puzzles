@@ -41,21 +41,18 @@ private class DisjointUnion(points: List<Point3D>) {
     fun clustersRoots() = root.indices.map { findRoot(it) }.toSet()
     fun clustersSizes() = clustersRoots().map { r -> size[r] }
 
-    fun findRoot(x: Int): Int {
-        if (root[x] != x) root[x] = findRoot(root[x])
-        return root[x]
+    fun findRoot(v: Int): Int {
+        if (root[v] != v) root[v] = findRoot(root[v])
+        return root[v]
     }
 
     fun union(x: Int, y: Int): Boolean {
-        var rootX = findRoot(x)
-        var rootY = findRoot(y)
+        var (rootX, rootY) = findRoot(x) to findRoot(y)
 
         if (rootX == rootY) return false
 
         if (size[rootX] < size[rootY]) {
-            val temp = rootX
-            rootX = rootY
-            rootY = temp
+            val temp = rootX; rootX = rootY; rootY = temp
         }
 
         root[rootY] = rootX
