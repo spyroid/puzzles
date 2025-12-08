@@ -22,12 +22,12 @@ private fun playground(input: List<String>): Any {
     }.sortedBy { it.first }
 
     var du = DisjointUnion(points)
-    dist.take(1000).forEach { (_, p) -> du.merge(p.first, p.second) }
+    dist.take(1000).forEach { (_, p) -> du.union(p.first, p.second) }
     val part1 = du.clustersSizes().sortedDescending().take(3).fold(1) { acc, v -> acc * v }
 
     du = DisjointUnion(points)
     val part2 = dist.runningFold(Pair(points.size, 0L)) { clusters, (_, p) ->
-        val nc = if (du.merge(p.first, p.second)) clusters.first - 1 else clusters.first
+        val nc = if (du.union(p.first, p.second)) clusters.first - 1 else clusters.first
         Pair(nc, points[p.first].x * points[p.second].x.toLong())
     }.first { it.first == 1 }.second
 
@@ -46,17 +46,20 @@ private class DisjointUnion(points: List<Point3D>) {
         return root[x]
     }
 
-    fun merge(a: Int, b: Int): Boolean {
-        val (ra, rb) = findRoot(a) to findRoot(b)
-        if (ra == rb) return false
+    fun union(x: Int, y: Int): Boolean {
+        var rootX = findRoot(x)
+        var rootY = findRoot(y)
 
-        if (size[ra] >= size[rb]) {
-            root[rb] = ra
-            size[ra] += size[rb]
-        } else {
-            root[ra] = rb
-            size[rb] += size[ra]
+        if (rootX == rootY) return false
+
+        if (size[rootX] < size[rootY]) {
+            val temp = rootX
+            rootX = rootY
+            rootY = temp
         }
+
+        root[rootY] = rootX
+        size[rootX] += size[rootY]
         return true
     }
 }
