@@ -12,24 +12,24 @@ fun main() {
 }
 
 private fun playground(input: List<String>): Any {
-
     val points = input.map { Point3D.of(it) }
-
     val dist = (0..points.lastIndex).flatMap { i ->
         (i + 1..points.lastIndex).map { j ->
             points[i].distance(points[j]) to (i to j)
         }
     }.sortedBy { it.first }
 
-    var du = DisjointUnion(points)
-    dist.take(1000).forEach { (_, p) -> du.union(p.first, p.second) }
-    val part1 = du.clustersSizes().sortedDescending().take(3).fold(1) { acc, v -> acc * v }
+    val part1 = DisjointUnion(points).let { du ->
+        dist.take(1000).forEach { (_, p) -> du.union(p.first, p.second) }
+        du.clustersSizes().sortedDescending().take(3).fold(1) { acc, v -> acc * v }
+    }
 
-    du = DisjointUnion(points)
-    val part2 = dist.runningFold(Pair(points.size, 0L)) { clusters, (_, p) ->
-        val nc = if (du.union(p.first, p.second)) clusters.first - 1 else clusters.first
-        Pair(nc, points[p.first].x * points[p.second].x.toLong())
-    }.first { it.first == 1 }.second
+    val part2 = DisjointUnion(points).let { du ->
+        dist.runningFold(Pair(points.size, 0L)) { clusters, (_, p) ->
+            val nc = if (du.union(p.first, p.second)) clusters.first - 1 else clusters.first
+            Pair(nc, points[p.first].x * points[p.second].x.toLong())
+        }.first { it.first == 1 }.second
+    }
 
     return part1 to part2
 }
