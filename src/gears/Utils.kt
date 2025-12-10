@@ -15,21 +15,29 @@ fun <E> cartesian(lists: List<List<E>>) = sequence {
         }
     }
 }
-
 fun <T> permutations(list: List<T>): List<List<T>> = when {
     list.size > 10 -> throw Exception("You probably dont have enough memory to keep all those permutations")
     list.size <= 1 -> listOf(list)
     else -> permutations(list.drop(1)).map { perm -> (list.indices).map { i -> perm.subList(0, i) + list.first() + perm.drop(i) } }.flatten()
 }
-
 fun <T> List<T>.combinations(): Sequence<Pair<T, T>> {
     if (size < 2) return sequenceOf<Pair<T, T>>()
     return sequence {
         for (i in indices) for (j in (i + 1)..lastIndex) yield(Pair(this@combinations[i], this@combinations[j]))
     }
 }
-
+fun <T> List<T>.circularWindows(size: Int): List<List<T>> {
+    if (this.size < size) return emptyList()
+    val result = mutableListOf<List<T>>()
+    for (i in indices) {
+        val window = (0 until size).map { this[(i + it) % this.size] }
+        result += window
+    }
+    return result
+}
 fun Iterable<Long>.lcm() = this.reduce { total, next -> lcm(total, next) }
+
+
 fun lcm(a: Long, b: Long) = a / gcd(a, b) * b
 tailrec fun gcd(a: Long, b: Long): Long = if (b == 0L) a else gcd(b, a % b)
 
