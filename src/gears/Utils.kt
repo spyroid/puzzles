@@ -2,6 +2,7 @@ package gears
 
 fun ByteArray.toHex(): String = java.util.HexFormat.of().formatHex(this)
 
+// Lists
 fun <E> cartesian(lists: List<List<E>>) = sequence {
     val counters = Array(lists.size) { 0 }
     val length = lists.fold(1) { acc, list -> acc * list.size }
@@ -19,6 +20,13 @@ fun <T> permutations(list: List<T>): List<List<T>> = when {
     list.size > 10 -> throw Exception("You probably dont have enough memory to keep all those permutations")
     list.size <= 1 -> listOf(list)
     else -> permutations(list.drop(1)).map { perm -> (list.indices).map { i -> perm.subList(0, i) + list.first() + perm.drop(i) } }.flatten()
+}
+
+fun <T> List<T>.combinations(): Sequence<Pair<T, T>> {
+    if (size < 2) return sequenceOf<Pair<T, T>>()
+    return sequence {
+        for (i in indices) for (j in (i + 1)..lastIndex) yield(Pair(this@combinations[i], this@combinations[j]))
+    }
 }
 
 fun Iterable<Long>.lcm() = this.reduce { total, next -> lcm(total, next) }

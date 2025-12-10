@@ -9,7 +9,7 @@ fun main() {
 }
 
 private fun `Chronal Coordinates`(input: List<String>): Any {
-    val centroids = input.map { Point.of(it, ", ") }.toSet()
+    val centroids = input.map { Point.of(it, listOf(", ")) }.toSet()
     val (p1, p2) = centroids.bounds()
 
     val unboundedCentroids = mutableSetOf<Point>()

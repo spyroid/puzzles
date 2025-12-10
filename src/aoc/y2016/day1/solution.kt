@@ -10,7 +10,7 @@ private fun main() {
 }
 
 private fun taxicab(lines: List<String>, twice: Boolean = false): Int {
-    var p = Point.zero
+    var p = Point.ZERO
     var dir = Direction.UP
     val set = mutableSetOf(p)
 

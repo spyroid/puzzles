@@ -13,8 +13,8 @@ private fun clumsyCrucible(input: List<String>): Any {
     fun walk(a: Int, b: Int, firstTurn: Int): Int {
         val grid = Grid2.of(input) { mutableListOf(0, 0, it.digitToInt()) }
         val cursors = ArrayDeque<Pair<Point, Int>>().apply {
-            add(Point.zero to 0)
-            add(Point.zero to 1)
+            add(Point.ZERO to 0)
+            add(Point.ZERO to 1)
         }
 
         fun step(cursor: Pair<Point, Int>, range: IntProgression) {

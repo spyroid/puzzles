@@ -28,12 +28,12 @@ private fun RAMRun(input: List<String>): Any {
         return -1
     }
 
-    val part1 = bfs(allWalls.take(1024).toSet(), Point.zero, Point(70, 70))
+    val part1 = bfs(allWalls.take(1024).toSet(), Point.ZERO, Point(70, 70))
 
     val currentWalls = mutableSetOf<Point>()
     for (wall in allWalls) {
         currentWalls.add(wall)
-        if (bfs(currentWalls, Point.zero, Point(70, 70)) == -1) break
+        if (bfs(currentWalls, Point.ZERO, Point(70, 70)) == -1) break
     }
 
     return part1 to currentWalls.last()

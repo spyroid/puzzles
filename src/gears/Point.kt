@@ -16,9 +16,9 @@ data class Point(var x: Int, var y: Int) {
     operator fun times(factor: Int) = Point(x * factor, y * factor)
 
     fun manhattan(other: Point) = abs(x - other.x) + abs(y - other.y)
-    fun manhattan() = manhattan(zero)
+    fun manhattan() = manhattan(ZERO)
     fun chebyshev(other: Point) = max(abs(x - other.x), abs(y - other.y))
-    fun chebyshev() = chebyshev(zero)
+    fun chebyshev() = chebyshev(ZERO)
 
     fun asDirection() = Point(x.sign, y.sign)
 
@@ -51,13 +51,16 @@ data class Point(var x: Int, var y: Int) {
     fun around4() = Direction.all4().map { this + it }
 
     companion object {
-        val zero = Point(0, 0)
-        fun of(str: String, delim: String = ",") = Point(str.substringBefore(delim).toInt(), str.substringAfter(delim).toInt())
+        val ZERO = Point(0, 0)
+        fun of(input: String, delim: List<String> = listOf()): Point {
+            val splits = if (delim.isNotEmpty()) input.split(delimiters = delim.toTypedArray()) else input.split(',', '-', ' ')
+            return splits.map { it.trim().toInt() }.let { (x, y) -> Point(x, y) }
+        }
     }
 }
 
 fun Iterable<Point>.bounds() = this.fold(listOf(Int.MAX_VALUE, Int.MIN_VALUE, Int.MAX_VALUE, Int.MIN_VALUE).toTypedArray()) { acc, p ->
-    acc[0] = min(acc[0], p.x); acc[1] = max(acc[1], p.x); acc[2] = min(acc[2], p.y);acc[3] = max(acc[3], p.y)
+    acc[0] = min(acc[0], p.x); acc[1] = max(acc[1], p.x); acc[2] = min(acc[2], p.y); acc[3] = max(acc[3], p.y)
     acc
 }.let { (x1, x2, y1, y2) -> Point(x1, y1) to Point(x2, y2) }
 

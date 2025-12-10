@@ -12,7 +12,7 @@ private fun main() {
 }
 
 private fun part2(input: List<Pair<Char, Int>>): Int {
-    val start = Point.zero
+    val start = Point.ZERO
     var p = start
     var wp = Point(10, 1)
     input.forEach { (inst, v) ->
@@ -35,14 +35,14 @@ private fun part2(input: List<Pair<Char, Int>>): Int {
             'E' -> wp += Direction.RIGHT.asPoint().times(v)
             'W' -> wp += Direction.LEFT.asPoint().times(v)
 
-            else -> Point.zero
+            else -> Point.ZERO
         }
     }
     return p.manhattan(start)
 }
 
 private fun part1(input: List<Pair<Char, Int>>): Int {
-    val start = Point.zero
+    val start = Point.ZERO
     var p = start
     var dir = Direction.of('E')
     input.forEach { (inst, v) ->
@@ -55,7 +55,7 @@ private fun part1(input: List<Pair<Char, Int>>): Int {
             'E' -> p += Direction.RIGHT.asPoint().times(v)
             'W' -> p += Direction.LEFT.asPoint().times(v)
 
-            else -> Point.zero
+            else -> Point.ZERO
         }
     }
     return p.manhattan(start)

@@ -10,7 +10,7 @@ fun main() {
 
 private fun crossedWires(input: List<String>): Any {
     fun walk(path: String): Set<Point> = buildSet {
-        var p = Point.zero
+        var p = Point.ZERO
         var steps = 0
         path.split(",").forEach { s ->
             val (dir, length) = Direction.of(s.first()) to s.drop(1).toInt()

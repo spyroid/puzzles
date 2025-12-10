@@ -11,7 +11,7 @@ fun main() {
 }
 
 private fun rope(input: List<String>, knots: Int): Int = buildSet {
-    val points = MutableList(knots) { Point.zero }
+    val points = MutableList(knots) { Point.ZERO }
     input.forEach { s ->
         val (dir, count) = s.split(" ").let { Pair(Direction.of(it[0]), it[1].toInt()) }
         repeat(count) {

@@ -11,7 +11,7 @@ private fun main() {
 }
 
 private fun part1(all: String): MutableSet<Point> {
-    var p = Point.zero
+    var p = Point.ZERO
     val set = mutableSetOf(p)
     for (m in all) {
         when (m) {
