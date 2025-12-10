@@ -1,15 +1,8 @@
 package aoc.y2025.day9
 
-import aoc.y2025.day9.Rectangle
-import gears.Point
-import gears.circularWindows
-import gears.combinations
-import gears.length
-import gears.overlaps
-import gears.puzzle
+import gears.*
 import java.lang.Integer.max
 import java.lang.Integer.min
-import kotlin.math.absoluteValue
 
 fun main() {
     puzzle {
@@ -28,7 +21,7 @@ private fun movieTheater(input: List<String>): Any {
     return part1 to part2
 }
 
-private data class Rectangle(val x: IntRange, val y: IntRange) {
+data class Rectangle(val x: IntRange, val y: IntRange) {
     lateinit var inner: Rectangle
     val area = x.length().toLong() * y.length()
 
