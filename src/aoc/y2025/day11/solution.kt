@@ -11,14 +11,24 @@ fun main() {
 private fun reactor(input: List<String>): Any {
     val devices = input.map { line -> line.split(": ") }.associate { (a, b) -> a to b.split(" ") }
 
-    fun find(start: String, end: String, memo: MutableMap<String, Long> = mutableMapOf()): Long {
-        return if (start == end) 1L else memo.getOrPut(start) {
-            devices[start]?.sumOf { next -> find(next, end, memo) } ?: 0
+    val part1 = {
+        fun find(device: String): Long = if (device == "out") 1L else devices[device]?.sumOf { find(it) } ?: 0L
+        find("you")
+    }
+    val part2 = {
+        fun find(device: String, a: Boolean = false, b: Boolean = false, memo: MutableMap<Triple<String, Boolean, Boolean>, Long> = mutableMapOf()): Long {
+            return if (device == "out") {
+                if (a && b) 1L else 0L
+            } else {
+                memo.getOrPut(Triple(device, a, b)) {
+                    devices[device]?.sumOf {
+                        find(it, (a || device == "fft"), (b || device == "dac"), memo)
+                    } ?: 0L
+                }
+            }
         }
+        find("svr")
     }
 
-    val part1 = find("you", "out")
-    val part2 = find("svr", "fft") * find("fft", "dac") * find("dac", "out")
-
-    return part1 to part2
+    return part1() to part2()
 }
