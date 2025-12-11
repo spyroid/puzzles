@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    kotlin("jvm") version "2.3.0-RC"
+    kotlin("jvm") version "2.3.0-RC3"
     id("com.github.ben-manes.versions") version "0.53.0"
 }
 
@@ -16,7 +16,7 @@ dependencies {
 //    implementation("com.github.ajalt.mordant:mordant:2.0.0-beta13")
 //    implementation("org.jetbrains.kotlinx:multik-api:0.2.1")
 //    implementation("org.jetbrains.kotlinx:multik-default:0.2.1")
-//    implementation("io.arrow-kt:arrow-core:1.1.5")
+//    implementation("io.arrow-kt:arrow-core:2.2.0")
 }
 
 tasks {
