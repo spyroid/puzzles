@@ -1,8 +1,6 @@
 package aoc.y2025.day9
 
 import gears.*
-import java.lang.Integer.max
-import java.lang.Integer.min
 
 fun main() {
     puzzle {
@@ -26,7 +24,7 @@ data class Rectangle(val x: IntRange, val y: IntRange) {
     val area = x.length().toLong() * y.length()
 
     companion object {
-        fun of(a: Point, b: Point) = Rectangle(min(a.x, b.x)..max(a.x, b.x), min(a.y, b.y)..max(a.y, b.y)).apply {
+        fun of(a: Point, b: Point) = Rectangle(minOf(a.x, b.x)..maxOf(a.x, b.x), minOf(a.y, b.y)..maxOf(a.y, b.y)).apply {
             inner = Rectangle(x.first + 1..<x.last, y.first + 1..<y.last)
         }
     }
