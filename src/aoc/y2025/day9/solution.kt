@@ -11,7 +11,7 @@ fun main() {
 private fun movieTheater(input: List<String>): Any {
     val points = input.map { Point.of(it) }
     val lines: List<Rectangle> = (points + points.first()).zipWithNext().map { (a, b) -> Rectangle.of(a, b) }
-    val rectangles = points.combinations().map { (a, b) -> Rectangle.of(a, b) }.sortedByDescending { it.area }
+    val rectangles = points.combinations(2).map { (a, b) -> Rectangle.of(a, b) }.sortedByDescending { it.area }
 
     val part1 = rectangles.first().area
     val part2 = rectangles.first { rectangle -> lines.none { line -> line.overlaps(rectangle.inner) } }.area

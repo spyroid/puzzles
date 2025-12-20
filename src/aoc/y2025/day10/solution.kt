@@ -1,8 +1,6 @@
 package aoc.y2025.day10
 
-import gears.combination
 import gears.combinations
-import gears.permutations
 import gears.puzzle
 import gears.symmetricDifference
 
@@ -18,10 +16,9 @@ private fun factory(input: List<String>): Any {
     val out = set.symmetricDifference(setOf(4, 3))
 
     val list = listOf(1, 2, 3, 4)
-        combination(list.toTypedArray(), 2)
-        .onEach { println(it) }.count()
 
-    listOf(1, 2, 3, 4).combinations().forEach(::println)
+    list.combinations(2).onEach { println(it) }.count()
+
 
     return out
 }

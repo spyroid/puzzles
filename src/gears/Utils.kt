@@ -22,11 +22,26 @@ fun <T> permutations(list: List<T>): List<List<T>> = when {
     else -> permutations(list.drop(1)).map { perm -> (list.indices).map { i -> perm.subList(0, i) + list.first() + perm.drop(i) } }.flatten()
 }
 
-fun <T> List<T>.combinations(): Sequence<Pair<T, T>> {
-    if (size < 2) return sequenceOf<Pair<T, T>>()
-    return sequence {
-        for (i in indices) for (j in (i + 1)..lastIndex) yield(Pair(this@combinations[i], this@combinations[j]))
+fun <T> List<T>.combinations(r: Int): List<List<T>> {
+    val n = size
+    val results = mutableListOf<List<T>>() // the number of all cases
+
+    val result = slice(0 until r).toMutableList()
+
+    fun recursionCombination(depth: Int = 0, index: Int = 0) {
+        if (depth == r) {
+            results.add(result.toList())
+            return
+        }
+
+        for (i in index until n) {
+            result[depth] = this[i]
+            recursionCombination(depth + 1, i + 1)
+        }
     }
+
+    recursionCombination()
+    return results
 }
 
 fun <T> List<T>.circularWindows(size: Int): List<List<T>> {
@@ -129,24 +144,3 @@ infix fun <E> Set<E>.symmetricDifference(other: Set<E>): Set<E> {
 
 //
 
-fun <T> combination(elements: Array<T>, r: Int): List<List<T>> {
-    val n = elements.size
-    val results = mutableListOf<List<T>>() // the number of all cases
-
-    val result = elements.sliceArray(0 until r)
-
-    fun recursionCombination(depth: Int = 0, index: Int = 0) {
-        if (depth == r) {
-            results.add(result.toList())
-            return
-        }
-
-        for (i in index until n) {
-            result[depth] = elements[i]
-            recursionCombination(depth + 1, i + 1)
-        }
-    }
-
-    recursionCombination()
-    return results
-}
