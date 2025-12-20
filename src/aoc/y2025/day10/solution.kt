@@ -1,0 +1,27 @@
+package aoc.y2025.day10
+
+import gears.combination
+import gears.combinations
+import gears.permutations
+import gears.puzzle
+import gears.symmetricDifference
+
+fun main() {
+    puzzle {
+        factory(inputLines())
+    }
+}
+
+private fun factory(input: List<String>): Any {
+
+    val set = setOf(1, 4)
+    val out = set.symmetricDifference(setOf(4, 3))
+
+    val list = listOf(1, 2, 3, 4)
+        combination(list.toTypedArray(), 2)
+        .onEach { println(it) }.count()
+
+    listOf(1, 2, 3, 4).combinations().forEach(::println)
+
+    return out
+}

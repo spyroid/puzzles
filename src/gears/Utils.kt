@@ -119,3 +119,34 @@ private val re = "[-0-9]+".toRegex()
 fun String.findInts() = re.findAll(this).map { it.value.toInt() }.toList()
 fun String.findLongs() = re.findAll(this).map { it.value.toLong() }.toList()
 fun String.findNumbers() = re.findAll(this).map { it.value }.toList()
+
+// Sets
+infix fun <E> Set<E>.symmetricDifference(other: Set<E>): Set<E> {
+    val left = this subtract other
+    val right = other subtract this
+    return left union right
+}
+
+//
+
+fun <T> combination(elements: Array<T>, r: Int): List<List<T>> {
+    val n = elements.size
+    val results = mutableListOf<List<T>>() // the number of all cases
+
+    val result = elements.sliceArray(0 until r)
+
+    fun recursionCombination(depth: Int = 0, index: Int = 0) {
+        if (depth == r) {
+            results.add(result.toList())
+            return
+        }
+
+        for (i in index until n) {
+            result[depth] = elements[i]
+            recursionCombination(depth + 1, i + 1)
+        }
+    }
+
+    recursionCombination()
+    return results
+}
